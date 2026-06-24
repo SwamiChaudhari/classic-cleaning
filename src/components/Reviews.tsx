@@ -1,235 +1,223 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { Star, Quote, MapPin, CheckCircle2 } from "lucide-react";
+import { reviews } from "@/config/reviews";
+import { business } from "@/config/business";
 
-const testimonials = [
-  {
-    id: 1,
-    name: "Sarah Mitchell",
-    role: "Homeowner, Austin TX",
-    source: "Google",
-    rating: 5,
-    quote:
-      "Absolutely blown away by the attention to detail. They cleaned places I didn't even know existed. My kitchen has never looked this good!",
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
   },
-  {
-    id: 2,
-    name: "James Rodriguez",
-    role: "Business Owner, Denver CO",
-    source: "Facebook",
-    rating: 5,
-    quote:
-      "We use them for our office space every week. Professional, punctual, and our employees love coming to a clean workspace.",
-  },
-  {
-    id: 3,
-    name: "Emily Chen",
-    role: "Homeowner, Seattle WA",
-    source: "Google",
-    rating: 5,
-    quote:
-      "I've tried three other cleaning services before. This is the one that actually delivers on their promises. Five stars isn't enough.",
-  },
-  {
-    id: 4,
-    name: "Michael Thompson",
-    role: "Property Manager, Miami FL",
-    source: "Google",
-    rating: 5,
-    quote:
-      "Managing 12 rental units is stressful enough. They handle turnovers flawlessly and my tenants always comment on how clean everything is.",
-  },
-  {
-    id: 5,
-    name: "Lisa Park",
-    role: "Homeowner, Chicago IL",
-    source: "Facebook",
-    rating: 5,
-    quote:
-      "The team was friendly, thorough, and respectful of our home. They even organized my pantry without being asked. Above and beyond!",
-  },
-  {
-    id: 6,
-    name: "David Williams",
-    role: "Homeowner, Atlanta GA",
-    source: "Google",
-    rating: 5,
-    quote:
-      "Booked a deep clean before hosting Thanksgiving. My mother-in-law said it was the cleanest house she'd ever seen. That says it all.",
-  },
-];
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
 
 function StarRating({ rating }: { rating: number }) {
   return (
     <div className="flex gap-0.5">
       {Array.from({ length: 5 }).map((_, i) => (
-        <svg
+        <Star
           key={i}
-          className={`w-5 h-5 ${i < rating ? "text-green" : "text-gray-300"}`}
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
+          className={`w-4 h-4 ${
+            i < rating ? "text-gold fill-gold" : "text-gray-300"
+          }`}
+        />
       ))}
     </div>
   );
 }
 
-function SourceBadge({ source }: { source: string }) {
-  const colors =
-    source === "Google"
-      ? "bg-blue-light text-blue"
-      : "bg-blue-50 text-blue-700";
-
+function ReviewCard({ review }: { review: (typeof reviews)[0] }) {
   return (
-    <span
-      className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ${colors}`}
-    >
-      {source === "Google" ? (
-        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-        </svg>
-      ) : (
-        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-        </svg>
+    <div className="bg-white rounded-2xl shadow-card border border-border p-6 flex flex-col h-full hover:shadow-lg transition-shadow duration-300">
+      {/* Stars */}
+      <StarRating rating={review.rating} />
+
+      {/* Quote */}
+      <div className="mt-4 flex-1">
+        <Quote className="w-6 h-6 text-teal/30 mb-2 -scale-x-100" />
+        <p className="text-gray-600 leading-relaxed text-[15px]">
+          {review.text}
+        </p>
+      </div>
+
+      {/* Service Tag */}
+      {review.service && (
+        <div className="mt-4">
+          <span className="inline-block bg-teal/10 text-teal text-xs font-semibold px-3 py-1 rounded-full">
+            {review.service}
+          </span>
+        </div>
       )}
-      {source}
-    </span>
+
+      {/* Customer Info */}
+      <div className="mt-5 pt-5 border-t border-border flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-navy/10 flex items-center justify-center text-navy font-bold text-sm shrink-0">
+          {review.name
+            .split(" ")
+            .map((n) => n[0])
+            .join("")}
+        </div>
+        <div className="min-w-0">
+          <div className="flex items-center gap-2">
+            <p className="font-semibold text-navy text-sm truncate">
+              {review.name}
+            </p>
+            {review.verified && (
+              <CheckCircle2 className="w-4 h-4 text-teal shrink-0" />
+            )}
+          </div>
+          <div className="flex items-center gap-1 text-xs text-gray-500">
+            <MapPin className="w-3 h-3 shrink-0" />
+            <span className="truncate">{review.location}</span>
+            <span className="mx-1">·</span>
+            <span className="shrink-0">{review.date}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
 export default function Reviews() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
-  const next = () => {
-    setActiveIndex((prev) => (prev + 1) % testimonials.length);
-  };
+  // Auto-scroll carousel with infinite loop
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
 
-  const prev = () => {
-    setActiveIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
-    );
-  };
+    let animationId: number;
+    let lastTime = 0;
+    const speed = 0.5; // pixels per frame
+
+    const scroll = (time: number) => {
+      if (!lastTime) lastTime = time;
+      const delta = time - lastTime;
+      lastTime = time;
+
+      if (!isPaused && container) {
+        container.scrollLeft += speed * (delta / 16);
+
+        // Infinite loop: when scrolled past half, reset to start
+        const maxScroll = container.scrollWidth / 2;
+        if (container.scrollLeft >= maxScroll) {
+          container.scrollLeft = 0;
+        }
+      }
+
+      animationId = requestAnimationFrame(scroll);
+    };
+
+    animationId = requestAnimationFrame(scroll);
+
+    return () => cancelAnimationFrame(animationId);
+  }, [isPaused]);
+
+  // Duplicate reviews for infinite scroll
+  const duplicatedReviews = [...reviews, ...reviews];
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="py-16 lg:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-3">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          {/* Google Logo Placeholder */}
+          <div className="inline-flex items-center gap-2 mb-4">
+            <svg
+              className="w-7 h-7"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+                fill="#4285F4"
+              />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853"
+              />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                fill="#EA4335"
+              />
+            </svg>
+            <span className="text-sm font-semibold text-gray-600">Google Reviews</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-navy font-[family-name:var(--font-poppins)]">
             What Our Customers Say
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-6">
-            Don't just take our word for it — hear from homeowners and businesses
-            across the country.
+          <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
+            Don&apos;t just take our word for it — hear from homeowners and
+            businesses across Pune who trust Classic Cleaning.
           </p>
 
           {/* Overall Rating */}
-          <div className="inline-flex items-center gap-3 bg-green-light rounded-2xl px-6 py-3">
-            <span className="text-3xl font-bold text-green">4.9</span>
+          <div className="inline-flex items-center gap-3 bg-white rounded-2xl px-6 py-3 mt-6 shadow-card border border-border">
+            <span className="text-3xl font-bold text-navy">
+              {business.rating}
+            </span>
             <div>
-              <StarRating rating={5} />
-              <p className="text-sm text-gray-600 mt-0.5">
-                Based on 100+ verified reviews
+              <StarRating rating={Math.round(business.rating)} />
+              <p className="text-sm text-gray-500 mt-0.5">
+                Based on {business.reviewCount}+ verified reviews
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Mobile: Swipeable Cards */}
-        <div className="md:hidden">
-          <div
-            className="overflow-x-auto snap-x snap-mandatory flex gap-4 pb-4 -mx-4 px-4 scrollbar-hide"
-            onTouchStart={(e) => {
-              const startX = e.touches[0].clientX;
-              const handler = (ev: TouchEvent) => {
-                const diff = ev.touches[0].clientX - startX;
-                if (Math.abs(diff) > 60) {
-                  if (diff < 0) next();
-                  else prev();
-                  document.removeEventListener("touchmove", handler);
-                }
-              };
-              document.addEventListener("touchmove", handler, { once: true });
-            }}
-          >
-            {testimonials.map((t) => (
-              <div
-                key={t.id}
-                className="min-w-[85vw] snap-center flex-shrink-0"
-              >
-                <div className="rounded-2xl shadow-sm bg-surface border border-border p-6 h-full">
-                  <SourceBadge source={t.source} />
-                  <StarRating rating={t.rating} />
-                  <p className="text-gray-700 mt-4 leading-relaxed text-[15px]">
-                    "{t.quote}"
-                  </p>
-                  <div className="mt-6 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-navy/10 flex items-center justify-center text-navy font-bold text-sm">
-                      {t.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </div>
-                    <div>
-                      <p className="font-semibold text-navy text-sm">
-                        {t.name}
-                      </p>
-                      <p className="text-xs text-gray-500">{t.role}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Dots */}
-          <div className="flex justify-center gap-2 mt-6">
-            {testimonials.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveIndex(i)}
-                aria-label={`View review ${i + 1}`}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  i === activeIndex
-                    ? "bg-green w-8"
-                    : "bg-gray-300 hover:bg-gray-400"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Desktop: 3-Column Grid */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((t) => (
+        {/* Auto-scroll Carousel */}
+        <div
+          ref={scrollRef}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          className="flex gap-5 overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory pb-4"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {duplicatedReviews.map((review, index) => (
             <div
-              key={t.id}
-              className="rounded-2xl shadow-sm bg-surface border border-border p-6 hover:shadow-md transition-shadow"
+              key={`${review.id}-${index}`}
+              className="min-w-[300px] sm:min-w-[350px] lg:min-w-[380px] snap-start flex-shrink-0"
             >
-              <SourceBadge source={t.source} />
-              <StarRating rating={t.rating} />
-              <p className="text-gray-700 mt-4 leading-relaxed">"{t.quote}"</p>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-navy/10 flex items-center justify-center text-navy font-bold text-sm">
-                  {t.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
-                </div>
-                <div>
-                  <p className="font-semibold text-navy text-sm">{t.name}</p>
-                  <p className="text-xs text-gray-500">{t.role}</p>
-                </div>
-              </div>
+              <ReviewCard review={review} />
             </div>
           ))}
         </div>
+
+        {/* Tablet/Desktop Grid (visible above mobile carousel) */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="hidden lg:grid lg:grid-cols-3 gap-6 mt-10"
+        >
+          {reviews.slice(0, 6).map((review) => (
+            <motion.div key={review.id} variants={itemVariants}>
+              <ReviewCard review={review} />
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

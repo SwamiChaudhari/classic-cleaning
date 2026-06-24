@@ -1,22 +1,31 @@
 @import "tailwindcss";
 
 @theme {
+  /* Classic Cleaning Brand Colors */
   --color-navy: #0B1D3A;
   --color-navy-light: #132B52;
+  --color-navy-50: #F0F3F9;
+  --color-teal: #0D9488;
+  --color-teal-light: #F0FDFA;
   --color-blue: #2563EB;
   --color-blue-light: #EFF6FF;
   --color-blue-50: #F0F7FF;
-  --color-green: #059669;
-  --color-green-light: #ECFDF5;
+  --color-emerald: #059669;
+  --color-emerald-light: #ECFDF5;
   --color-orange: #EA580C;
   --color-orange-light: #FFF7ED;
   --color-surface: #FAFBFC;
   --color-border: #E5E7EB;
+  --color-gold: #D97706;
+
+  /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Poppins', 'Inter', system-ui, sans-serif;
 }
 
 *, *::before, *::after {
   -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
 html {
@@ -29,26 +38,30 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-y: contain;
+  background: #FFFFFF;
+  color: #1F2937;
 }
 
 /* Hide scrollbar but keep scroll */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Smooth pulse for CTA */
+/* ===== ANIMATIONS ===== */
+
+/* CTA Pulse */
 @keyframes cta-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.4); }
   50% { box-shadow: 0 0 0 12px rgba(234, 88, 12, 0); }
 }
 .cta-pulse { animation: cta-pulse 2s ease-in-out infinite; }
 
-/* Fade up animation */
+/* Fade Up */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-up {
-  animation: fadeUp 0.5s ease-out forwards;
+  animation: fadeUp 0.6s ease-out forwards;
 }
 
 /* Slide in from right for mobile menu */
@@ -58,6 +71,15 @@ body {
 }
 .animate-slide-in {
   animation: slideIn 0.3s ease-out forwards;
+}
+
+/* Counter animation */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-count-up {
+  animation: countUp 0.8s ease-out forwards;
 }
 
 /* Shimmer loading effect */
@@ -71,6 +93,42 @@ body {
   animation: shimmer 2s infinite;
 }
 
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #2563EB 0%, #0D9488 50%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-dark {
+  background: rgba(11, 29, 58, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Soft shadows */
+.shadow-soft {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-card-hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
 /* Safe area padding */
 .pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 12px); }
 .pt-safe { padding-top: env(safe-area-inset-top); }
@@ -79,4 +137,32 @@ body {
 .tap-target {
   min-height: 44px;
   min-width: 44px;
+}
+
+/* Section heading underline */
+.heading-underline::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #EA580C, #D97706);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+/* Marquee for offer banner */
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+.animate-marquee {
+  animation: marquee 15s linear infinite;
+}
+
+/* Image zoom on hover */
+.img-zoom {
+  transition: transform 0.4s ease;
+}
+.img-zoom:hover {
+  transform: scale(1.05);
 }

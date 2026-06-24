@@ -1,167 +1,226 @@
-import Link from "next/link";
+"use client";
 
-const plans = [
-  {
-    name: "Starter",
-    price: "$99",
-    period: "per visit",
-    desc: "Perfect for regular maintenance cleaning",
-    features: [
-      "All common areas cleaned",
-      "Kitchen & bathroom surfaces",
-      "Vacuuming & mopping",
-      "Trash removal",
-      "Dusting all surfaces",
-    ],
-    popular: false,
-    cta: "Get Quote",
+import { motion } from "framer-motion";
+import { Check, Star, Zap } from "lucide-react";
+import Link from "next/link";
+import { packages, formatPrice } from "@/config/pricing";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
   },
-  {
-    name: "Deep",
-    price: "$199",
-    period: "per visit",
-    desc: "Comprehensive top-to-bottom cleaning",
-    features: [
-      "Everything in Starter",
-      "Inside oven & refrigerator",
-      "Cabinet interiors",
-      "Baseboard scrubbing",
-      "Window cleaning",
-      "Grout & tile scrubbing",
-    ],
-    popular: true,
-    cta: "Get Quote",
-  },
-  {
-    name: "Move-Out",
-    price: "$249",
-    period: "per visit",
-    desc: "Get your security deposit back",
-    features: [
-      "Everything in Deep Clean",
-      "Wall spot cleaning",
-      "Carpet steam cleaning",
-      "Light fixture cleaning",
-      "Garage cleaning",
-      "Final walkthrough",
-    ],
-    popular: false,
-    cta: "Get Quote",
-  },
-  {
-    name: "Commercial",
-    price: "Custom",
-    period: "quote",
-    desc: "Tailored for your business needs",
-    features: [
-      "Custom cleaning plan",
-      "Flexible scheduling",
-      "Dedicated team",
-      "Monthly billing",
-      "Account manager",
-      "Emergency service",
-    ],
-    popular: false,
-    cta: "Contact Us",
-  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+};
+
+const comparisonData = [
+  { label: "Transparent Pricing", classic: true, others: false },
+  { label: "No Hidden Charges", classic: true, others: false },
+  { label: "Trained & Verified Staff", classic: true, others: "partial" },
+  { label: "Eco-Friendly Products", classic: true, others: false },
+  { label: "Same-Day Service Available", classic: true, others: "partial" },
 ];
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-16 lg:py-24 bg-surface">
+    <section id="pricing" className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <span className="inline-block bg-orange-light text-orange font-semibold text-sm px-4 py-2 rounded-full mb-4">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12 lg:mb-16"
+        >
+          <span className="inline-block bg-teal/10 text-teal font-semibold text-sm tracking-wider uppercase px-4 py-2 rounded-full mb-4">
             Transparent Pricing
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy mb-3">
             Simple, Honest Pricing
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            No hidden fees. No surprises. Get an exact quote for your specific
-            needs.
+          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+            No hidden charges, ever. Get an exact quote for your specific needs.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Cards: horizontal snap scroll on mobile, 4-col grid on desktop */}
-        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-4 sm:grid sm:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 sm:gap-6 sm:overflow-visible sm:pb-0">
-          {plans.map((plan, i) => (
-            <div
-              key={i}
-              className={`relative bg-white rounded-2xl p-6 border-2 shadow-sm transition-all hover:shadow-xl shrink-0 w-[85vw] max-w-[320px] snap-center sm:w-auto sm:max-w-none ${
-                plan.popular
-                  ? "border-orange scale-[1.02] lg:scale-105 shadow-lg"
-                  : "border-border"
+        {/* Pricing Cards Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5"
+        >
+          {packages.map((pkg) => (
+            <motion.div
+              key={pkg.id}
+              variants={cardVariants}
+              whileHover={{ y: -8 }}
+              className={`relative bg-white rounded-2xl p-6 transition-all duration-300 ${
+                pkg.popular
+                  ? "ring-2 ring-orange shadow-xl shadow-orange/10 z-10 lg:scale-[1.03]"
+                  : pkg.badge === "Best Value"
+                  ? "border-2 border-gold/40 shadow-lg shadow-gold/10"
+                  : "border border-gray-200 shadow-sm hover:shadow-lg"
               }`}
             >
-              {plan.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-orange text-white text-xs font-bold px-4 py-1.5 rounded-full whitespace-nowrap">
-                  MOST POPULAR
+              {/* Badges */}
+              {pkg.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange to-orange/85 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-md uppercase tracking-wider">
+                  <Zap className="w-3 h-3 inline mr-1 -mt-0.5" />
+                  Most Popular
                 </div>
               )}
 
-              <h3 className="text-xl font-bold text-navy mb-1">{plan.name}</h3>
-              <p className="text-sm text-gray-500 mb-4">{plan.desc}</p>
+              {pkg.badge === "Best Value" && !pkg.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-amber-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-md uppercase tracking-wider">
+                  <Star className="w-3 h-3 inline mr-1 -mt-0.5" />
+                  Best Value
+                </div>
+              )}
 
-              <div className="mb-5">
-                <span className="text-4xl font-extrabold text-navy">
-                  {plan.price}
+              {/* Plan Name & Description */}
+              <h3 className="text-lg font-bold text-navy mb-1">{pkg.name}</h3>
+              <p className="text-sm text-gray-500 mb-5 leading-relaxed">
+                {pkg.description}
+              </p>
+
+              {/* Pricing */}
+              <div className="mb-6">
+                <span className="text-3xl font-extrabold text-navy">
+                  {formatPrice(pkg.price)}
                 </span>
-                <span className="text-gray-500 text-sm">/{plan.period}</span>
+                {pkg.originalPrice && (
+                  <span className="ml-2 text-gray-400 line-through text-sm">
+                    {formatPrice(pkg.originalPrice)}
+                  </span>
+                )}
               </div>
 
-              <ul className="space-y-2.5 mb-6">
-                {plan.features.map((f, j) => (
+              {/* Features List */}
+              <ul className="space-y-2.5 mb-7">
+                {pkg.features.map((feature, i) => (
                   <li
-                    key={j}
-                    className="flex items-start gap-2 text-sm text-gray-700"
+                    key={i}
+                    className="flex items-start gap-2.5 text-sm text-gray-600"
                   >
-                    <span className="w-5 h-5 rounded-full bg-green text-white flex items-center justify-center shrink-0 mt-0.5">
-                      <svg
-                        className="w-3 h-3"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={3}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
+                    <span className="w-5 h-5 rounded-full bg-emerald/10 text-emerald flex items-center justify-center shrink-0 mt-0.5">
+                      <Check className="w-3 h-3" strokeWidth={3} />
                     </span>
-                    {f}
+                    {feature}
                   </li>
                 ))}
               </ul>
 
+              {/* CTA Button */}
               <Link
                 href="#quote"
                 className={`block w-full text-center font-bold py-3.5 rounded-xl transition-all min-h-[48px] ${
-                  plan.popular
-                    ? "bg-orange hover:bg-orange/90 text-white hover:shadow-lg"
-                    : "bg-navy hover:bg-navy-light text-white"
+                  pkg.popular
+                    ? "bg-gradient-to-r from-orange to-orange/90 hover:from-orange hover:to-orange/80 text-white shadow-lg shadow-orange/20 hover:shadow-xl hover:shadow-orange/30"
+                    : pkg.badge === "Best Value"
+                    ? "bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-white shadow-md"
+                    : "bg-navy hover:bg-navy/90 text-white"
                 }`}
               >
-                {plan.cta}
+                Get Quote
               </Link>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <p className="text-center text-sm text-gray-500 mt-8">
-          💡 All prices are starting from. Final price depends on property size
-          and condition.{" "}
+        {/* Comparison Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-16 lg:mt-20 bg-gray-50 rounded-2xl p-6 sm:p-8"
+        >
+          <div className="text-center mb-8">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-navy mb-2">
+              Why Choose Classic Cleaning?
+            </h3>
+            <p className="text-gray-500 text-sm">
+              See how we compare to the competition
+            </p>
+          </div>
+
+          <div className="max-w-2xl mx-auto">
+            {/* Comparison Header */}
+            <div className="grid grid-cols-3 gap-4 mb-4 px-1">
+              <div className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                Feature
+              </div>
+              <div className="text-xs sm:text-sm font-bold text-navy text-center">
+                Classic Cleaning
+              </div>
+              <div className="text-xs sm:text-sm font-semibold text-gray-500 text-center">
+                Others
+              </div>
+            </div>
+
+            {/* Comparison Rows */}
+            {comparisonData.map((item, i) => (
+              <div
+                key={i}
+                className={`grid grid-cols-3 gap-4 items-center py-3 px-1 ${
+                  i < comparisonData.length - 1
+                    ? "border-b border-gray-200"
+                    : ""
+                }`}
+              >
+                <span className="text-sm text-gray-700 font-medium">
+                  {item.label}
+                </span>
+                <div className="flex justify-center">
+                  <span className="w-6 h-6 rounded-full bg-emerald text-white flex items-center justify-center">
+                    <Check className="w-3.5 h-3.5" strokeWidth={3} />
+                  </span>
+                </div>
+                <div className="flex justify-center">
+                  {item.others === true ? (
+                    <span className="w-6 h-6 rounded-full bg-emerald text-white flex items-center justify-center">
+                      <Check className="w-3.5 h-3.5" strokeWidth={3} />
+                    </span>
+                  ) : item.others === "partial" ? (
+                    <span className="w-6 h-6 rounded-full bg-yellow-400 text-white flex items-center justify-center text-xs font-bold">
+                      ~
+                    </span>
+                  ) : (
+                    <span className="w-6 h-6 rounded-full bg-gray-300 text-white flex items-center justify-center">
+                      <span className="text-xs font-bold">−</span>
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Bottom CTA note */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center text-sm text-gray-500 mt-8"
+        >
+          All prices are starting from. Final price depends on property size and
+          condition.{" "}
           <Link
             href="#quote"
-            className="text-blue font-semibold hover:underline"
+            className="text-orange font-semibold hover:underline"
           >
             Get your exact quote
           </Link>{" "}
           in 60 seconds.
-        </p>
+        </motion.p>
       </div>
     </section>
   );

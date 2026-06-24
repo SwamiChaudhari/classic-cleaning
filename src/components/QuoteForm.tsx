@@ -1,42 +1,56 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Check,
+  ArrowRight,
+  ArrowLeft,
+  Sparkles,
+  Shield,
+  Loader2,
+} from "lucide-react";
+import { services } from "@/config/services";
+import { generateQuoteMessage } from "@/lib/utils";
 
 interface QuoteFormProps {
   variant?: "full" | "compact";
   className?: string;
 }
 
-const SERVICES = [
-  { value: "", label: "Select Service Type" },
-  { value: "residential", label: "Residential Cleaning" },
-  { value: "deep", label: "Deep Cleaning" },
-  { value: "moveout", label: "Move-In / Move-Out" },
-  { value: "airbnb", label: "Airbnb / Vacation Rental" },
-  { value: "office", label: "Office Cleaning" },
-  { value: "commercial", label: "Commercial Cleaning" },
-  { value: "construction", label: "Post-Construction" },
-  { value: "recurring", label: "Recurring Plan" },
+const propertyTypes = [
+  "1 BHK",
+  "2 BHK",
+  "3 BHK",
+  "4 BHK",
+  "Villa",
+  "Office",
+  "Commercial Space",
 ];
 
 const TOTAL_STEPS = 3;
 
-export default function QuoteForm({ variant = "full", className = "" }: QuoteFormProps) {
+export default function QuoteForm({
+  variant = "full",
+  className = "",
+}: QuoteFormProps) {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
     name: "",
     phone: "",
-    email: "",
     service: "",
+    propertyType: "",
+    area: "",
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const update = (field: string, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
   const canProceed = () => {
-    if (step === 1) return form.name.trim().length > 0 && form.phone.trim().length > 0;
+    if (step === 1) return form.name.trim().length > 0 && form.phone.trim().length >= 10;
     if (step === 2) return form.service.length > 0;
     return true;
   };
@@ -49,30 +63,75 @@ export default function QuoteForm({ variant = "full", className = "" }: QuoteFor
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleWhatsAppRedirect = () => {
+    const selectedService = services.find((s) => s.id === form.service);
+    const message = generateQuoteMessage({
+      service: selectedService?.title || "General Cleaning",
+      propertyType: form.propertyType,
+      area: form.area,
+      name: form.name,
+    });
+    const url = `https://wa.me/917385169523?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setLoading(false);
     setSubmitted(true);
   };
 
   // Success state
   if (submitted) {
     return (
-      <div className={`bg-white rounded-2xl shadow-lg p-8 text-center ${className}`}>
-        <div className="w-20 h-20 bg-green rounded-full flex items-center justify-center mx-auto mb-5 animate-fade-up">
-          <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-        </div>
-        <h3 className="text-2xl font-bold text-navy mb-2 animate-fade-up">Quote Request Received!</h3>
-        <p className="text-gray-500 mb-6 animate-fade-up">
-          We'll contact you within 15 minutes with your free estimate.
-        </p>
-        <a
-          href="tel:+1-800-555-0199"
-          className="inline-flex items-center gap-2 bg-orange text-white font-bold px-8 py-3.5 rounded-xl hover:bg-orange/90 transition-all animate-fade-up"
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className={`bg-white rounded-2xl shadow-xl p-8 text-center ${className}`}
+      >
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+          className="w-20 h-20 bg-emerald rounded-full flex items-center justify-center mx-auto mb-5"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 01.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-          Call Us Now
-        </a>
-      </div>
+          <Check className="w-10 h-10 text-white" strokeWidth={3} />
+        </motion.div>
+        <h3 className="text-2xl font-bold text-navy mb-2">
+          Quote Request Received!
+        </h3>
+        <p className="text-gray-500 mb-6">
+          We&apos;ll contact you within 15 minutes with your free estimate.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <a
+            href="tel:07385169523"
+            className="inline-flex items-center justify-center gap-2 bg-navy text-white font-bold px-6 py-3.5 rounded-xl hover:bg-navy-light transition-all"
+          >
+            Call Us Now
+          </a>
+          <button
+            onClick={() => {
+              setSubmitted(false);
+              setStep(1);
+              setForm({
+                name: "",
+                phone: "",
+                service: "",
+                propertyType: "",
+                area: "",
+                message: "",
+              });
+            }}
+            className="inline-flex items-center justify-center gap-2 bg-surface border border-border text-navy font-semibold px-6 py-3.5 rounded-xl hover:bg-gray-100 transition-all"
+          >
+            Book Another
+          </button>
+        </div>
+      </motion.div>
     );
   }
 
@@ -82,14 +141,26 @@ export default function QuoteForm({ variant = "full", className = "" }: QuoteFor
   return (
     <form
       onSubmit={handleSubmit}
-      className={`bg-white rounded-2xl shadow-lg ${variant === "full" ? "p-6 sm:p-8" : "p-5"} ${className}`}
+      className={`bg-white rounded-2xl shadow-xl ${
+        variant === "full" ? "p-6 sm:p-8" : "p-5"
+      } ${className}`}
     >
       {/* Header */}
       <div className="text-center mb-6">
-        <h3 className="text-2xl sm:text-3xl font-bold text-navy tracking-tight">
-          Get Your Free Quote
+        <div className="inline-flex items-center gap-2 bg-orange-light text-orange text-xs font-bold px-3 py-1.5 rounded-full mb-3 uppercase tracking-wider">
+          <Sparkles className="w-3.5 h-3.5" />
+          Free Quote
+        </div>
+        <h3
+          className={`font-bold text-navy tracking-tight ${
+            variant === "full" ? "text-2xl sm:text-3xl" : "text-xl"
+          }`}
+        >
+          Get Your Free Estimate
         </h3>
-        <p className="text-gray-500 mt-1 text-sm">Takes less than 60 seconds</p>
+        <p className="text-gray-500 mt-1 text-sm">
+          Takes less than 60 seconds. No obligation.
+        </p>
       </div>
 
       {/* Progress indicator */}
@@ -98,7 +169,9 @@ export default function QuoteForm({ variant = "full", className = "" }: QuoteFor
           <div key={i} className="flex-1 flex items-center gap-2">
             <div
               className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${
-                i < step ? "bg-orange" : "bg-border"
+                i < step
+                  ? "bg-gradient-to-r from-orange to-gold"
+                  : "bg-border"
               }`}
             />
           </div>
@@ -110,7 +183,11 @@ export default function QuoteForm({ variant = "full", className = "" }: QuoteFor
 
       {/* Step 1: Name + Phone */}
       {step === 1 && (
-        <div className="space-y-4">
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="space-y-4"
+        >
           <input
             type="text"
             placeholder="Your Full Name"
@@ -127,54 +204,84 @@ export default function QuoteForm({ variant = "full", className = "" }: QuoteFor
             onChange={(e) => update("phone", e.target.value)}
             className={inputClasses}
           />
-        </div>
+        </motion.div>
       )}
 
-      {/* Step 2: Service + Email */}
+      {/* Step 2: Service + Property */}
       {step === 2 && (
-        <div className="space-y-4">
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="space-y-4"
+        >
           <select
             required
             value={form.service}
             onChange={(e) => update("service", e.target.value)}
-            className={`${inputClasses} ${!form.service ? "text-gray-400" : "text-gray-900"}`}
+            className={`${inputClasses} ${
+              !form.service ? "text-gray-400" : "text-gray-900"
+            }`}
           >
-            {SERVICES.map((s) => (
-              <option key={s.value} value={s.value}>
-                {s.label}
+            <option value="">Select Service Type</option>
+            {services.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.title} — {s.startingPrice ? `₹${s.startingPrice.toLocaleString("en-IN")}` : "Contact for price"}
               </option>
             ))}
           </select>
-          <input
-            type="email"
-            placeholder="Email Address (Optional)"
-            value={form.email}
-            onChange={(e) => update("email", e.target.value)}
-            className={inputClasses}
-          />
-        </div>
+          <select
+            value={form.propertyType}
+            onChange={(e) => update("propertyType", e.target.value)}
+            className={`${inputClasses} ${
+              !form.propertyType ? "text-gray-400" : "text-gray-900"
+            }`}
+          >
+            <option value="">Property Type</option>
+            {propertyTypes.map((pt) => (
+              <option key={pt} value={pt}>
+                {pt}
+              </option>
+            ))}
+          </select>
+        </motion.div>
       )}
 
-      {/* Step 3: Message + Submit */}
+      {/* Step 3: Area + Message + Submit */}
       {step === 3 && (
-        <div className="space-y-4">
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="space-y-4"
+        >
+          <input
+            type="text"
+            placeholder="Area / Locality (e.g., Kothrud, Baner)"
+            value={form.area}
+            onChange={(e) => update("area", e.target.value)}
+            className={inputClasses}
+          />
           <textarea
-            placeholder="Tell us about your cleaning needs... (Optional)"
-            rows={4}
+            placeholder="Any special requirements... (Optional)"
+            rows={3}
             value={form.message}
             onChange={(e) => update("message", e.target.value)}
             className={`${inputClasses} resize-none`}
           />
+          {/* Summary */}
           <div className="bg-surface rounded-xl p-4 border border-border">
-            <p className="text-xs text-gray-500 mb-1">Summary</p>
-            <p className="text-sm text-gray-700 font-medium">{form.name}</p>
+            <p className="text-xs text-gray-500 mb-1 font-medium">Summary</p>
+            <p className="text-sm text-gray-700 font-semibold">{form.name}</p>
             <p className="text-sm text-gray-500">{form.phone}</p>
-            {form.email && <p className="text-sm text-gray-500">{form.email}</p>}
-            <p className="text-sm text-gray-500 mt-1">
-              {SERVICES.find((s) => s.value === form.service)?.label}
-            </p>
+            {form.service && (
+              <p className="text-sm text-gray-500">
+                {services.find((s) => s.id === form.service)?.title}
+              </p>
+            )}
+            {form.propertyType && (
+              <p className="text-sm text-gray-500">{form.propertyType}</p>
+            )}
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* Navigation buttons */}
@@ -183,8 +290,9 @@ export default function QuoteForm({ variant = "full", className = "" }: QuoteFor
           <button
             type="button"
             onClick={handleBack}
-            className="flex-1 py-4 rounded-xl font-bold text-gray-600 bg-surface border border-border hover:bg-gray-100 transition-colors min-h-[52px]"
+            className="flex-1 py-4 rounded-xl font-bold text-gray-600 bg-surface border border-border hover:bg-gray-100 transition-colors min-h-[52px] flex items-center justify-center gap-2"
           >
+            <ArrowLeft className="w-4 h-4" />
             Back
           </button>
         )}
@@ -193,23 +301,46 @@ export default function QuoteForm({ variant = "full", className = "" }: QuoteFor
             type="button"
             onClick={handleNext}
             disabled={!canProceed()}
-            className="flex-1 bg-orange hover:bg-orange/90 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl text-lg transition-all min-h-[52px]"
+            className="flex-1 bg-gradient-to-r from-orange to-gold hover:shadow-lg disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl text-lg transition-all min-h-[52px] flex items-center justify-center gap-2"
           >
             Continue
+            <ArrowRight className="w-4 h-4" />
           </button>
         ) : (
           <button
             type="submit"
-            className="w-full bg-orange hover:bg-orange/90 text-white font-bold py-4 rounded-xl text-lg transition-all hover:shadow-lg active:scale-[0.98] min-h-[52px]"
+            disabled={loading}
+            className="flex-1 bg-gradient-to-r from-orange to-gold hover:shadow-lg text-white font-bold py-4 rounded-xl text-lg transition-all min-h-[52px] flex items-center justify-center gap-2 disabled:opacity-70"
           >
-            Get My Free Quote →
+            {loading ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : (
+              <>
+                Get My Free Quote
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )}
           </button>
         )}
       </div>
 
-      <p className="text-center text-xs text-gray-400 mt-4">
-        🔒 Your information is secure. No spam, ever.
-      </p>
+      {/* WhatsApp alternative */}
+      {step === TOTAL_STEPS && (
+        <button
+          type="button"
+          onClick={handleWhatsAppRedirect}
+          className="w-full mt-3 bg-emerald hover:bg-emerald/90 text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2"
+        >
+          <span className="text-lg">💬</span>
+          Or send via WhatsApp
+        </button>
+      )}
+
+      {/* Trust badge */}
+      <div className="flex items-center justify-center gap-2 mt-4 text-xs text-gray-400">
+        <Shield className="w-3.5 h-3.5" />
+        <span>Your information is secure. No spam, ever.</span>
+      </div>
     </form>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,13 +8,42 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-poppins",
+});
+
 export const metadata: Metadata = {
-  title: "ProClean Services | Professional Cleaning You Can Trust",
-  description: "Professional residential and commercial cleaning services. Fully insured, background-checked staff, satisfaction guaranteed. Get your free quote in 60 seconds.",
+  title: "Classic Cleaning Services | Professional Cleaning In Pune",
+  description:
+    "Premium residential and commercial cleaning services in Pune. Background-verified staff, same-day service, 4.8★ rating. Get free quote now.",
+  keywords: [
+    "cleaning services pune",
+    "house cleaning pune",
+    "deep cleaning pune",
+    "office cleaning pune",
+    "commercial cleaning pune",
+    "sofa cleaning pune",
+    "kitchen cleaning pune",
+    "best cleaning company pune",
+  ],
   openGraph: {
-    title: "ProClean Services | Professional Cleaning You Can Trust",
-    description: "Professional residential and commercial cleaning services. Get your free quote in 60 seconds.",
+    title: "Classic Cleaning Services | Professional Cleaning In Pune",
+    description:
+      "Premium residential and commercial cleaning services in Pune. 4.8★ rating, 1500+ homes cleaned.",
     type: "website",
+    locale: "en_IN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Classic Cleaning Services | Professional Cleaning In Pune",
+    description:
+      "Premium residential and commercial cleaning services in Pune. 4.8★ rating, 1500+ homes cleaned.",
+  },
+  alternates: {
+    canonical: "https://classiccleaning.in",
   },
 };
 
@@ -24,7 +53,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="font-sans antialiased text-gray-900 bg-white overflow-x-hidden">
         {children}
       </body>

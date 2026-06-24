@@ -1,121 +1,92 @@
-import QuoteForm from "./QuoteForm";
+"use client";
 
-const trustSignals = [
-  {
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-      </svg>
-    ),
-    label: "Free Estimates",
-  },
-  {
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-      </svg>
-    ),
-    label: "No Contracts",
-  },
-  {
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    label: "Same-Day Service",
-  },
-];
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Sparkles, MessageCircle, Phone, ArrowRight } from "lucide-react";
+import { business } from "@/config/business";
+import QuoteForm from "./QuoteForm";
 
 export default function FinalCTA() {
   return (
-    <section
-      id="quote"
-      className="py-16 lg:py-24 bg-gradient-to-br from-navy via-navy-light to-navy relative overflow-hidden"
-    >
-      {/* Background decorative blobs */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="absolute top-10 left-10 w-64 h-64 bg-blue rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-green rounded-full blur-3xl" />
+    <section id="quote" className="py-16 lg:py-24 bg-gradient-to-br from-navy via-navy-light to-navy relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div
+          animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute -top-20 -right-20 w-96 h-96 bg-teal rounded-full blur-[100px]"
+        />
+        <motion.div
+          animate={{ scale: [1.2, 1, 1.2], opacity: [0.1, 0.15, 0.1] }}
+          transition={{ duration: 10, repeat: Infinity }}
+          className="absolute bottom-0 -left-20 w-80 h-80 bg-orange rounded-full blur-[100px]"
+        />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left: Content */}
-          <div className="text-center lg:text-left">
-            <span className="inline-block bg-white/10 text-white/90 font-semibold text-sm px-4 py-2 rounded-full mb-6">
-              Ready To Get Started?
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center lg:text-left"
+          >
+            <span className="inline-block text-orange font-semibold text-sm tracking-wider uppercase mb-4">
+              Get Started Today
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-6 leading-tight">
-              Ready For A Cleaner Home?
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white font-[family-name:var(--font-poppins)] mb-5">
+              Ready For a{" "}
+              <span className="gradient-text">Cleaner Space?</span>
             </h2>
-            <p className="text-xl text-white/75 mb-8 max-w-xl mx-auto lg:mx-0">
-              Get your free quote in less than 60 seconds. No obligation. No
-              hidden fees. Just professional cleaning you can trust.
+            <p className="text-white/70 text-lg mb-8 max-w-lg">
+              Join {business.homesCleaned.toLocaleString()}+ happy customers.
+              Get your free quote in less than 60 seconds.
             </p>
 
-            {/* Trust signals */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
-              {trustSignals.map((signal, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2.5"
-                >
-                  <span className="text-green">{signal.icon}</span>
-                  <span className="text-white/90 text-sm font-medium">
-                    {signal.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Quick contact */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
               <a
-                href="tel:+1-800-555-0199"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white font-bold px-6 py-3.5 rounded-xl transition-all min-h-[48px]"
+                href={`https://wa.me/${business.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-emerald hover:bg-emerald/90 text-white font-bold px-7 py-4 rounded-xl text-lg transition-all hover:scale-[1.03] flex items-center justify-center gap-2 min-h-[56px]"
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                  />
-                </svg>
-                (800) 555-0199
+                <MessageCircle className="w-5 h-5" />
+                WhatsApp Us
               </a>
               <a
-                href="mailto:hello@procleanservices.com"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white font-bold px-6 py-3.5 rounded-xl transition-all min-h-[48px]"
+                href={`tel:${business.phone}`}
+                className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white font-bold px-7 py-4 rounded-xl text-lg transition-all flex items-center justify-center gap-2 min-h-[56px]"
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-                Email Us
+                <Phone className="w-5 h-5" />
+                {business.phone}
               </a>
             </div>
-          </div>
 
-          {/* Right: Quote Form */}
-          <div>
-            <QuoteForm />
-          </div>
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 text-sm text-white/60">
+              <span className="flex items-center gap-1.5">
+                <span className="text-emerald">✓</span> Free Quote
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="text-emerald">✓</span> No Obligation
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="text-emerald">✓</span> Response in 15 min
+              </span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-teal/20 to-blue/20 rounded-3xl blur-2xl" />
+              <QuoteForm className="relative" />
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

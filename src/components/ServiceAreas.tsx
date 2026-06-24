@@ -1,115 +1,135 @@
-import Link from "next/link";
+"use client";
 
-const cities = [
-  { name: "Austin", zip: "78701" },
-  { name: "Denver", zip: "80202" },
-  { name: "Seattle", zip: "98101" },
-  { name: "Miami", zip: "33101" },
-  { name: "Chicago", zip: "60601" },
-  { name: "Atlanta", zip: "30301" },
-  { name: "Dallas", zip: "75201" },
-  { name: "Phoenix", zip: "85001" },
-  { name: "Portland", zip: "97201" },
-  { name: "Nashville", zip: "37201" },
-  { name: "Charlotte", zip: "28201" },
-  { name: "San Diego", zip: "92101" },
-];
+import { motion } from "framer-motion";
+import { MapPin, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { areas } from "@/config/areas";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
 
 export default function ServiceAreas() {
   return (
-    <section className="py-16 md:py-24 bg-surface">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-3">
+    <section id="areas" className="py-16 lg:py-24 bg-surface">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <span className="inline-block text-orange font-semibold text-sm tracking-wider uppercase mb-3">
             Service Areas
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-navy font-[family-name:var(--font-poppins)]">
+            Serving Across Pune
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            We proudly serve major cities across the United States. Professional
-            cleaning, no matter where you are.
+          <p className="text-gray-500 mt-3 max-w-xl mx-auto">
+            From Kothrud to Hinjewadi — we cover all major areas in Pune.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Map Placeholder */}
-        <div className="relative rounded-2xl overflow-hidden bg-blue-light border border-border mb-10 h-48 md:h-64 flex items-center justify-center">
-          <div className="text-center">
-            <svg
-              className="w-12 h-12 text-blue/40 mx-auto mb-2"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-              />
-            </svg>
-            <p className="text-blue/60 text-sm font-medium">
-              Serving 50+ cities nationwide
-            </p>
-          </div>
-
-          {/* Decorative dots representing cities */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-[30%] left-[20%] w-2 h-2 rounded-full bg-orange/50 animate-pulse" />
-            <div className="absolute top-[45%] left-[35%] w-2 h-2 rounded-full bg-orange/50 animate-pulse" />
-            <div className="absolute top-[25%] left-[50%] w-2 h-2 rounded-full bg-orange/50 animate-pulse" />
-            <div className="absolute top-[55%] left-[60%] w-2 h-2 rounded-full bg-orange/50 animate-pulse" />
-            <div className="absolute top-[35%] left-[70%] w-2 h-2 rounded-full bg-orange/50 animate-pulse" />
-            <div className="absolute top-[60%] left-[80%] w-2 h-2 rounded-full bg-orange/50 animate-pulse" />
-            <div className="absolute top-[50%] left-[45%] w-2 h-2 rounded-full bg-orange/50 animate-pulse" />
-            <div className="absolute top-[40%] left-[25%] w-2 h-2 rounded-full bg-orange/50 animate-pulse" />
-          </div>
-        </div>
-
-        {/* City Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 mb-10">
-          {cities.map((city) => (
-            <div
-              key={city.name}
-              className="rounded-2xl shadow-sm bg-white border border-border p-4 hover:border-blue hover:shadow-md transition-all group"
-            >
-              <h3 className="font-semibold text-navy text-sm md:text-base group-hover:text-blue transition-colors">
-                {city.name}
-              </h3>
-              <p className="text-xs text-gray-500 mt-0.5">
-                ZIP {city.zip}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="text-center">
-          <div className="inline-block rounded-2xl bg-white border border-border shadow-sm px-6 py-5 md:px-8 md:py-6">
-            <p className="text-navy font-semibold mb-1">
-              Not sure if we service your area?
-            </p>
-            <p className="text-gray-500 text-sm mb-4">
-              We're expanding rapidly — chances are we've got you covered.
-            </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-blue hover:bg-blue/90 text-white font-semibold px-6 py-3 rounded-full transition-colors min-h-[48px]"
-            >
-              Check Availability
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
+        <div className="grid lg:grid-cols-2 gap-10 items-center">
+          {/* Area cards grid */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+          >
+            {areas.map((area) => (
+              <motion.div
+                key={area.id}
+                variants={itemVariants}
+                whileHover={{ y: -4, boxShadow: "0 8px 24px rgba(0,0,0,0.08)" }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Link>
-          </div>
+                <Link
+                  href={`/areas/${area.slug}`}
+                  className="block bg-white rounded-xl p-4 border border-border hover:border-blue/30 transition-all h-full"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <MapPin className="w-4 h-4 text-teal" />
+                    <span className="font-bold text-navy text-sm">
+                      {area.name}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 line-clamp-2">
+                    {area.description.slice(0, 60)}...
+                  </p>
+                  <div className="mt-2 flex items-center gap-1 text-xs text-teal font-medium">
+                    <span>View</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Map placeholder */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative"
+          >
+            <div className="bg-white rounded-2xl border border-border p-6 shadow-card">
+              <div className="aspect-[4/3] bg-gradient-to-br from-blue-light/50 to-teal-light/50 rounded-xl flex items-center justify-center relative overflow-hidden">
+                {/* Stylized map illustration */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-teal rounded-full blur-3xl" />
+                  <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-blue rounded-full blur-2xl" />
+                  <div className="absolute top-1/2 left-1/2 w-20 h-20 bg-orange rounded-full blur-2xl" />
+                </div>
+                <div className="relative text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-teal to-blue rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <MapPin className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-navy mb-2">
+                    10+ Areas Served
+                  </h3>
+                  <p className="text-gray-500 text-sm max-w-xs">
+                    Covering all major residential and commercial areas across
+                    Pune
+                  </p>
+                  <div className="mt-4 flex flex-wrap justify-center gap-2">
+                    {areas.slice(0, 5).map((area) => (
+                      <span
+                        key={area.id}
+                        className="bg-white/80 text-navy text-xs font-medium px-3 py-1.5 rounded-full border border-border"
+                      >
+                        {area.name}
+                      </span>
+                    ))}
+                    <span className="bg-orange text-white text-xs font-medium px-3 py-1.5 rounded-full">
+                      +{areas.length - 5} more
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 text-center">
+                <Link
+                  href="/areas"
+                  className="inline-flex items-center gap-2 text-blue font-semibold hover:text-teal transition-colors"
+                >
+                  View All Areas
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

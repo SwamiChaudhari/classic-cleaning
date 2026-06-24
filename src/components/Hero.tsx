@@ -1,88 +1,173 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
+import {
+  Phone,
+  MessageCircle,
+  Star,
+  Home,
+  Sparkles,
+  Clock,
+  Shield,
+  Award,
+  CheckCircle2,
+} from "lucide-react";
+import { business } from "@/config/business";
 import QuoteForm from "./QuoteForm";
+
+const fadeUpVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" as const },
+  }),
+};
 
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-navy via-navy-light to-navy">
-      {/* Background decorative blobs */}
-      <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <div className="absolute -top-20 -left-20 w-72 h-72 bg-blue rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-green rounded-full blur-3xl" />
+      {/* Animated background elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div
+          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15] }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute -top-20 -left-20 w-96 h-96 bg-teal rounded-full blur-[100px]"
+        />
+        <motion.div
+          animate={{ scale: [1.2, 1, 1.2], opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 10, repeat: Infinity }}
+          className="absolute bottom-10 right-10 w-80 h-80 bg-blue rounded-full blur-[100px]"
+        />
+        <motion.div
+          animate={{ scale: [1, 1.3, 1], opacity: [0.08, 0.15, 0.08] }}
+          transition={{ duration: 12, repeat: Infinity }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald rounded-full blur-[120px]"
+        />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-20 w-full">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-14 lg:py-24 w-full">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: Content */}
-          <div className="text-center lg:text-left">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            className="text-center lg:text-left"
+          >
             {/* Trust badge pill */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full px-4 py-1.5 mb-5">
-              <span className="w-2 h-2 bg-green rounded-full animate-pulse" />
-              <span className="text-white/90 text-sm font-medium">Trusted by 500+ Happy Customers</span>
-            </div>
+            <motion.div
+              custom={0}
+              variants={fadeUpVariants}
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full px-4 py-2 mb-6"
+            >
+              <span className="flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-emerald opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald" />
+              </span>
+              <span className="text-white/90 text-sm font-medium">
+                ⭐ {business.rating} Rating | {business.reviewCount}+ Reviews | {business.homesCleaned.toLocaleString()}+ Homes
+              </span>
+            </motion.div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4">
+            <motion.h1
+              custom={1}
+              variants={fadeUpVariants}
+              className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-extrabold text-white leading-[1.1] mb-5 font-[family-name:var(--font-poppins)]"
+            >
               Professional{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue to-green">
-                Cleaning Services
-              </span>{" "}
-              You Can Trust
-            </h1>
+              <span className="gradient-text">Cleaning Services</span>{" "}
+              In Pune You Can Trust
+            </motion.h1>
 
-            <p className="text-base sm:text-lg text-white/75 mb-6 max-w-lg mx-auto lg:mx-0">
-              Background-checked professionals. Fully insured. Satisfaction guaranteed.
-            </p>
+            <motion.p
+              custom={2}
+              variants={fadeUpVariants}
+              className="text-base sm:text-lg text-white/70 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed"
+            >
+              Background-verified professionals. Eco-friendly products.
+              Same-day service available. Serving 10+ areas across Pune.
+            </motion.p>
 
             {/* CTA buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-8">
+            <motion.div
+              custom={3}
+              variants={fadeUpVariants}
+              className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-8"
+            >
               <Link
                 href="#quote"
-                className="bg-orange hover:bg-orange/90 text-white font-bold px-6 py-4 rounded-xl text-lg transition-all hover:shadow-xl hover:scale-[1.03] flex items-center justify-center gap-2 min-h-[52px]"
+                className="bg-gradient-to-r from-orange to-gold hover:shadow-xl hover:shadow-orange-200/30 text-white font-bold px-7 py-4 rounded-xl text-lg transition-all hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-2 min-h-[56px]"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                <Sparkles className="w-5 h-5" />
                 Get Free Quote
               </Link>
               <a
-                href="tel:+1-800-555-0199"
-                className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/25 text-white font-bold px-6 py-4 rounded-xl text-lg transition-all flex items-center justify-center gap-2 min-h-[52px]"
+                href={`https://wa.me/${business.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-emerald hover:bg-emerald/90 text-white font-bold px-7 py-4 rounded-xl text-lg transition-all hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-2 min-h-[56px]"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                <MessageCircle className="w-5 h-5" />
+                WhatsApp
+              </a>
+              <a
+                href={`tel:${business.phone}`}
+                className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white font-bold px-7 py-4 rounded-xl text-lg transition-all flex items-center justify-center gap-2 min-h-[56px]"
+              >
+                <Phone className="w-5 h-5" />
                 Call Now
               </a>
-            </div>
+            </motion.div>
 
-            {/* Trust badges row */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-3">
-              <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
-                <span className="text-green text-sm">✓</span>
-                <span className="text-white/90 text-sm">Fully Insured</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
-                <span className="text-green text-sm">✓</span>
-                <span className="text-white/90 text-sm">Background Checked</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
-                <span className="text-green text-sm">✓</span>
-                <span className="text-white/90 text-sm">100% Satisfaction</span>
-              </div>
-            </div>
-          </div>
+            {/* Trust badges */}
+            <motion.div
+              custom={4}
+              variants={fadeUpVariants}
+              className="flex flex-wrap justify-center lg:justify-start gap-3"
+            >
+              {[
+                { icon: Shield, text: "Fully Insured" },
+                { icon: CheckCircle2, text: "Background Verified" },
+                { icon: Clock, text: "Same Day Service" },
+                { icon: Award, text: "4.8★ Rated" },
+              ].map((badge, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10"
+                >
+                  <badge.icon className="w-3.5 h-3.5 text-emerald" />
+                  <span className="text-white/90 text-xs sm:text-sm font-medium">
+                    {badge.text}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
 
-          {/* Right: Quote Form (desktop only) */}
-          <div className="hidden lg:block">
+          {/* Right: Quote Form */}
+          <motion.div
+            custom={5}
+            variants={fadeUpVariants}
+            className="hidden lg:block"
+          >
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue/20 to-green/20 rounded-3xl blur-2xl" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-teal/20 to-blue/20 rounded-3xl blur-2xl" />
               <QuoteForm className="relative" />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* Mobile quote form */}
-      <div className="lg:hidden relative z-10 px-4 sm:px-6 pb-10">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6 }}
+        className="lg:hidden relative z-10 px-4 sm:px-6 pb-10"
+      >
         <QuoteForm variant="compact" />
-      </div>
+      </motion.div>
     </section>
   );
 }

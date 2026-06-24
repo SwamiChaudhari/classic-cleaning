@@ -1,106 +1,139 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Link from "next/link";
+import {
+  Home,
+  Sparkles,
+  CookingPot,
+  Bath,
+  Sofa,
+  Building2,
+  Store,
+  PackageOpen,
+  ArrowRight,
+} from "lucide-react";
+import { services, formatPrice } from "@/config/services";
 
-const servicesList = [
-  {
-    icon: "🏠",
-    title: "Residential Cleaning",
-    features: ["Kitchen & Bathrooms", "Dusting & Vacuuming", "Floor Mopping"],
-    price: "From $99",
+const iconMap: Record<string, React.ElementType> = {
+  Home,
+  Sparkles,
+  CookingPot,
+  Bath,
+  Sofa,
+  Building2,
+  Store,
+  PackageOpen,
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
   },
-  {
-    icon: "✨",
-    title: "Deep Cleaning",
-    features: ["Inside Appliances", "Baseboard Scrubbing", "Window Cleaning"],
-    price: "From $199",
-  },
-  {
-    icon: "📦",
-    title: "Move-In / Move-Out",
-    features: ["Empty Property", "All Rooms Deep Cleaned", "Carpet Cleaning"],
-    price: "From $249",
-  },
-  {
-    icon: "🛏️",
-    title: "Airbnb Cleaning",
-    features: ["Same-Day Turnover", "Linen Change", "Restock Supplies"],
-    price: "From $79",
-  },
-  {
-    icon: "🏢",
-    title: "Office Cleaning",
-    features: ["Desk Areas", "Common Rooms", "Restrooms"],
-    price: "From $149",
-  },
-  {
-    icon: "🏭",
-    title: "Commercial Cleaning",
-    features: ["Floor Care", "Restroom Sanitization", "Pressure Washing"],
-    price: "Custom Quote",
-  },
-  {
-    icon: "🔨",
-    title: "Post-Construction",
-    features: ["Dust Removal", "Debris Cleanup", "Surface Polishing"],
-    price: "From $299",
-  },
-  {
-    icon: "📅",
-    title: "Recurring Plans",
-    features: ["Same Team Every Visit", "Priority Booking", "Discount Pricing"],
-    price: "Save 20%",
-  },
-];
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
 
 export default function Services() {
   return (
-    <section id="services" className="py-12 lg:py-20 bg-surface">
+    <section id="services" className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Section header */}
-        <div className="text-center mb-10">
-          <span className="inline-block bg-blue-light text-blue font-semibold text-sm px-4 py-1.5 rounded-full mb-3">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <span className="inline-block text-orange font-semibold text-sm tracking-wider uppercase mb-3">
             Our Services
           </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy mb-3">
-            Cleaning Services For Every Need
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-navy font-[family-name:var(--font-poppins)]">
+            Cleaning Solutions for Every Need
           </h2>
-          <p className="text-base text-gray-500 max-w-xl mx-auto">
-            From regular home cleaning to specialized commercial services, we have you covered.
+          <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
+            From deep home cleaning to commercial spaces — we do it all with
+            professional care and attention to detail.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Cards: horizontal scroll snap on mobile, 2-col tablet, 4-col desktop */}
-        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 overflow-x-auto sm:overflow-visible no-scrollbar pb-2 sm:pb-0 snap-x snap-mandatory sm:snap-none">
-          {servicesList.map((service, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all border border-border group flex flex-col shrink-0 snap-start w-[280px] sm:w-auto"
-            >
-              <div className="text-3xl mb-3">{service.icon}</div>
-              <h3 className="text-lg font-bold text-navy mb-3 group-hover:text-blue transition-colors">
-                {service.title}
-              </h3>
-              <ul className="space-y-2 mb-4 flex-1">
-                {service.features.map((f, j) => (
-                  <li key={j} className="flex items-center gap-2 text-sm text-gray-600">
-                    <span className="text-green font-bold shrink-0">✓</span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="flex items-center justify-between pt-4 border-t border-border mt-auto">
-                <span className="text-base font-bold text-orange">{service.price}</span>
-                <Link
-                  href="#quote"
-                  className="bg-navy hover:bg-blue text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors min-h-[44px] flex items-center"
-                >
-                  Book
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"
+        >
+          {services.map((service) => {
+            const Icon = iconMap[service.icon] || Sparkles;
+            return (
+              <motion.div
+                key={service.id}
+                variants={itemVariants}
+                whileHover={{ y: -6, boxShadow: "0 12px 32px rgba(0,0,0,0.1)" }}
+                className="group bg-white rounded-2xl border border-border p-6 transition-all duration-300 hover:border-blue/30 relative overflow-hidden"
+              >
+                {service.popular && (
+                  <div className="absolute top-3 right-3 bg-gradient-to-r from-orange to-gold text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">
+                    Popular
+                  </div>
+                )}
+                <div className="w-12 h-12 bg-blue-light rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue/10 transition-colors">
+                  <Icon className="w-6 h-6 text-blue" />
+                </div>
+                <h3 className="text-lg font-bold text-navy mb-2">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+                  {service.shortDescription}
+                </p>
+                <ul className="space-y-2 mb-5">
+                  {service.features.slice(0, 3).map((f, i) => (
+                    <li
+                      key={i}
+                      className="flex items-center gap-2 text-sm text-gray-600"
+                    >
+                      <span className="w-1.5 h-1.5 bg-teal rounded-full shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex items-center justify-between pt-4 border-t border-border">
+                  <span className="text-navy font-bold">
+                    {formatPrice(service.startingPrice)}
+                  </span>
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="text-sm text-blue font-semibold flex items-center gap-1 group-hover:gap-2 transition-all"
+                  >
+                    Details
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mt-10"
+        >
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 bg-navy hover:bg-navy-light text-white font-bold px-8 py-4 rounded-xl transition-all hover:shadow-lg"
+          >
+            View All Services
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );
