@@ -1,0 +1,231 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { business } from "@/config/business";
+import Footer from "@/components/Footer";
+import StickyBottomBar from "@/components/StickyBottomBar";
+import Navbar from "@/components/Navbar";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  MessageCircle,
+  Send,
+} from "lucide-react";
+
+export default function ContactPage() {
+  return (
+    <main className="min-h-screen">
+      <Navbar />
+
+      <section className="bg-gradient-to-br from-navy via-navy-light to-navy py-16 lg:py-20 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-20">
+          <div className="absolute -top-20 -left-20 w-72 h-72 bg-teal rounded-full blur-[100px]" />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white font-[family-name:var(--font-poppins)] mb-4"
+          >
+            Get In <span className="gradient-text">Touch</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-white/70 text-lg"
+          >
+            We&apos;d love to hear from you. Book a service or ask a question — we respond within 15 minutes.
+          </motion.p>
+        </div>
+      </section>
+
+      <section className="py-16 lg:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-2xl font-extrabold text-navy font-[family-name:var(--font-poppins)] mb-6">
+                Send Us a Message
+              </h2>
+              <form className="space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      Your Name
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Full name"
+                      className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="+91 XXXXX XXXXX"
+                      className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Service Needed
+                  </label>
+                  <select className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent text-gray-500">
+                    <option value="">Select a service</option>
+                    <option value="home">Home Cleaning</option>
+                    <option value="deep">Deep Cleaning</option>
+                    <option value="kitchen">Kitchen Cleaning</option>
+                    <option value="bathroom">Bathroom Cleaning</option>
+                    <option value="sofa">Sofa Cleaning</option>
+                    <option value="office">Office Cleaning</option>
+                    <option value="commercial">Commercial Cleaning</option>
+                    <option value="moveout">Move-In / Move-Out</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Message
+                  </label>
+                  <textarea
+                    rows={4}
+                    placeholder="Tell us about your cleaning needs..."
+                    className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent resize-none"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-orange to-gold text-white font-bold py-4 rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                >
+                  <Send className="w-4 h-4" />
+                  Send Message
+                </button>
+              </form>
+            </motion.div>
+
+            {/* Contact Info */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              <h2 className="text-2xl font-extrabold text-navy font-[family-name:var(--font-poppins)] mb-6">
+                Contact Information
+              </h2>
+
+              {/* Quick Contact Cards */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <a
+                  href={`tel:${business.phone}`}
+                  className="bg-blue-light/50 rounded-2xl p-5 border border-blue/10 hover:shadow-card transition-all group"
+                >
+                  <div className="w-10 h-10 bg-blue rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                    <Phone className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="font-bold text-navy text-sm mb-1">Call Us</h3>
+                  <p className="text-blue font-semibold text-sm">{business.phone}</p>
+                  <p className="text-xs text-gray-500 mt-1">Available 8 AM – 11 PM</p>
+                </a>
+                <a
+                  href={`https://wa.me/${business.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-emerald-light/50 rounded-2xl p-5 border border-emerald/10 hover:shadow-card transition-all group"
+                >
+                  <div className="w-10 h-10 bg-emerald rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                    <MessageCircle className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="font-bold text-navy text-sm mb-1">WhatsApp</h3>
+                  <p className="text-emerald font-semibold text-sm">+91 {business.whatsapp}</p>
+                  <p className="text-xs text-gray-500 mt-1">Instant response</p>
+                </a>
+              </div>
+
+              {/* Address & Hours */}
+              <div className="bg-surface rounded-2xl p-6 border border-border space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-navy rounded-xl flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-navy text-sm mb-1">Office Address</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {business.address.flat}<br />
+                      {business.address.area}<br />
+                      {business.address.locality}, {business.address.city} – {business.address.pincode}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-navy rounded-xl flex items-center justify-center shrink-0">
+                    <Clock className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-navy text-sm mb-1">Working Hours</h3>
+                    <p className="text-sm text-gray-600">{business.hours}</p>
+                    <p className="text-xs text-emerald font-medium mt-1">
+                      ⚡ Emergency service available 24/7
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-navy rounded-xl flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-navy text-sm mb-1">Email</h3>
+                    <a
+                      href={`mailto:${business.email}`}
+                      className="text-sm text-blue hover:underline"
+                    >
+                      {business.email}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Map Placeholder */}
+              <div className="bg-gradient-to-br from-blue-light/30 to-teal-light/30 rounded-2xl border border-border overflow-hidden">
+                <div className="aspect-[16/9] flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-14 h-14 bg-gradient-to-br from-teal to-blue rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+                      <MapPin className="w-7 h-7 text-white" />
+                    </div>
+                    <h3 className="font-bold text-navy mb-1">Located in Kothrud, Pune</h3>
+                    <p className="text-sm text-gray-500">
+                      Serving all areas across Pune
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+      <StickyBottomBar />
+    </main>
+  );
+}
