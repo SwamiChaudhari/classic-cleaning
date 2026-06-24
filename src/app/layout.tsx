@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
+import AIAssistant from "@/components/AIAssistant";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
+import StickyBottomBar from "@/components/StickyBottomBar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -64,6 +68,10 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased text-gray-900 bg-white overflow-x-hidden">
         {children}
+        <WhatsAppWidget />
+        <AIAssistant />
+        <ExitIntentPopup />
+        <StickyBottomBar />
       </body>
     </html>
   );
