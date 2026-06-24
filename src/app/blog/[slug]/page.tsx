@@ -57,7 +57,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1 text-white/60 hover:text-white text-sm mb-6"
+            className="inline-flex items-center gap-1 text-white/80 hover:text-white text-sm mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Blog
@@ -70,7 +70,7 @@ export default async function BlogPostPage({ params }: Props) {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white font-[family-name:var(--font-poppins)] mb-4">
             {post.title}
           </h1>
-          <div className="flex flex-wrap items-center gap-4 text-sm text-white/60">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-white/80">
             <span className="flex items-center gap-1">
               <User className="w-3.5 h-3.5" />
               {post.author}
@@ -101,40 +101,36 @@ export default async function BlogPostPage({ params }: Props) {
       {/* Content */}
       <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
         <div className="prose prose-lg max-w-none">
-          <p className="text-lg text-gray-600 leading-relaxed mb-6">
-            {post.excerpt}
-          </p>
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Maintaining a clean and hygienic space is essential for both health and peace of mind. 
-            In a bustling city like Pune, where dust and pollution are constant challenges, professional 
-            cleaning services offer the perfect solution for busy families and businesses.
-          </p>
-          <h2 className="text-2xl font-bold text-navy mt-8 mb-4 font-[family-name:var(--font-poppins)]">
-            Why Professional Cleaning Matters
-          </h2>
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Professional cleaning goes beyond surface-level tidying. Our trained experts use 
-            eco-friendly products and industrial-grade equipment to eliminate germs, allergens, 
-            and stubborn stains that regular cleaning misses.
-          </p>
-          <ul className="list-disc pl-6 text-gray-600 space-y-2 mb-6">
-            <li>Deep sanitization of high-touch surfaces</li>
-            <li>Eco-friendly products safe for children and pets</li>
-            <li>Background-verified, trained professionals</li>
-            <li>Same-day service available across Pune</li>
-          </ul>
-          <h2 className="text-2xl font-bold text-navy mt-8 mb-4 font-[family-name:var(--font-poppins)]">
-            Our Recommendation
-          </h2>
-          <p className="text-gray-600 leading-relaxed mb-4">
-            For optimal results, we recommend scheduling a deep cleaning every 2-3 weeks, with 
-            weekly maintenance cleaning in between. This keeps your space consistently clean 
-            without the stress of last-minute preparation.
-          </p>
-          <p className="text-gray-600 leading-relaxed">
-            Ready to experience the Classic Cleaning difference? Contact us today for a free 
-            customized quote tailored to your specific needs.
-          </p>
+          {post.content.split("\\n\\n").map((paragraph, i) => {
+            if (paragraph.startsWith("## ")) {
+              return (
+                <h2
+                  key={i}
+                  className="text-2xl font-bold text-navy mt-8 mb-4 font-[family-name:var(--font-poppins)]"
+                >
+                  {paragraph.replace("## ", "")}
+                </h2>
+              );
+            }
+            if (paragraph.startsWith("- ")) {
+              const items = paragraph.split("\\n").filter((l) => l.startsWith("- "));
+              return (
+                <ul key={i} className="list-disc pl-6 text-gray-600 space-y-2 mb-6">
+                  {items.map((item, j) => (
+                    <li key={j} className="text-gray-600 leading-relaxed">
+                      {item.replace("- ", "")}
+                    </li>
+                  ))}
+                </ul>
+              );
+            }
+            if (paragraph.trim() === "") return null;
+            return (
+              <p key={i} className="text-gray-600 leading-relaxed mb-4">
+                {paragraph}
+              </p>
+            );
+          })}
         </div>
 
         {/* Tags */}

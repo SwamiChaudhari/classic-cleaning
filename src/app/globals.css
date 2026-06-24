@@ -133,6 +133,9 @@ body {
 .pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 12px); }
 .pt-safe { padding-top: env(safe-area-inset-top); }
 
+/* Opacity utilities for contrast */
+.text-white\/80 { color: rgba(255,255,255,0.8); }
+
 /* Touch-friendly tap targets */
 .tap-target {
   min-height: 44px;

@@ -187,6 +187,8 @@ export default function Navbar() {
                 onClick={() => setMenuOpen(!menuOpen)}
                 className="w-10 h-10 flex items-center justify-center bg-orange rounded-xl text-white hover:bg-orange/90 transition-colors"
                 aria-label="Toggle menu"
+                aria-expanded={menuOpen}
+                aria-controls="mobile-menu"
               >
                 {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -212,6 +214,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
             />
             <motion.div
+              id="mobile-menu"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}

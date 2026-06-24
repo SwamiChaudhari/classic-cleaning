@@ -22,7 +22,7 @@ export const blogPosts: BlogPost[] = [
     slug: "deep-cleaning-cost-pune",
     excerpt:
       "Wondering how much deep cleaning costs in Pune? Here's a complete breakdown of pricing, what's included, and how to get the best value.",
-    content: "",
+    content: "Deep cleaning covers every corner of your home. In Pune's climate, dust and humidity cause stubborn grime in kitchens and bathrooms. This guide breaks down deep cleaning costs in Pune.\n\nAverage cost: 1 BHK starts at ₹1,999, 2 BHK at ₹2,999, 3 BHK+ at ₹3,999. Prices include kitchen deep clean, bathroom sanitization, floor scrubbing, window cleaning, and surface disinfection.\n\nFactors affecting cost: property size, bathrooms, grime level, and add-ons. At Classic Cleaning, we offer transparent pricing with no hidden charges.",
     category: "Guides",
     author: "Classic Cleaning Team",
     date: "June 20, 2026",
@@ -38,7 +38,7 @@ export const blogPosts: BlogPost[] = [
     slug: "kitchen-cleaning-tips",
     excerpt:
       "Practical kitchen cleaning tips from professional cleaners. How to maintain a clean kitchen daily and when to call the pros.",
-    content: "",
+    content: "Keeping your kitchen clean doesn't have to be a chore. With the right techniques, you can maintain a spotless kitchen every day.\n\nClean as you cook — wipe surfaces while waiting. Use vinegar and baking soda for tough stains. Don't forget appliances: microwave weekly, fridge doors monthly, chimney every 3-4 months.\n\nFor Pune homes, humidity causes mold in corners. Keep well-ventilated. A 10-minute daily wipe-down saves hours of deep cleaning.",
     category: "Tips",
     author: "Classic Cleaning Team",
     date: "June 15, 2026",
@@ -53,7 +53,7 @@ export const blogPosts: BlogPost[] = [
     slug: "bathroom-cleaning-guide",
     excerpt:
       "Step-by-step bathroom cleaning guide. Remove stains, kill germs, and keep your bathroom sparkling clean.",
-    content: "",
+    content: "A clean bathroom is essential for hygiene. Here's a step-by-step guide to deep cleaning your bathroom.\n\nSpray surfaces with eco-friendly cleaner and let sit 5-10 minutes. Scrub tiles focusing on grout lines. Use vinegar solution for fixtures.\n\nToilet: use cleaner with bowl brush. Mirrors: microfiber cloth. Mop floor with disinfectant.\n\nOur professional bathroom cleaning handles everything in 1-2 hours.",
     category: "Guides",
     author: "Classic Cleaning Team",
     date: "June 10, 2026",
@@ -68,7 +68,7 @@ export const blogPosts: BlogPost[] = [
     slug: "sofa-cleaning-guide",
     excerpt:
       "Your sofa collects dust, allergens, and stains. Learn how to maintain it and when professional cleaning is needed.",
-    content: "",
+    content: "Your sofa collects dust, allergens, and stains daily. Regular vacuuming helps, but professional cleaning goes deeper.\n\nFabric sofas absorb oils and pet hair. For families with children or pets, professional cleaning every 3-4 months is recommended.\n\nProfessional sofa cleaning uses hot water extraction and fabric-safe chemicals. Starts at ₹499 per seat. Pro tip: vacuum weekly and blot spills immediately.",
     category: "Guides",
     author: "Classic Cleaning Team",
     date: "June 5, 2026",
@@ -83,7 +83,7 @@ export const blogPosts: BlogPost[] = [
     slug: "move-in-move-out-checklist",
     excerpt:
       "Complete checklist for move-in/move-out cleaning. Don't lose your security deposit — here's what landlords check.",
-    content: "",
+    content: "Moving is stressful enough without worrying about cleaning. Use this comprehensive checklist.\n\nKitchen: Clean inside cabinets, deep clean appliances, scrub tiles, clean chimney. Bathrooms: Scrub tiles, deep clean toilet, polish fixtures. Living Areas: Dust all surfaces, vacuum carpets, clean windows, wipe walls.\n\nDon't forget: light switches, door handles, window sills, balcony. Our move-in/move-out cleaning handles everything.",
     category: "Checklists",
     author: "Classic Cleaning Team",
     date: "May 28, 2026",
@@ -98,7 +98,7 @@ export const blogPosts: BlogPost[] = [
     slug: "office-cleaning-checklist",
     excerpt:
       "A clean office boosts productivity. Here's what to include in your office cleaning routine and how often.",
-    content: "",
+    content: "A clean office boosts productivity and creates a professional impression.\n\nDaily: Empty trash, wipe desks, clean restrooms, vacuum, sanitize handles. Weekly: Deep clean restrooms, mop floors, dust partitions, clean windows. Monthly: Deep clean carpets, polish floors, clean vents.\n\nFor Pune businesses, dust accumulation is a major challenge. Our office cleaning contracts start at ₹2,999.",
     category: "Checklists",
     author: "Classic Cleaning Team",
     date: "May 20, 2026",

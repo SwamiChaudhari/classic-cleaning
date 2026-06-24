@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const VALID_TOKEN = "classic-cleaning-admin-2026";
+const VALID_TOKEN = process.env.ADMIN_TOKEN || "classic-cleaning-admin-2026";
 const COOKIE_NAME = "auth_token";
 
 export function middleware(request: NextRequest) {

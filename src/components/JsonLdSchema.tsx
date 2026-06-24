@@ -1,5 +1,9 @@
 import Script from "next/script";
 import { business } from "@/config/business";
+import { faqs } from "@/config/faq";
+import { services } from "@/config/services";
+import { reviews } from "@/config/reviews";
+import { areas } from "@/config/areas";
 
 export default function JsonLdSchema() {
   const schema = {
@@ -51,6 +55,36 @@ export default function JsonLdSchema() {
     ],
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  };
+
+  const serviceSchemas = services.map((service) => ({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.description,
+    provider: { "@type": "LocalBusiness", name: business.name },
+    areaServed: areas.map((a) => a.name),
+    offers: { "@type": "Offer", price: service.startingPrice, priceCurrency: "INR" },
+    image: service.image,
+  }));
+
+  const reviewSchemas = reviews.map((review) => ({
+    "@context": "https://schema.org",
+    "@type": "Review",
+    itemReviewed: { "@type": "Service", name: business.fullName },
+    reviewRating: { "@type": "Rating", ratingValue: String(review.rating) },
+    author: { "@type": "Person", name: review.name },
+    reviewBody: review.text,
+  }));
+
   return (
     <>
       <Script
@@ -63,6 +97,27 @@ export default function JsonLdSchema() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      {serviceSchemas.map((s, i) => (
+        <Script
+          key={`service-schema-${i}`}
+          id={`service-schema-${i}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(s) }}
+        />
+      ))}
+      {reviewSchemas.map((r, i) => (
+        <Script
+          key={`review-schema-${i}`}
+          id={`review-schema-${i}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(r) }}
+        />
+      ))}
     </>
   );
 }

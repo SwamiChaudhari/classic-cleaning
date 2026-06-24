@@ -10,7 +10,7 @@ import { Star, Quote, MapPin, CheckCircle2, ThumbsUp } from "lucide-react";
 
 export default function ReviewsPage() {
   return (
-    <main className="min-h-screen">
+    <main id="main-content" className="min-h-screen">
       <Navbar />
 
       <section className="bg-gradient-to-br from-navy via-navy-light to-navy py-16 lg:py-20 relative overflow-hidden">

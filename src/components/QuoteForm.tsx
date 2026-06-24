@@ -11,6 +11,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { services } from "@/config/services";
+import { business } from "@/config/business";
 import { generateQuoteMessage } from "@/lib/utils";
 
 interface QuoteFormProps {
@@ -71,7 +72,7 @@ export default function QuoteForm({
       area: form.area,
       name: form.name,
     });
-    const url = `https://wa.me/917385169523?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/${business.whatsapp}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 

@@ -52,7 +52,7 @@ export const metadata: Metadata = {
       "Premium residential and commercial cleaning services in Pune. 4.8★ rating, 1500+ homes cleaned.",
   },
   alternates: {
-    canonical: "https://classiccleaning.in",
+    canonical: "https://classic-cleaning.vercel.app",
   },
   manifest: "/manifest.json",
 };

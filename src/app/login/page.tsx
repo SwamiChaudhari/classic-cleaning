@@ -20,15 +20,23 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
-    // Simulate auth delay
-    await new Promise((r) => setTimeout(r, 800));
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
 
-    if (password === "classic2026") {
-      // Set cookie and redirect
-      document.cookie = "auth_token=classic-cleaning-admin-2026; path=/; max-age=86400; SameSite=Lax";
-      router.push(redirect);
-    } else {
-      setError("Invalid password. Try 'classic2026'");
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        router.push(redirect);
+      } else {
+        setError(data.error || "Invalid password. Try 'classic2026'");
+        setLoading(false);
+      }
+    } catch {
+      setError("Connection error. Please try again.");
       setLoading(false);
     }
   };

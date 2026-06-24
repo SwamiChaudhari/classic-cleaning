@@ -62,7 +62,7 @@ export default function Footer() {
                 </span>
               </div>
             </Link>
-            <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-sm">
+            <p className="text-white/80 text-sm leading-relaxed mb-6 max-w-sm">
               {business.description}
             </p>
             <div className="flex gap-3">
@@ -94,7 +94,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-white/60 hover:text-teal text-sm transition-colors"
+                    className="text-white/80 hover:text-teal text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -111,7 +111,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-white/60 hover:text-teal text-sm transition-colors"
+                    className="text-white/80 hover:text-teal text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -128,7 +128,7 @@ export default function Footer() {
                 <Phone className="w-4 h-4 text-teal shrink-0 mt-0.5" />
                 <a
                   href={`tel:${business.phone}`}
-                  className="text-sm text-white/60 hover:text-white transition-colors"
+                  className="text-sm text-white/80 hover:text-white transition-colors"
                 >
                   {business.phone}
                 </a>
@@ -137,20 +137,20 @@ export default function Footer() {
                 <Mail className="w-4 h-4 text-teal shrink-0 mt-0.5" />
                 <a
                   href={`mailto:${business.email}`}
-                  className="text-sm text-white/60 hover:text-white transition-colors"
+                  className="text-sm text-white/80 hover:text-white transition-colors"
                 >
                   {business.email}
                 </a>
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-teal shrink-0 mt-0.5" />
-                <span className="text-sm text-white/60">
+                <span className="text-sm text-white/80">
                   {business.address.full}
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <Clock className="w-4 h-4 text-teal shrink-0 mt-0.5" />
-                <span className="text-sm text-white/60">{business.hours}</span>
+                <span className="text-sm text-white/80">{business.hours}</span>
               </li>
             </ul>
 
