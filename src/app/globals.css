@@ -139,6 +139,32 @@ body {
   min-width: 44px;
 }
 
+/* Focus visible styles for accessibility */
+*:focus-visible {
+  outline: 2px solid #EA580C;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Smooth scroll only when user allows */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 /* Section heading underline */
 .heading-underline::after {
   content: '';

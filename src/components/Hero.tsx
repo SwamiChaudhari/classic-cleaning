@@ -83,10 +83,17 @@ export default function Hero() {
             <motion.p
               custom={2}
               variants={fadeUpVariants}
-              className="text-base sm:text-lg text-white/70 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed"
+              className="text-base sm:text-lg text-white/70 mb-3 max-w-lg mx-auto lg:mx-0 leading-relaxed"
             >
               Background-verified professionals. Eco-friendly products.
               Same-day service available. Serving 10+ areas across Pune.
+            </motion.p>
+            <motion.p
+              custom={3}
+              variants={fadeUpVariants}
+              className="text-sm text-emerald font-semibold mb-6"
+            >
+              Starting from ₹499 — 1,500+ homes cleaned. Yours next.
             </motion.p>
 
             {/* CTA buttons */}

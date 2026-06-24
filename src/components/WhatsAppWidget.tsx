@@ -58,7 +58,7 @@ export default function WhatsAppWidget() {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 1.5, type: "spring", stiffness: 260, damping: 20 }}
-        className="fixed bottom-24 right-4 z-40 lg:bottom-8 lg:right-8 w-14 h-14 bg-emerald rounded-full shadow-lg shadow-emerald/30 flex items-center justify-center text-white hover:bg-emerald-600 transition-colors group"
+        className="fixed bottom-20 right-4 z-40 lg:bottom-8 lg:right-8 w-14 h-14 bg-emerald rounded-full shadow-lg shadow-emerald/30 flex items-center justify-center text-white hover:bg-emerald-600 transition-colors group"
         aria-label="Get a quote via WhatsApp"
       >
         {/* Pulse ring */}

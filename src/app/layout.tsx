@@ -8,6 +8,8 @@ import ExitIntentPopup from "@/components/ExitIntentPopup";
 import StickyBottomBar from "@/components/StickyBottomBar";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
+import JsonLdSchema from "@/components/JsonLdSchema";
+import SkipLink from "@/components/SkipLink";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -76,6 +78,8 @@ export default function RootLayout({
         <meta name="theme-color" content="#0B1D3A" />
       </head>
       <body className="font-sans antialiased text-gray-900 bg-white overflow-x-hidden">
+        <SkipLink />
+        <JsonLdSchema />
         {children}
         <WhatsAppWidget />
         <AIAssistant />
