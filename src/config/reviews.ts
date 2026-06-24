@@ -1,100 +1,5 @@
 import { business } from "./business";
 
-export interface Review {
-  id: string;
-  name: string;
-  rating: number;
-  text: string;
-  location: string;
-  date: string;
-  avatar?: string;
-  service?: string;
-  verified?: boolean;
-}
-
-export const reviews: Review[] = [
-  {
-    id: "1",
-    name: "Priya Sharma",
-    rating: 5,
-    text: "Absolutely fantastic service! The team was punctual, thorough, and very professional. My house looks spotless. Highly recommend Classic Cleaning to anyone in Pune.",
-    location: "Kothrud",
-    date: "2 weeks ago",
-    service: "Deep Cleaning",
-    verified: true,
-  },
-  {
-    id: "2",
-    name: "Rahul Deshmukh",
-    rating: 5,
-    text: "Best cleaning service in Pune! They did an amazing job with my 2 BHK deep cleaning. The attention to detail is exceptional. Will definitely book again.",
-    location: "Baner",
-    date: "1 month ago",
-    service: "2 BHK Deep Cleaning",
-    verified: true,
-  },
-  {
-    id: "3",
-    name: "Sneha Patil",
-    rating: 5,
-    text: "The sofa cleaning was incredible. My white sofa looks brand new again! The team used safe chemicals and was very careful with the fabric.",
-    location: "Aundh",
-    date: "3 weeks ago",
-    service: "Sofa Cleaning",
-    verified: true,
-  },
-  {
-    id: "4",
-    name: "Amit Joshi",
-    rating: 4,
-    text: "Great service for office cleaning. Our workspace has never been cleaner. The team came after office hours so it didn't disturb our work. Very professional.",
-    location: "Hinjewadi",
-    date: "1 week ago",
-    service: "Office Cleaning",
-    verified: true,
-  },
-  {
-    id: "5",
-    name: "Meera Kulkarni",
-    rating: 5,
-    text: "I booked Classic Cleaning for my move-out cleaning and they exceeded all expectations. The landlord was impressed and returned the full deposit!",
-    location: "Warje",
-    date: "2 months ago",
-    service: "Move-Out Cleaning",
-    verified: true,
-  },
-  {
-    id: "6",
-    name: "Vikram Singh",
-    rating: 5,
-    text: "The kitchen cleaning was phenomenal. The chimney and appliances look brand new. Very thorough work and the pricing is very reasonable.",
-    location: "Karve Nagar",
-    date: "3 weeks ago",
-    service: "Kitchen Cleaning",
-    verified: true,
-  },
-  {
-    id: "7",
-    name: "Ananya Reddy",
-    rating: 5,
-    text: "I've been using Classic Cleaning for 6 months now for regular home cleaning. They're always on time, consistent, and do a great job every single time.",
-    location: "Wakad",
-    date: "1 month ago",
-    service: "Home Cleaning",
-    verified: true,
-  },
-  {
-    id: "8",
-    name: "Suresh Patel",
-    rating: 5,
-    text: "Booked same-day service and they arrived within 2 hours! Emergency cleaning was handled very professionally. Thank you Classic Cleaning team!",
-    location: "Pashan",
-    date: "2 weeks ago",
-    service: "Emergency Cleaning",
-    verified: true,
-  },
-];
-
 export const reviewStats = {
   average: business.rating,
   total: business.reviewCount,
@@ -106,3 +11,94 @@ export const reviewStats = {
     1: 1,
   },
 };
+
+export const reviews = [
+  {
+    id: 1,
+    name: 'Sarah Johnson',
+    rating: 5,
+    text: 'Absolutely fantastic service! The team was professional, thorough, and left my home sparkling. Will definitely book again.',
+    service: 'Deep Cleaning',
+    location: 'New York, NY',
+    date: '2026-06-15',
+    verified: true,
+    visible: true,
+  },
+  {
+    id: 2,
+    name: 'Michael Chen',
+    rating: 5,
+    text: 'Best cleaning service I have ever used. They went above and beyond, even cleaning areas I did not expect. Highly recommend!',
+    service: 'Regular Cleaning',
+    location: 'Brooklyn, NY',
+    date: '2026-06-12',
+    verified: true,
+    visible: true,
+  },
+  {
+    id: 3,
+    name: 'Emily Rodriguez',
+    rating: 4,
+    text: 'Great attention to detail and very punctual. The only reason for 4 stars is that they arrived slightly late, but the quality made up for it.',
+    service: 'Move-in Cleaning',
+    location: 'Queens, NY',
+    date: '2026-06-10',
+    verified: true,
+    visible: true,
+  },
+  {
+    id: 4,
+    name: 'David Thompson',
+    rating: 5,
+    text: 'Incredible transformation. My apartment looks brand new after their deep cleaning service. Worth every penny!',
+    service: 'Deep Cleaning',
+    location: 'Manhattan, NY',
+    date: '2026-06-08',
+    verified: false,
+    visible: true,
+  },
+  {
+    id: 5,
+    name: 'Lisa Park',
+    rating: 5,
+    text: 'The team was friendly, efficient, and respectful of my home. They used eco-friendly products which I really appreciate.',
+    service: 'Green Cleaning',
+    location: 'Staten Island, NY',
+    date: '2026-06-05',
+    verified: true,
+    visible: true,
+  },
+  {
+    id: 6,
+    name: 'James Wilson',
+    rating: 4,
+    text: 'Solid cleaning service. Professional staff and good communication throughout. Would use again for regular maintenance.',
+    service: 'Regular Cleaning',
+    location: 'Bronx, NY',
+    date: '2026-06-03',
+    verified: true,
+    visible: false,
+  },
+  {
+    id: 7,
+    name: 'Amanda Foster',
+    rating: 5,
+    text: 'Outstanding work! They cleaned my office space and it looks immaculate. The attention to detail is remarkable.',
+    service: 'Commercial Cleaning',
+    location: 'New York, NY',
+    date: '2026-06-01',
+    verified: true,
+    visible: true,
+  },
+  {
+    id: 8,
+    name: 'Robert Kim',
+    rating: 3,
+    text: 'Service was okay but not exceptional. Some areas were missed during the cleaning. Hoping for improvement next time.',
+    service: 'Regular Cleaning',
+    location: 'Brooklyn, NY',
+    date: '2026-05-28',
+    verified: false,
+    visible: true,
+  },
+];
