@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import AIAssistant from "@/components/AIAssistant";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 import StickyBottomBar from "@/components/StickyBottomBar";
+import PWAInstallPrompt from "@/components/PWAInstallPrompt";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -49,6 +52,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://classiccleaning.in",
   },
+  manifest: "/manifest.json",
+};
+
+export const viewport = {
+  themeColor: "#0B1D3A",
 };
 
 export default function RootLayout({
@@ -65,13 +73,18 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <meta name="theme-color" content="#0B1D3A" />
       </head>
       <body className="font-sans antialiased text-gray-900 bg-white overflow-x-hidden">
         {children}
         <WhatsAppWidget />
         <AIAssistant />
         <ExitIntentPopup />
+        <PWAInstallPrompt />
         <StickyBottomBar />
+        <Suspense fallback={null}>
+          <AnalyticsTracker />
+        </Suspense>
       </body>
     </html>
   );
