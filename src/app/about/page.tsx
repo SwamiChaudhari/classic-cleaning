@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { business } from "@/config/business";
@@ -125,11 +126,14 @@ export default function AboutPage() {
               className="relative"
             >
               <div className="rounded-2xl overflow-hidden shadow-xl">
-                <img
+                <Image
                   src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80"
                   alt="Classic Cleaning team"
+                  width={800}
+                  height={400}
                   className="w-full h-[400px] object-cover"
-                loading="lazy" />
+                  priority
+                />
               </div>
               <div className="absolute -bottom-4 -left-4 bg-white rounded-xl p-4 shadow-lg border border-border">
                 <div className="flex items-center gap-3">

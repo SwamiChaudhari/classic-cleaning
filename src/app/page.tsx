@@ -33,7 +33,7 @@ const Footer = dynamic(() => import("@/components/Footer"), { ssr: true });
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main id="main-content" className="min-h-screen">
       <Navbar />
       <Hero />
       <TrustIndicators />

@@ -173,7 +173,7 @@ export default function BlogPage() {
           </p>
           <form className="flex gap-2">
             <input
-              type="email"
+              type="email" aria-label="Email address"
               placeholder="Your email address"
               className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-white/40 text-sm focus:outline-none focus:ring-2 focus:ring-teal"
             />

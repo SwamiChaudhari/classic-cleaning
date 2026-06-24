@@ -8,7 +8,10 @@ import {
   MapPin,
   Clock,
   ArrowRight,
+  Heart,
   Globe,
+  Video,
+  ExternalLink,
 } from "lucide-react";
 import { business } from "@/config/business";
 
@@ -68,9 +71,10 @@ export default function Footer() {
             <div className="flex gap-3">
               {[
                 { icon: Globe, href: business.social.facebook, label: "Facebook" },
-                { icon: Globe, href: business.social.instagram, label: "Instagram" },
+                { icon: Heart, href: business.social.instagram, label: "Instagram" },
                 { icon: Globe, href: business.social.twitter, label: "Twitter" },
-                { icon: Globe, href: business.social.linkedin, label: "LinkedIn" },
+                { icon: ExternalLink, href: business.social.linkedin, label: "LinkedIn" },
+                { icon: Video, href: business.social.youtube || "#", label: "YouTube" },
               ].map((social, i) => (
                 <a
                   key={i}
@@ -189,7 +193,7 @@ export default function Footer() {
             </div>
             <form className="flex gap-2 w-full sm:w-auto">
               <input
-                type="email"
+                type="email" aria-label="Email address"
                 placeholder="Your email address"
                 className="flex-1 sm:w-56 px-4 py-2.5 bg-white/10 border border-white/10 rounded-lg text-white placeholder:text-white/40 text-sm focus:outline-none focus:ring-2 focus:ring-teal"
               />

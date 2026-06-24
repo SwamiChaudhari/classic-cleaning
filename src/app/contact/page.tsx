@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { business } from "@/config/business";
 import Footer from "@/components/Footer";
@@ -12,9 +13,22 @@ import {
   Clock,
   MessageCircle,
   Send,
+  Check,
 } from "lucide-react";
 
 export default function ContactPage() {
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    // Simulate API call
+    await new Promise((r) => setTimeout(r, 800));
+    setLoading(false);
+    setSubmitted(true);
+  };
+
   return (
     <main id="main-content" className="min-h-screen">
       <Navbar />
@@ -54,7 +68,30 @@ export default function ContactPage() {
               <h2 className="text-2xl font-extrabold text-navy font-[family-name:var(--font-poppins)] mb-6">
                 Send Us a Message
               </h2>
-              <form className="space-y-4">
+              {submitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-surface rounded-2xl p-8 text-center border border-border"
+                >
+                  <div className="w-16 h-16 bg-emerald rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Check className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-navy mb-2">
+                    Message Sent!
+                  </h3>
+                  <p className="text-gray-500 mb-4">
+                    We&apos;ll get back to you within 30 minutes during business hours.
+                  </p>
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className="text-blue font-semibold hover:underline text-sm"
+                  >
+                    Send another message
+                  </button>
+                </motion.div>
+              ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -63,6 +100,7 @@ export default function ContactPage() {
                     <input
                       type="text"
                       placeholder="Full name"
+                      required
                       className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
                     />
                   </div>
@@ -73,6 +111,7 @@ export default function ContactPage() {
                     <input
                       type="tel"
                       placeholder="+91 XXXXX XXXXX"
+                      required
                       className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
                     />
                   </div>
@@ -84,6 +123,7 @@ export default function ContactPage() {
                   <input
                     type="email"
                     placeholder="your@email.com"
+                    required
                     className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
                   />
                 </div>
@@ -115,12 +155,26 @@ export default function ContactPage() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-orange to-gold text-white font-bold py-4 rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-orange to-gold text-white font-bold py-4 rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-60"
                 >
-                  <Send className="w-4 h-4" />
-                  Send Message
+                  {loading ? (
+                    <span className="inline-flex items-center gap-2">
+                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      Send Message
+                    </>
+                  )}
                 </button>
               </form>
+              )}
             </motion.div>
 
             {/* Contact Info */}

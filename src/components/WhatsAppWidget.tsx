@@ -55,7 +55,7 @@ export default function WhatsAppWidget() {
       {/* Floating WhatsApp Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-20 right-4 z-40 lg:bottom-8 lg:right-8 w-14 h-14 bg-emerald rounded-full shadow-lg shadow-emerald/30 flex items-center justify-center text-white hover:bg-emerald-600 transition-colors group"
+        className="fixed bottom-20 right-4 z-40 lg:bottom-8 lg:right-8 w-14 h-14 bg-emerald rounded-full shadow-lg shadow-emerald/30 flex items-center justify-center text-white hover:bg-emerald-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 transition-colors group"
         aria-label="Get a quote via WhatsApp"
       >
         <MessageCircle className="w-6 h-6" />

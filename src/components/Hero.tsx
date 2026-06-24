@@ -78,9 +78,9 @@ export default function Hero() {
               variants={fadeUpVariants}
               className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-extrabold text-white leading-[1.1] mb-5 font-[family-name:var(--font-poppins)]"
             >
-              Professional{" "}
-              <span className="gradient-text">Cleaning Services</span>{" "}
-              In Pune You Can Trust
+              1,500+ Pune Homes{" "}
+              <span className="gradient-text">Spotless.</span>{" "}
+              Yours Next?
             </motion.h1>
 
             <motion.p

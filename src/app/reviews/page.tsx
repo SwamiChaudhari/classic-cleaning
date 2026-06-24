@@ -55,8 +55,16 @@ export default function ReviewsPage() {
                     ))}
                   </div>
                   <p className="text-sm text-gray-500">{business.reviewCount}+ Google Reviews</p>
-                </div>
-              </div>
+                  </div>
+                  <a
+                  href="https://g.page/r/YOUR_GOOGLE_REVIEW_LINK/review"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-navy text-white font-bold px-5 py-3 rounded-xl hover:bg-navy-light transition-all text-sm"
+                  >
+                  ★ Write a Review
+                  </a>
+                  </div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: 20 }}

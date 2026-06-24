@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { services, getServiceBySlug, formatPrice } from "@/config/services";
 import { business } from "@/config/business";
 import { faqs } from "@/config/faq";
@@ -107,11 +108,14 @@ export default async function ServicePage({ params }: Props) {
             </div>
             <div>
               <div className="relative rounded-2xl overflow-hidden shadow-xl">
-                <img
+                <Image
                   src={service.image}
                   alt={service.title}
+                  width={800}
+                  height={400}
                   className="w-full h-[300px] lg:h-[400px] object-cover"
-                loading="lazy" />
+                  priority
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
               </div>
             </div>

@@ -4,12 +4,12 @@ import "./globals.css";
 import { Suspense } from "react";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import AIAssistant from "@/components/AIAssistant";
-import ExitIntentPopup from "@/components/ExitIntentPopup";
 import StickyBottomBar from "@/components/StickyBottomBar";
-import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import JsonLdSchema from "@/components/JsonLdSchema";
 import SkipLink from "@/components/SkipLink";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import FloatingWidgets from "@/components/FloatingWidgets";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -76,19 +76,22 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <meta name="theme-color" content="#0B1D3A" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="robots" content="index, follow" />
       </head>
       <body className="font-sans antialiased text-gray-900 bg-white overflow-x-hidden">
         <SkipLink />
-        <JsonLdSchema />
-        {children}
-        <WhatsAppWidget />
-        <AIAssistant />
-        <ExitIntentPopup />
-        <PWAInstallPrompt />
-        <StickyBottomBar />
-        <Suspense fallback={null}>
-          <AnalyticsTracker />
-        </Suspense>
+        <ErrorBoundary>
+          <JsonLdSchema />
+          {children}
+          <WhatsAppWidget />
+          <AIAssistant />
+          <FloatingWidgets />
+          <StickyBottomBar />
+          <Suspense fallback={null}>
+            <AnalyticsTracker />
+          </Suspense>
+        </ErrorBoundary>
       </body>
     </html>
   );

@@ -20,7 +20,7 @@ export const services: Service[] = [
     title: "Home Cleaning",
     slug: "home-cleaning",
     description:
-      "Complete home cleaning service including dusting, vacuuming, mopping, kitchen cleaning, bathroom cleaning, and surface sanitizing. Perfect for maintaining a clean and healthy home environment.",
+      "Complete home cleaning service including dusting, vacuuming, mopping, kitchen cleaning, bathroom cleaning, and surface sanitizing. Our trained professionals use eco-friendly products and advanced equipment to ensure every corner of your home is spotless. Perfect for maintaining a clean and healthy home environment for your family. Same-day service available across all Pune areas.",
     shortDescription:
       "Complete home cleaning — dusting, vacuuming, mopping, kitchen & bathroom",
     icon: "Home",
@@ -42,7 +42,7 @@ export const services: Service[] = [
     title: "Deep Cleaning",
     slug: "deep-cleaning",
     description:
-      "Intensive deep cleaning that covers every corner of your home. Includes inside appliances, baseboard scrubbing, window cleaning, carpet cleaning, and detailed sanitization of all surfaces.",
+      "Intensive deep cleaning that covers every corner of your home. Our team tackles inside appliances, baseboard scrubbing, window cleaning, carpet shampooing, and detailed sanitization of all surfaces. Ideal if you haven't had a professional clean in 3+ months, or before hosting guests. We use hospital-grade disinfectants safe for kids and pets.",
     shortDescription:
       "Intensive cleaning — inside appliances, baseboards, windows, carpets",
     icon: "Sparkles",
@@ -67,7 +67,7 @@ export const services: Service[] = [
     title: "Kitchen Cleaning",
     slug: "kitchen-cleaning",
     description:
-      "Professional kitchen cleaning including chimney cleaning, appliance deep clean, countertop sanitization, tile cleaning, and grease removal. Your kitchen will look brand new.",
+      "Professional kitchen cleaning including chimney deep cleaning, appliance interior scrubbing, countertop sanitization, tile and grout cleaning, and stubborn grease removal. Our team uses food-safe disinfectants and specialized tools to make your kitchen hygienic and sparkling. Recommended monthly for home kitchens and weekly for commercial ones.",
     shortDescription:
       "Chimney, appliances, countertops, tile & grease removal",
     icon: "CookingPot",
@@ -91,7 +91,7 @@ export const services: Service[] = [
     title: "Bathroom Cleaning",
     slug: "bathroom-cleaning",
     description:
-      "Expert bathroom cleaning including tile scrubbing, fixture polishing, toilet deep clean, and complete sanitization. We remove stains, kill germs, and leave your bathroom sparkling.",
+      "Expert bathroom cleaning including tile scrubbing, fixture polishing, toilet deep clean, and complete sanitization. We remove stubborn stains, limescale buildup, soap scum, and kill 99.9% of germs using hospital-grade disinfectants. Your bathroom will look and smell fresh. Recommended weekly for commercial bathrooms and monthly for homes.",
     shortDescription:
       "Tile scrubbing, fixture polishing, toilet deep clean, sanitization",
     icon: "Bath",
@@ -115,7 +115,7 @@ export const services: Service[] = [
     title: "Sofa Cleaning",
     slug: "sofa-cleaning",
     description:
-      "Professional sofa and upholstery cleaning using advanced equipment. Removes stains, allergens, odors, and extends the life of your furniture. Suitable for all fabric types.",
+      "Professional sofa and upholstery cleaning using advanced hot-water extraction and dry cleaning equipment. We remove deep-set stains, dust mites, pet allergens, and stubborn odors to extend the life of your furniture by years. Suitable for all fabric types including cotton, silk, leather, and microfiber. Recommended every 6 months to keep your furniture hygienic and looking new.",
     shortDescription:
       "Stain removal, allergen elimination, fabric-safe deep clean",
     icon: "Sofa",
@@ -139,7 +139,7 @@ export const services: Service[] = [
     title: "Office Cleaning",
     slug: "office-cleaning",
     description:
-      "Professional office cleaning for businesses of all sizes. Includes workstation cleaning, common area sanitization, washroom cleaning, and pantry maintenance. Flexible scheduling.",
+      "Professional office cleaning for businesses of all sizes across Pune. We cover individual workstations, meeting rooms, common area sanitization, washroom deep cleaning, and pantry maintenance. Flexible scheduling available including after-hours and weekends to minimize disruption. Essential for maintaining employee health and workplace professionalism.",
     shortDescription:
       "Workstations, common areas, washrooms, pantry — flexible scheduling",
     icon: "Building2",

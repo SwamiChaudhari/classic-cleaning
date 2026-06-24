@@ -35,13 +35,15 @@ export default function FAQ() {
           </p>
         </motion.div>
 
-        {/* Category filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
+        {/* Category filter — horizontally scrollable on mobile */}
+        <div className="flex flex-nowrap sm:flex-wrap justify-center gap-2 mb-8 overflow-x-auto no-scrollbar px-2 sm:px-0">
           {faqCategories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              aria-label={`Filter by ${cat}`}
+              aria-pressed={activeCategory === cat}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
                 activeCategory === cat
                   ? "bg-navy text-white"
                   : "bg-white text-gray-600 hover:bg-blue-light/50 border border-border"
@@ -66,6 +68,8 @@ export default function FAQ() {
                 onClick={() =>
                   setOpenId(openId === faq.id ? null : faq.id)
                 }
+                aria-expanded={openId === faq.id}
+                aria-controls={`faq-answer-${faq.id}`}
                 className="w-full flex items-center justify-between px-6 py-5 text-left"
               >
                 <span className="font-semibold text-navy pr-4">
@@ -78,6 +82,9 @@ export default function FAQ() {
                 )}
               </button>
               <div
+                id={`faq-answer-${faq.id}`}
+                role="region"
+                aria-labelledby={`faq-question-${faq.id}`}
                 className={`overflow-hidden transition-all duration-300 ${
                   openId === faq.id ? "max-h-96" : "max-h-0"
                 }`}

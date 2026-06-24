@@ -138,7 +138,7 @@ export default function ExitIntentPopup() {
                       {/* Email Input */}
                       <div className="mb-3">
                         <input
-                          type="email"
+                          type="email" aria-label="Email address"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="Enter your email address"

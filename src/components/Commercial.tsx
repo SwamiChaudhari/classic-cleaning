@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Building2, CheckCircle2 } from "lucide-react";
 
@@ -24,9 +25,11 @@ export default function Commercial() {
             transition={{ duration: 0.6 }}
             className="relative rounded-2xl overflow-hidden shadow-xl"
           >
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80"
               alt="Professional office cleaning"
+              width={800}
+              height={450}
               className="w-full h-[350px] lg:h-[450px] object-cover"
               loading="lazy"
             />

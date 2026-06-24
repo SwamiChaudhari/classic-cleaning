@@ -11,10 +11,10 @@ export default function JsonLdSchema() {
     "@type": "LocalBusiness",
     name: business.fullName,
     description: business.description,
-    image: "https://classiccleaning.in/og-image.jpg",
+    image: "https://classic-cleaning.vercel.app/og-image.jpg",
     telephone: `+91${business.phone}`,
     email: business.email,
-    url: "https://classiccleaning.in",
+    url: "https://classic-cleaning.vercel.app",
     address: {
       "@type": "PostalAddress",
       streetAddress: `${business.address.flat}, ${business.address.area}`,
@@ -48,10 +48,10 @@ export default function JsonLdSchema() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://classiccleaning.in" },
-      { "@type": "ListItem", position: 2, name: "Services", item: "https://classiccleaning.in/services" },
-      { "@type": "ListItem", position: 3, name: "Pricing", item: "https://classiccleaning.in/pricing" },
-      { "@type": "ListItem", position: 4, name: "Contact", item: "https://classiccleaning.in/contact" },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://classic-cleaning.vercel.app" },
+      { "@type": "ListItem", position: 2, name: "Services", item: "https://classic-cleaning.vercel.app/services" },
+      { "@type": "ListItem", position: 3, name: "Pricing", item: "https://classic-cleaning.vercel.app/pricing" },
+      { "@type": "ListItem", position: 4, name: "Contact", item: "https://classic-cleaning.vercel.app/contact" },
     ],
   };
 

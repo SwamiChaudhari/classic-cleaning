@@ -4,7 +4,7 @@ import { blogPosts } from '@/config/blog';
 import { areas } from '@/config/areas';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://classiccleaning.in';
+  const baseUrl = 'https://classic-cleaning.vercel.app';
 
   const staticPages: MetadataRoute.Sitemap = [
     {

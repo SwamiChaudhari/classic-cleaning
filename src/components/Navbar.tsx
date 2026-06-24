@@ -215,6 +215,9 @@ export default function Navbar() {
             />
             <motion.div
               id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Navigation menu"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}

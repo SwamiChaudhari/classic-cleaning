@@ -36,7 +36,17 @@ export default function PricingPage() {
             className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white font-[family-name:var(--font-poppins)] mb-4"
           >
             Transparent <span className="gradient-text">Pricing</span>
-          </motion.h1>
+            </motion.h1>
+            {/* Urgency banner */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center gap-2 bg-orange/10 border border-orange/20 text-orange font-semibold text-sm px-4 py-2 rounded-full mt-3"
+            >
+              <span className="flex h-2 w-2"><span className="animate-ping absolute h-2 w-2 rounded-full bg-orange opacity-75"></span><span className="relative h-2 w-2 rounded-full bg-orange"></span></span>
+              Limited slots available this month — Book before 2 PM for same-day service
+            </motion.div>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

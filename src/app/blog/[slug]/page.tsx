@@ -43,7 +43,7 @@ export default async function BlogPostPage({ params }: Props) {
     relatedPosts.push(...others);
   }
 
-  const shareUrl = `https://classiccleaning.in/blog/${post.slug}`;
+  const shareUrl = `https://classic-cleaning.vercel.app/blog/${post.slug}`;
 
   return (
     <main className="min-h-screen">
