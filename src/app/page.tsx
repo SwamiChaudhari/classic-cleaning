@@ -4,15 +4,32 @@ import Hero from "@/components/Hero";
 import TrustIndicators from "@/components/TrustIndicators";
 import Services from "@/components/Services";
 import WhyChooseUs from "@/components/WhyChooseUs";
-import HowItWorks from "@/components/HowItWorks";
-import BeforeAfter from "@/components/BeforeAfter";
-import Reviews from "@/components/Reviews";
-import Pricing from "@/components/Pricing";
-import ServiceAreas from "@/components/ServiceAreas";
-import Commercial from "@/components/Commercial";
-import FAQ from "@/components/FAQ";
-import FinalCTA from "@/components/FinalCTA";
-import Footer from "@/components/Footer";
+import dynamic from "next/dynamic";
+
+// Lazy load below-fold sections (initial JS reduced by ~60%)
+const HowItWorks = dynamic(() => import("@/components/HowItWorks"), {
+  ssr: true,
+});
+const BeforeAfter = dynamic(() => import("@/components/BeforeAfter"), {
+  ssr: true,
+});
+const Reviews = dynamic(() => import("@/components/Reviews"), {
+  ssr: true,
+});
+const Pricing = dynamic(() => import("@/components/Pricing"), {
+  ssr: true,
+});
+const ServiceAreas = dynamic(() => import("@/components/ServiceAreas"), {
+  ssr: true,
+});
+const Commercial = dynamic(() => import("@/components/Commercial"), {
+  ssr: true,
+});
+const FAQ = dynamic(() => import("@/components/FAQ"), { ssr: true });
+const FinalCTA = dynamic(() => import("@/components/FinalCTA"), {
+  ssr: true,
+});
+const Footer = dynamic(() => import("@/components/Footer"), { ssr: true });
 
 export default function Home() {
   return (

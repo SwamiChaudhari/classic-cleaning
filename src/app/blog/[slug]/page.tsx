@@ -94,7 +94,7 @@ export default async function BlogPostPage({ params }: Props) {
             src={post.image}
             alt={post.title}
             className="w-full h-[300px] lg:h-[450px] object-cover"
-          />
+          loading="lazy" />
         </div>
       </div>
 
@@ -171,7 +171,7 @@ export default async function BlogPostPage({ params }: Props) {
                       src={p.image}
                       alt={p.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    loading="lazy" />
                   </div>
                   <div className="p-5">
                     <span className="inline-block bg-teal-light text-teal text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">

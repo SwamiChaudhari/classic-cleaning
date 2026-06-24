@@ -225,7 +225,7 @@ export default function BeforeAfter() {
                 alt={`${currentItem.title} - After`}
                 className="w-full h-full object-cover"
                 draggable={false}
-              />
+              loading="lazy" />
             </div>
 
             {/* Before Image (clipped) */}
@@ -238,7 +238,7 @@ export default function BeforeAfter() {
                 alt={`${currentItem.title} - Before`}
                 className="w-full h-full object-cover"
                 draggable={false}
-              />
+              loading="lazy" />
               {/* Grayscale overlay for "before" effect */}
               <div className="absolute inset-0 bg-gray-600/30 mix-blend-multiply" />
             </div>

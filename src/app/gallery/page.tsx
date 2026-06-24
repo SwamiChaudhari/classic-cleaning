@@ -82,7 +82,7 @@ export default function GalleryPage() {
                     src={item.thumbnail || item.src}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                  loading="lazy" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
@@ -177,7 +177,7 @@ export default function GalleryPage() {
               src={lightbox.src}
               alt={lightbox.title}
               className="w-full rounded-2xl shadow-2xl"
-            />
+            loading="lazy" />
             <div className="mt-4 text-center">
               <h3 className="text-white font-bold text-lg">{lightbox.title}</h3>
               <p className="text-white/60 text-sm">{lightbox.description}</p>

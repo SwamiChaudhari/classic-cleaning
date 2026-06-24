@@ -76,7 +76,7 @@ export default function ServicesPage() {
                     src={service.image}
                     alt={service.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                  loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent" />
                   {service.popular && (
                     <div className="absolute top-3 right-3 bg-gradient-to-r from-orange to-gold text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">

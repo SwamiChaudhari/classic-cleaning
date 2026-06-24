@@ -28,6 +28,7 @@ export default function Commercial() {
               src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80"
               alt="Professional office cleaning"
               className="w-full h-[350px] lg:h-[450px] object-cover"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent" />
             <div className="absolute bottom-5 left-5">

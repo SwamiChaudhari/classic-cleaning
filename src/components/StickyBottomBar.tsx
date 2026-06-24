@@ -1,16 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+
 import { Phone, MessageCircle, Sparkles } from "lucide-react";
 import { business } from "@/config/business";
 
 export default function StickyBottomBar() {
   return (
-    <motion.div
-      initial={{ y: 100 }}
-      animate={{ y: 0 }}
-      transition={{ delay: 1, type: "spring", stiffness: 200, damping: 25 }}
+    <div
       className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-white/95 backdrop-blur-md border-t border-border shadow-[0_-4px_24px_rgba(0,0,0,0.08)] pb-safe"
     >
       <div className="flex items-center gap-2 p-3">
@@ -37,12 +34,12 @@ export default function StickyBottomBar() {
         {/* Get Free Quote — larger, pulsing */}
         <Link
           href="#quote"
-          className="flex-[2] flex items-center justify-center gap-2 bg-gradient-to-r from-orange to-gold text-white font-bold py-3.5 rounded-xl text-sm cta-pulse active:scale-95 transition-transform min-h-[48px]"
+          className="flex-[2] flex items-center justify-center gap-2 bg-gradient-to-r from-orange to-gold text-white font-bold py-3.5 rounded-xl text-sm min-h-[48px]"
         >
           <Sparkles className="w-4 h-4" />
           Get Free Quote
         </Link>
       </div>
-    </motion.div>
+    </div>
   );
 }

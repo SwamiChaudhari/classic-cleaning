@@ -57,7 +57,7 @@ export default function BlogPage() {
                     src={featured.image}
                     alt={featured.title}
                     className="w-full h-full object-cover"
-                  />
+                  loading="lazy" />
                 </div>
                 <div className="p-6 lg:p-8 flex flex-col justify-center">
                   <span className="inline-block bg-orange text-white text-[10px] font-bold px-2.5 py-1 rounded-full w-fit mb-3">
@@ -138,7 +138,7 @@ export default function BlogPage() {
                     src={post.image}
                     alt={post.title}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
+                  loading="lazy" />
                 </div>
                 <div className="p-5">
                   <span className="inline-block bg-teal-light text-teal text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">

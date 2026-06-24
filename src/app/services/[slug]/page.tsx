@@ -111,7 +111,7 @@ export default async function ServicePage({ params }: Props) {
                   src={service.image}
                   alt={service.title}
                   className="w-full h-[300px] lg:h-[400px] object-cover"
-                />
+                loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
               </div>
             </div>

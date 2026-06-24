@@ -129,7 +129,7 @@ export default function AboutPage() {
                   src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80"
                   alt="Classic Cleaning team"
                   className="w-full h-[400px] object-cover"
-                />
+                loading="lazy" />
               </div>
               <div className="absolute -bottom-4 -left-4 bg-white rounded-xl p-4 shadow-lg border border-border">
                 <div className="flex items-center gap-3">
@@ -248,7 +248,7 @@ export default function AboutPage() {
                     src={member.avatar}
                     alt={member.name}
                     className="w-full h-full object-cover"
-                  />
+                  loading="lazy" />
                 </div>
                 <h3 className="font-bold text-navy">{member.name}</h3>
                 <p className="text-sm text-gray-500">{member.role}</p>

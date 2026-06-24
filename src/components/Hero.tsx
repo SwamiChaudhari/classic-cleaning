@@ -28,22 +28,25 @@ const fadeUpVariants = {
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-navy via-navy-light to-navy">
-      {/* Animated background elements */}
+      {/* Animated background elements — staggered, GPU-friendly (opacity+transform only, reduced blur) */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15] }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute -top-20 -left-20 w-96 h-96 bg-teal rounded-full blur-[100px]"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: [0.15, 0.25, 0.15], scale: [1, 1.1, 1] }}
+          transition={{ duration: 8, repeat: Infinity, delay: 0 }}
+          className="absolute -top-20 -left-20 w-64 h-64 bg-teal/30 rounded-full blur-3xl"
         />
         <motion.div
-          animate={{ scale: [1.2, 1, 1.2], opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 10, repeat: Infinity }}
-          className="absolute bottom-10 right-10 w-80 h-80 bg-blue rounded-full blur-[100px]"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: [0.1, 0.2, 0.1], scale: [1.1, 1, 1.1] }}
+          transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+          className="absolute bottom-10 right-10 w-52 h-52 bg-blue/20 rounded-full blur-3xl"
         />
         <motion.div
-          animate={{ scale: [1, 1.3, 1], opacity: [0.08, 0.15, 0.08] }}
-          transition={{ duration: 12, repeat: Infinity }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald rounded-full blur-[120px]"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: [0.08, 0.15, 0.08], scale: [1, 1.15, 1] }}
+          transition={{ duration: 12, repeat: Infinity, delay: 4 }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-emerald/15 rounded-full blur-3xl"
         />
       </div>
 

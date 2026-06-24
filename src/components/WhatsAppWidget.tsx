@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { services } from "@/config/services";
 import { business } from "@/config/business";
 import { generateQuoteMessage } from "@/lib/utils";
@@ -53,18 +53,13 @@ export default function WhatsAppWidget() {
   return (
     <>
       {/* Floating WhatsApp Button */}
-      <motion.button
+      <button
         onClick={() => setIsOpen(true)}
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 1.5, type: "spring", stiffness: 260, damping: 20 }}
         className="fixed bottom-20 right-4 z-40 lg:bottom-8 lg:right-8 w-14 h-14 bg-emerald rounded-full shadow-lg shadow-emerald/30 flex items-center justify-center text-white hover:bg-emerald-600 transition-colors group"
         aria-label="Get a quote via WhatsApp"
       >
-        {/* Pulse ring */}
-        <span className="absolute inset-0 rounded-full bg-emerald animate-ping opacity-25" />
-        <MessageCircle className="w-6 h-6 relative z-10" />
-      </motion.button>
+        <MessageCircle className="w-6 h-6" />
+      </button>
 
       {/* Card Overlay */}
       <AnimatePresence>
