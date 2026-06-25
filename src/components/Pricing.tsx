@@ -1,22 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Check, Star, Zap } from "lucide-react";
 import Link from "next/link";
 import { packages, formatPrice } from "@/config/pricing";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
-};
 
 const comparisonData = [
   { label: "Transparent Pricing", classic: true, others: false },
@@ -31,13 +17,7 @@ export default function Pricing() {
     <section id="pricing" className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12 lg:mb-16"
-        >
+        <div className="text-center mb-12 lg:mb-16">
           <span className="inline-block bg-teal/10 text-teal font-semibold text-sm tracking-wider uppercase px-4 py-2 rounded-full mb-4">
             Transparent Pricing
           </span>
@@ -47,22 +27,14 @@ export default function Pricing() {
           <p className="text-lg text-gray-500 max-w-2xl mx-auto">
             No hidden charges, ever. Get an exact quote for your specific needs.
           </p>
-        </motion.div>
+        </div>
 
         {/* Pricing Cards Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5">
           {packages.map((pkg) => (
-            <motion.div
+            <div
               key={pkg.id}
-              variants={cardVariants}
-              whileHover={{ y: -8 }}
-              className={`relative bg-white rounded-2xl p-6 transition-all duration-300 ${
+              className={`relative bg-white rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 ${
                 pkg.popular
                   ? "ring-2 ring-orange shadow-xl shadow-orange/10 z-10 lg:scale-[1.03]"
                   : pkg.badge === "Best Value"
@@ -131,18 +103,12 @@ export default function Pricing() {
               >
                 Get Quote
               </Link>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Comparison Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-16 lg:mt-20 bg-gray-50 rounded-2xl p-6 sm:p-8"
-        >
+        <div className="mt-16 lg:mt-20 bg-gray-50 rounded-2xl p-6 sm:p-8">
           <div className="text-center mb-8">
             <h3 className="text-2xl sm:text-3xl font-extrabold text-navy mb-2">
               Why Choose Classic Cleaning?
@@ -202,15 +168,10 @@ export default function Pricing() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Bottom CTA note */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center text-sm text-gray-500 mt-8"
-        >
+        <p className="text-center text-sm text-gray-500 mt-8">
           All prices are starting from. Final price depends on property size and
           condition.{" "}
           <Link
@@ -220,7 +181,7 @@ export default function Pricing() {
             Get your exact quote
           </Link>{" "}
           in 60 seconds.
-        </motion.p>
+        </p>
       </div>
     </section>
   );

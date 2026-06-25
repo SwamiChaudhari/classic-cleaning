@@ -62,14 +62,9 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, i) => (
-              <motion.div
+              <div
                 key={service.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                whileHover={{ y: -6, boxShadow: "0 12px 32px rgba(0,0,0,0.1)" }}
-                className="group bg-white rounded-2xl border border-border overflow-hidden transition-all duration-300"
+                className="group bg-white rounded-2xl border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
@@ -112,7 +107,7 @@ export default function ServicesPage() {
                     </Link>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -121,26 +116,16 @@ export default function ServicesPage() {
       {/* Comparison Table */}
       <section className="py-16 lg:py-24 bg-surface">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <span className="text-orange font-semibold text-sm tracking-wider uppercase">
               Why Us
             </span>
             <h2 className="text-3xl font-extrabold text-navy mt-2 font-[family-name:var(--font-poppins)]">
               Classic Cleaning vs Others
             </h2>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-2xl shadow-card border border-border overflow-hidden"
-          >
+          <div className="bg-white rounded-2xl shadow-card border border-border overflow-hidden">
             <div className="grid grid-cols-3 text-center font-semibold text-sm border-b border-border">
               <div className="p-4 text-gray-500">Feature</div>
               <div className="p-4 bg-teal text-white">Classic Cleaning</div>
@@ -177,7 +162,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 

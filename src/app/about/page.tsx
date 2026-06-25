@@ -71,17 +71,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
             {companyInfo.stats.map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="text-center"
-              >
+              <div key={i} className="text-center">
                 <div className="text-2xl font-extrabold text-navy">{stat.value}</div>
                 <div className="text-xs text-gray-500 font-medium">{stat.label}</div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -91,11 +84,7 @@ export default function AboutPage() {
       <section className="py-16 lg:py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
+            <div>
               <span className="text-orange font-semibold text-sm tracking-wider uppercase">Our Story</span>
               <h2 className="text-3xl font-extrabold text-navy mt-2 mb-4 font-[family-name:var(--font-poppins)]">
                 From a Simple Idea to Pune&apos;s Trusted Cleaning Brand
@@ -118,13 +107,8 @@ export default function AboutPage() {
                 But our mission remains the same as day one: deliver a cleaner,
                 healthier space for every customer.
               </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
+            </div>
+            <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-xl">
                 <Image
                   src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80"
@@ -146,7 +130,7 @@ export default function AboutPage() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -155,31 +139,20 @@ export default function AboutPage() {
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-navy to-navy-light rounded-2xl p-8 text-white"
-            >
+            <div className="bg-gradient-to-br from-navy to-navy-light rounded-2xl p-8 text-white">
               <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-4">
                 <Target className="w-6 h-6 text-teal" />
               </div>
               <h3 className="text-xl font-bold mb-3 font-[family-name:var(--font-poppins)]">Our Mission</h3>
               <p className="text-white/70 leading-relaxed">{companyInfo.mission}</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="bg-gradient-to-br from-teal/10 to-blue/10 rounded-2xl p-8 border border-teal/20"
-            >
+            </div>
+            <div className="bg-gradient-to-br from-teal/10 to-blue/10 rounded-2xl p-8 border border-teal/20">
               <div className="w-12 h-12 bg-teal/10 rounded-xl flex items-center justify-center mb-4">
                 <Eye className="w-6 h-6 text-teal" />
               </div>
               <h3 className="text-xl font-bold text-navy mb-3 font-[family-name:var(--font-poppins)]">Our Vision</h3>
               <p className="text-gray-600 leading-relaxed">{companyInfo.vision}</p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -187,36 +160,26 @@ export default function AboutPage() {
       {/* Values */}
       <section className="py-16 lg:py-24 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <span className="text-orange font-semibold text-sm tracking-wider uppercase">Our Values</span>
             <h2 className="text-3xl font-extrabold text-navy mt-2 font-[family-name:var(--font-poppins)]">
               What We Stand For
             </h2>
-          </motion.div>
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {companyInfo.values.map((value, i) => {
               const Icon = valueIcons[i];
               return (
-                <motion.div
+                <div
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  whileHover={{ y: -4 }}
-                  className="bg-white rounded-2xl p-6 shadow-card border border-border"
+                  className="bg-white rounded-2xl p-6 shadow-card border border-border hover:-translate-y-1 transition-transform"
                 >
                   <div className="w-10 h-10 bg-blue-light rounded-xl flex items-center justify-center mb-3">
                     <Icon className="w-5 h-5 text-blue" />
                   </div>
                   <h3 className="font-bold text-navy text-sm mb-1">{value.title}</h3>
                   <p className="text-xs text-gray-500 leading-relaxed">{value.description}</p>
-                </motion.div>
+                </div>
               );
             })}
           </div>
@@ -226,27 +189,15 @@ export default function AboutPage() {
       {/* Team */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <span className="text-orange font-semibold text-sm tracking-wider uppercase">Our Team</span>
             <h2 className="text-3xl font-extrabold text-navy mt-2 font-[family-name:var(--font-poppins)]">
               Meet the People Behind Classic Cleaning
             </h2>
-          </motion.div>
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.map((member, i) => (
-              <motion.div
-                key={member.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="text-center"
-              >
+              <div key={member.id} className="text-center">
                 <div className="w-24 h-24 rounded-2xl overflow-hidden mx-auto mb-4 shadow-card">
                   <img
                     src={member.avatar}
@@ -263,7 +214,7 @@ export default function AboutPage() {
                     <span className="text-xs text-emerald font-medium">Verified</span>
                   </div>
                 )}
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

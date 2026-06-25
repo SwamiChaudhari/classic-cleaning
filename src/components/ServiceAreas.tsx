@@ -1,34 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { areas } from "@/config/areas";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
 
 export default function ServiceAreas() {
   return (
     <section id="areas" className="py-16 lg:py-24 bg-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <span className="inline-block text-orange font-semibold text-sm tracking-wider uppercase mb-3">
             Service Areas
           </span>
@@ -38,23 +18,13 @@ export default function ServiceAreas() {
           <p className="text-gray-500 mt-3 max-w-xl mx-auto">
             From Kothrud to Hinjewadi — we cover all major areas in Pune.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* Area cards grid */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-2 sm:grid-cols-3 gap-3"
-          >
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {areas.map((area) => (
-              <motion.div
-                key={area.id}
-                variants={itemVariants}
-                whileHover={{ y: -4, boxShadow: "0 8px 24px rgba(0,0,0,0.08)" }}
-              >
+              <div key={area.id} className="hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
                 <Link
                   href={`/areas/${area.slug}`}
                   className="block bg-white rounded-xl p-4 border border-border hover:border-blue/30 transition-all h-full"
@@ -73,18 +43,12 @@ export default function ServiceAreas() {
                     <ArrowRight className="w-3 h-3" />
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
           {/* Map placeholder */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative"
-          >
+          <div className="relative">
             <div className="bg-white rounded-2xl border border-border p-6 shadow-card">
               <div className="aspect-[4/3] bg-gradient-to-br from-blue-light/50 to-teal-light/50 rounded-xl flex items-center justify-center relative overflow-hidden">
                 {/* Stylized map illustration */}
@@ -129,7 +93,7 @@ export default function ServiceAreas() {
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

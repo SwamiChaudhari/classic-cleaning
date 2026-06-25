@@ -60,11 +60,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
+            <div>
               <h2 className="text-2xl font-extrabold text-navy font-[family-name:var(--font-poppins)] mb-6">
                 Send Us a Message
               </h2>
@@ -175,15 +171,10 @@ export default function ContactPage() {
                 </button>
               </form>
               )}
-            </motion.div>
+            </div>
 
             {/* Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
+            <div className="space-y-6">
               <h2 className="text-2xl font-extrabold text-navy font-[family-name:var(--font-poppins)] mb-6">
                 Contact Information
               </h2>
@@ -273,7 +264,7 @@ export default function ContactPage() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>

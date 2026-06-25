@@ -66,16 +66,11 @@ export default function GalleryPage() {
 
           {/* Masonry grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {filtered.map((item, i) => (
-              <motion.div
+            {filtered.map((item) => (
+              <div
                 key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                whileHover={{ y: -4 }}
                 onClick={() => setLightbox(item)}
-                className="group relative rounded-2xl overflow-hidden cursor-pointer shadow-card hover:shadow-card-hover transition-all"
+                className="group relative rounded-2xl overflow-hidden cursor-pointer shadow-card hover:shadow-card-hover transition-all hover:-translate-y-1"
               >
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
@@ -96,7 +91,7 @@ export default function GalleryPage() {
                     <ZoomIn className="w-4 h-4 text-navy" />
                   )}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
 
@@ -108,17 +103,13 @@ export default function GalleryPage() {
               { label: "Areas Covered", value: "10+" },
               { label: "Happy Customers", value: "1,500+" },
             ].map((stat, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
                 className="text-center bg-surface rounded-xl p-5 border border-border"
               >
                 <div className="text-2xl font-extrabold text-navy">{stat.value}</div>
                 <div className="text-xs text-gray-500 font-medium">{stat.label}</div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

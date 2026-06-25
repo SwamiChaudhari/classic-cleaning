@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { Building2, CheckCircle2 } from "lucide-react";
 
 const commercialServices = [
@@ -18,13 +17,7 @@ export default function Commercial() {
     <section className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative rounded-2xl overflow-hidden shadow-xl"
-          >
+          <div className="relative rounded-2xl overflow-hidden shadow-xl">
             <Image
               src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80"
               alt="Professional office cleaning"
@@ -39,14 +32,9 @@ export default function Commercial() {
                 🏢 Serving 50+ businesses in Pune
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div>
             <div className="inline-flex items-center gap-2 bg-teal-light text-teal text-xs font-bold px-3 py-1.5 rounded-full mb-4 uppercase tracking-wider">
               <Building2 className="w-3.5 h-3.5" />
               Commercial Cleaning
@@ -85,7 +73,7 @@ export default function Commercial() {
                 WhatsApp Us
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

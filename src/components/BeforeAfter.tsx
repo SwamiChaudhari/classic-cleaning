@@ -163,13 +163,7 @@ export default function BeforeAfter() {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <motion.div
-          className="text-center mb-12 md:mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: 'easeOut' as const }}
-        >
+        <div className="text-center mb-12 md:mb-16">
           <span
             className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
             style={{ backgroundColor: '#0D948820', color: '#0D9488' }}
@@ -188,16 +182,10 @@ export default function BeforeAfter() {
           >
             See the transformation we deliver across every service category
           </p>
-        </motion.div>
+        </div>
 
         {/* Slider Container */}
-        <motion.div
-          className="relative"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.7, ease: 'easeOut' as const, delay: 0.2 }}
-        >
+        <div className="relative">
           {/* Category Label */}
           <div className="flex items-center justify-center mb-6">
             <span
@@ -356,7 +344,7 @@ export default function BeforeAfter() {
               Drag the slider or tap arrows to compare
             </p>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

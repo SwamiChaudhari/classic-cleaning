@@ -80,30 +80,11 @@ const benefits = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
-
 export default function WhyChooseUs() {
   return (
     <section className="py-16 lg:py-24 bg-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <span className="inline-block text-orange font-semibold text-sm tracking-wider uppercase mb-3">
             Why Choose Us
           </span>
@@ -113,22 +94,14 @@ export default function WhyChooseUs() {
           <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
             We don&apos;t just clean — we deliver peace of mind with every service.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-10 items-center">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="grid sm:grid-cols-2 gap-4"
-          >
+          <div className="grid sm:grid-cols-2 gap-4">
             {benefits.map((benefit, i) => (
-              <motion.div
+              <div
                 key={i}
-                variants={itemVariants}
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-2xl p-5 shadow-card hover:shadow-card-hover transition-all duration-300 border border-border/50"
+                className="bg-white rounded-2xl p-5 shadow-card hover:shadow-card-hover transition-all duration-300 border border-border/50 hover:-translate-y-1"
               >
                 <div
                   className={`w-10 h-10 ${benefit.bg} rounded-xl flex items-center justify-center mb-3`}
@@ -141,17 +114,11 @@ export default function WhyChooseUs() {
                 <p className="text-xs text-gray-500 leading-relaxed">
                   {benefit.description}
                 </p>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative"
-          >
+          <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-xl">
               <img
                 src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80"
@@ -197,22 +164,17 @@ export default function WhyChooseUs() {
                 </div>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
-        >
+        <div className="text-center mt-12">
           <Link
             href="#quote"
             className="inline-flex items-center gap-2 bg-gradient-to-r from-orange to-gold hover:shadow-xl hover:shadow-orange-200/30 text-white font-bold px-8 py-4 rounded-xl transition-all hover:scale-[1.03]"
           >
             Book Your Cleaning Now
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

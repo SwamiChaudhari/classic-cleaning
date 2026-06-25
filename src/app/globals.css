@@ -42,6 +42,10 @@ body {
   color: #1F2937;
 }
 
+section {
+  contain: layout style;
+}
+
 /* Hide scrollbar but keep scroll */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

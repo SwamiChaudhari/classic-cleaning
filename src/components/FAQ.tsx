@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { faqs, faqCategories } from "@/config/faq";
@@ -17,13 +16,7 @@ export default function FAQ() {
   return (
     <section id="faq" className="py-16 lg:py-24 bg-surface">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-10"
-        >
+        <div className="text-center mb-10">
           <span className="inline-block text-orange font-semibold text-sm tracking-wider uppercase mb-3">
             FAQ
           </span>
@@ -33,7 +26,7 @@ export default function FAQ() {
           <p className="text-gray-500 mt-3">
             Got questions? We&apos;ve got answers.
           </p>
-        </motion.div>
+        </div>
 
         {/* Category filter — horizontally scrollable on mobile */}
         <div className="flex flex-nowrap sm:flex-wrap justify-center gap-2 mb-8 overflow-x-auto no-scrollbar px-2 sm:px-0">
@@ -55,15 +48,8 @@ export default function FAQ() {
         </div>
 
         <div className="space-y-3">
-          {filteredFaqs.map((faq, i) => (
-            <motion.div
-              key={faq.id}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="bg-white rounded-2xl border border-border overflow-hidden shadow-card"
-            >
+          {filteredFaqs.map((faq) => (
+            <div key={faq.id} className="bg-white rounded-2xl border border-border overflow-hidden shadow-card">
               <button
                 onClick={() =>
                   setOpenId(openId === faq.id ? null : faq.id)
@@ -93,7 +79,7 @@ export default function FAQ() {
                   {faq.answer}
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

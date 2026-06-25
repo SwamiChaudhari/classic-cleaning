@@ -45,12 +45,7 @@ export default function BlogPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Featured Post */}
           {featured && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-12"
-            >
+            <div className="mb-12">
               <div className="grid lg:grid-cols-2 gap-8 bg-gradient-to-br from-navy-50 to-teal-light/30 rounded-2xl overflow-hidden border border-border">
                 <div className="aspect-video lg:aspect-auto">
                   <img
@@ -101,7 +96,7 @@ export default function BlogPage() {
                   </a>
                 </div>
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* Category Filter */}
@@ -124,14 +119,9 @@ export default function BlogPage() {
           {/* Blog Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((post, i) => (
-              <motion.div
+              <div
                 key={post.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-2xl border border-border overflow-hidden shadow-card hover:shadow-card-hover transition-all"
+                className="bg-white rounded-2xl border border-border overflow-hidden shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all"
               >
                 <div className="aspect-[16/9] overflow-hidden">
                   <img
@@ -155,7 +145,7 @@ export default function BlogPage() {
                     <span>{post.date}</span>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

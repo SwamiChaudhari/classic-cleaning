@@ -40,12 +40,7 @@ export default function ReviewsPage() {
       <section className="py-12 bg-white border-b border-border">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="text-center md:text-left"
-            >
+            <div className="text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
                 <span className="text-5xl font-extrabold text-navy">{business.rating}</span>
                 <div>
@@ -65,31 +60,23 @@ export default function ReviewsPage() {
                   ★ Write a Review
                   </a>
                   </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-2"
-            >
+            </div>
+            <div className="space-y-2">
               {Object.entries(reviewStats.distribution)
                 .reverse()
                 .map(([stars, pct]) => (
                   <div key={stars} className="flex items-center gap-3">
                     <span className="text-sm text-gray-600 w-8">{stars}★</span>
                     <div className="flex-1 h-2 bg-border rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${pct}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: 0.2 }}
-                        className="h-full bg-gradient-to-r from-gold to-orange rounded-full"
+                      <div
+                        className="h-full bg-gradient-to-r from-gold to-orange rounded-full transition-all duration-1000 ease-out"
+                        style={{ width: `${pct}%` }}
                       />
                     </div>
                     <span className="text-sm text-gray-500 w-10">{pct}%</span>
                   </div>
                 ))}
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -99,12 +86,8 @@ export default function ReviewsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {reviews.map((review, i) => (
-              <motion.div
+              <div
                 key={review.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
                 className="bg-white rounded-2xl p-6 shadow-card border border-border hover:shadow-card-hover transition-all"
               >
                 <div className="flex gap-0.5 mb-3">
@@ -144,7 +127,7 @@ export default function ReviewsPage() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

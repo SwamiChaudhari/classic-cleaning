@@ -57,14 +57,9 @@ export default function AreasPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {areas.map((area, i) => (
-              <motion.div
+              <div
                 key={area.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                whileHover={{ y: -4, borderColor: "#2563EB" }}
-                className="bg-white rounded-2xl p-6 border border-border shadow-card hover:shadow-card-hover transition-all"
+                className="bg-white rounded-2xl p-6 border border-border shadow-card hover:shadow-card-hover hover:-translate-y-1 hover:border-blue transition-all"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 bg-teal-light rounded-xl flex items-center justify-center">
@@ -104,7 +99,7 @@ export default function AreasPage() {
                     Call
                   </a>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -192,18 +187,14 @@ export default function AreasPage() {
               { title: "Verified Staff", desc: "Background checked & trained professionals", icon: "🛡️" },
               { title: "Eco-Friendly", desc: "Safe chemicals for family & pets", icon: "🌿" },
             ].map((promise, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
                 className="bg-white rounded-2xl p-6 border border-border text-center shadow-card"
               >
                 <div className="text-3xl mb-3">{promise.icon}</div>
                 <h3 className="font-bold text-navy mb-1">{promise.title}</h3>
                 <p className="text-sm text-gray-500">{promise.desc}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

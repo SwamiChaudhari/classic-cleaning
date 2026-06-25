@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ClipboardList, CalendarCheck, Sparkles, ShieldCheck } from "lucide-react";
 
 const steps = [
@@ -46,13 +45,7 @@ export default function HowItWorks() {
   return (
     <section className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
-        >
+        <div className="text-center mb-14">
           <span className="inline-block text-orange font-semibold text-sm tracking-wider uppercase mb-3">
             How It Works
           </span>
@@ -62,7 +55,7 @@ export default function HowItWorks() {
           <p className="text-gray-500 mt-3 max-w-xl mx-auto">
             From booking to sparkling clean — it&apos;s that easy.
           </p>
-        </motion.div>
+        </div>
 
         <div className="relative">
           {/* Connecting line (desktop) */}
@@ -70,14 +63,7 @@ export default function HowItWorks() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {steps.map((step, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15, duration: 0.5 }}
-                className="relative text-center"
-              >
+              <div key={i} className="relative text-center">
                 {/* Step number circle */}
                 <div className="relative mx-auto mb-5">
                   <div
@@ -96,7 +82,7 @@ export default function HowItWorks() {
                 <p className="text-sm text-gray-500 leading-relaxed max-w-[250px] mx-auto">
                   {step.description}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

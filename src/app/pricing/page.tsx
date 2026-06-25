@@ -10,16 +10,6 @@ import Navbar from "@/components/Navbar";
 import QuoteForm from "@/components/QuoteForm";
 import { Check, Star, Zap, Shield, Phone, MessageCircle, X } from "lucide-react";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
-};
-
 export default function PricingPage() {
   return (
     <main id="main-content" className="min-h-screen">
@@ -61,18 +51,10 @@ export default function PricingPage() {
       {/* Pricing Cards */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"
-          >
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {packages.map((pkg) => (
-              <motion.div
+              <div
                 key={pkg.id}
-                variants={itemVariants}
-                whileHover={{ y: -8 }}
                 className={`relative bg-white rounded-2xl p-6 transition-all duration-300 ${
                   pkg.popular
                     ? "ring-2 ring-orange shadow-xl scale-[1.02]"
@@ -121,32 +103,22 @@ export default function PricingPage() {
                 >
                   Get Quote
                 </a>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Comparison Table */}
       <section className="py-16 lg:py-24 bg-surface">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-10"
-          >
+          <div className="text-center mb-10">
             <span className="text-orange font-semibold text-sm tracking-wider uppercase">Comparison</span>
             <h2 className="text-3xl font-extrabold text-navy mt-2 font-[family-name:var(--font-poppins)]">
               Classic Cleaning vs Others
             </h2>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-2xl shadow-card border border-border overflow-hidden"
-          >
+          </div>
+          <div className="bg-white rounded-2xl shadow-card border border-border overflow-hidden">
             <div className="grid grid-cols-3 text-center font-semibold text-sm border-b border-border">
               <div className="p-4 text-gray-500">Feature</div>
               <div className="p-4 bg-teal text-white">Classic Cleaning</div>
@@ -170,7 +142,7 @@ export default function PricingPage() {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 

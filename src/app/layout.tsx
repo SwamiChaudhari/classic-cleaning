@@ -2,14 +2,13 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
-import WhatsAppWidget from "@/components/WhatsAppWidget";
-import AIAssistant from "@/components/AIAssistant";
 import StickyBottomBar from "@/components/StickyBottomBar";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import JsonLdSchema from "@/components/JsonLdSchema";
 import SkipLink from "@/components/SkipLink";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import FloatingWidgets from "@/components/FloatingWidgets";
+import ClientWidgets from "@/components/ClientWidgets";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -75,6 +74,7 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <link rel="preconnect" href="https://images.unsplash.com" />
         <meta name="theme-color" content="#0B1D3A" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="robots" content="index, follow" />
@@ -84,8 +84,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <JsonLdSchema />
           {children}
-          <WhatsAppWidget />
-          <AIAssistant />
+          <Suspense fallback={null}><ClientWidgets /></Suspense>
           <FloatingWidgets />
           <StickyBottomBar />
           <Suspense fallback={null}>
