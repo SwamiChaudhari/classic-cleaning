@@ -18,7 +18,6 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
-import DashboardLayout from "./layout";
 
 const stats = [
   { label: 'Total Visitors', value: '2,847', change: '+12.5%', icon: Users, color: 'bg-teal-500', bgLight: 'bg-teal-50' },
@@ -79,8 +78,7 @@ export default function DashboardPage() {
   const maxVisitors = Math.max(...trafficData.map((d) => d.visitors));
 
   return (
-    <DashboardLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         {/* Welcome banner */}
         <div className="rounded-xl bg-gradient-to-r from-[#0B1D3A] to-[#0D9488] p-6 text-white">
           <h2 className="text-lg font-semibold" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
@@ -220,6 +218,5 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
   );
 }
