@@ -227,6 +227,9 @@ export default function Footer() {
               <Link href="#" className="hover:text-white transition-colors">
                 Sitemap
               </Link>
+              <Link href="/login" className="hover:text-teal transition-colors font-medium">
+                Admin
+              </Link>
             </div>
           </div>
         </div>

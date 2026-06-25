@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Lock, Eye, EyeOff, Sparkles } from "lucide-react";
 
-const ADMIN_PASSWORD = "classic2026";
+const ADMIN_PASSWORD = "admin123";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -103,6 +103,9 @@ export default function LoginPage() {
           <p className="text-xs text-gray-400 text-center mt-4">
             Protected area. Authorized personnel only.
           </p>
+          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-xs text-blue-600 font-medium">Default password: admin123</p>
+          </div>
         </form>
       </div>
     </div>

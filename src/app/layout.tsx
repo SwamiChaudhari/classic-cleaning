@@ -9,6 +9,7 @@ import SkipLink from "@/components/SkipLink";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import FloatingWidgets from "@/components/FloatingWidgets";
 import ClientWidgets from "@/components/ClientWidgets";
+import AdminButton from "@/components/AdminButton";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -87,6 +88,7 @@ export default function RootLayout({
           <Suspense fallback={null}><ClientWidgets /></Suspense>
           <FloatingWidgets />
           <StickyBottomBar />
+          <AdminButton />
           <Suspense fallback={null}>
             <AnalyticsTracker />
           </Suspense>
