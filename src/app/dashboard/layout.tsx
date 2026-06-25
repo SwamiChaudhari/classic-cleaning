@@ -1,10 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import {
   LayoutDashboard,
-  Home,
   Image,
   MessageSquare,
   Star,
@@ -12,237 +11,184 @@ import {
   Tag,
   HelpCircle,
   Briefcase,
-  DollarSign,
   Search,
   BarChart3,
-  Activity,
-  Settings,
   LogOut,
-  ChevronLeft,
-  ChevronRight,
+  Bell,
   Menu,
+  X,
   Sparkles,
-} from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+} from "lucide-react";
+import Link from "next/link";
 
 const navItems = [
-  { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
-  { label: 'Hero Editor', href: '/dashboard/hero', icon: Home },
-  { label: 'Services', href: '/dashboard/services', icon: Settings },
-  { label: 'Gallery', href: '/dashboard/gallery', icon: Image },
-  { label: 'Videos', href: '/dashboard/videos', icon: MessageSquare },
-  { label: 'Reviews', href: '/dashboard/reviews', icon: Star },
-  { label: 'Blogs', href: '/dashboard/blogs', icon: FileText },
-  { label: 'Offers', href: '/dashboard/offers', icon: Tag },
-  { label: 'FAQs', href: '/dashboard/faqs', icon: HelpCircle },
-  { label: 'Case Studies', href: '/dashboard/cases', icon: Briefcase },
-  { label: 'Pricing', href: '/dashboard/pricing', icon: DollarSign },
-  { label: 'SEO Settings', href: '/dashboard/seo', icon: Search },
-  { label: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
-  { label: 'Activity Logs', href: '/dashboard/activity', icon: Activity },
-  { label: 'Media Library', href: '/dashboard/media', icon: Image },
+  { name: 'Services', icon: Briefcase, href: '/dashboard/services' },
+  { name: 'Gallery', icon: Image, href: '/dashboard/gallery' },
+  { name: 'Media Library', icon: MessageSquare, href: '/dashboard/media' },
+  { name: 'Reviews', icon: Star, href: '/dashboard/reviews' },
+  { name: 'Blogs', icon: FileText, href: '/dashboard/blogs' },
+  { name: 'Offers', icon: Tag, href: '/dashboard/offers' },
+  { name: 'FAQs', icon: HelpCircle, href: '/dashboard/faqs' },
+  { name: 'SEO Settings', icon: Search, href: '/dashboard/seo' },
+  { name: 'Analytics', icon: BarChart3, href: '/dashboard/analytics' },
 ];
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [mobileOpen, setMobileOpen] = useState(false);
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const pathname = usePathname();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
-  const toggleMobile = () => setMobileOpen((prev) => !prev);
+  useEffect(() => {
+    const auth = sessionStorage.getItem("admin_auth");
+    if (auth !== "true") {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("admin_auth");
+    router.push("/login");
+  };
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-[#F9FAFB]">
+        <div className="animate-spin h-8 w-8 border-4 border-[#0D9488] border-t-transparent rounded-full" />
+      </div>
+    );
+  }
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Mobile Overlay */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-black/50 lg:hidden"
-            onClick={() => setMobileOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+    <div className="flex h-screen overflow-hidden bg-[#F9FAFB]">
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
       {/* Sidebar */}
-      <motion.aside
-        initial={false}
-        animate={{
-          width: sidebarOpen ? 256 : 64,
-          x: mobileOpen ? 0 : -256,
-        }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="fixed inset-y-0 left-0 z-50 flex flex-col lg:relative lg:translate-x-0"
-        style={{ backgroundColor: '#0B1D3A' }}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-[#0B1D3A] text-white transition-transform duration-300 lg:relative lg:translate-x-0 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
       >
         {/* Logo */}
-        <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
-          <AnimatePresence mode="wait">
-            {sidebarOpen && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex items-center gap-2 overflow-hidden"
-              >
-                <Sparkles className="h-7 w-7 shrink-0 text-teal-400" />
-                <span className="whitespace-nowrap text-lg font-bold text-white">
-                  Classic Cleaning
-                </span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          {!sidebarOpen && (
-            <Sparkles className="mx-auto h-7 w-7 text-teal-400" />
-          )}
-        </div>
+        <Link href="/dashboard" className="flex h-16 items-center justify-between border-b border-white/10 px-6">
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0D9488]">
+              <Sparkles className="h-4 w-4 text-white" />
+            </div>
+            <span className="font-semibold text-lg">Classic Cleaning</span>
+          </div>
+          <button
+            className="lg:hidden text-white/70 hover:text-white"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </Link>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto px-2 py-4">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            const Icon = item.icon;
+        <nav className="flex-1 overflow-y-auto px-3 py-4">
+          <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-white/40">
+            Main
+          </p>
+          <Link
+            href="/dashboard"
+            onClick={() => setSidebarOpen(false)}
+            className={`mb-1 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+              pathname === '/dashboard'
+                ? 'bg-[#0D9488] text-white'
+                : 'text-white/70 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            <LayoutDashboard className="h-4.5 w-4.5" />
+            Dashboard
+          </Link>
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className={`group relative mb-1 flex items-center gap-3 rounded-r-lg px-3 py-2.5 transition-all duration-200 ${
-                  isActive
-                    ? 'bg-white text-gray-900'
-                    : 'text-gray-300 hover:bg-white/10 hover:text-white'
-                }`}
-              >
-                {/* Active left border */}
-                {isActive && (
-                  <motion.div
-                    layoutId="active-border"
-                    className="absolute left-0 top-0 h-full w-1 rounded-r"
-                    style={{ backgroundColor: '#0D9488' }}
-                  />
-                )}
-                <Icon
-                  className={`h-5 w-5 shrink-0 ${
-                    isActive ? 'text-teal-600' : 'text-gray-400 group-hover:text-white'
-                  }`}
-                />
-                <AnimatePresence mode="wait">
-                  {sidebarOpen && (
-                    <motion.span
-                      initial={{ opacity: 0, width: 0 }}
-                      animate={{ opacity: 1, width: 'auto' }}
-                      exit={{ opacity: 0, width: 0 }}
-                      className="whitespace-nowrap text-sm font-medium overflow-hidden"
-                    >
-                      {item.label}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </Link>
-            );
-          })}
+          <p className="mb-2 mt-6 px-3 text-xs font-semibold uppercase tracking-wider text-white/40">
+            Content
+          </p>
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              onClick={() => setSidebarOpen(false)}
+              className={`mb-1 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                pathname === item.href
+                  ? 'bg-[#0D9488] text-white'
+                  : 'text-white/70 hover:bg-white/10 hover:text-white'
+              }`}
+            >
+              <item.icon className="h-4.5 w-4.5" />
+              {item.name}
+            </Link>
+          ))}
         </nav>
 
-        {/* Collapse Toggle (desktop) */}
-        <div className="hidden border-t border-white/10 p-3 lg:block">
-          <button
-            onClick={toggleSidebar}
-            className="flex w-full items-center justify-center gap-2 rounded-lg px-3 py-2 text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
-          >
-            {sidebarOpen ? (
-              <>
-                <ChevronLeft className="h-5 w-5" />
-                <span className="text-sm">Collapse</span>
-              </>
-            ) : (
-              <ChevronRight className="h-5 w-5" />
-            )}
-          </button>
-        </div>
-
-        {/* Logout */}
-        <div className="border-t border-white/10 p-3">
-          <button
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
-          >
-            <LogOut className="h-5 w-5 shrink-0" />
-            <AnimatePresence mode="wait">
-              {sidebarOpen && (
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="text-sm overflow-hidden"
-                >
-                  Logout
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </button>
-        </div>
-      </motion.aside>
-
-      {/* Main Content Wrapper */}
-      <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Top Bar */}
-        <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm">
-          {/* Mobile hamburger */}
-          <button
-            onClick={toggleMobile}
-            className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 lg:hidden"
-          >
-            <Menu className="h-6 w-6" />
-          </button>
-
-          {/* Desktop collapse toggle */}
-          <button
-            onClick={toggleSidebar}
-            className="hidden rounded-lg p-2 text-gray-600 hover:bg-gray-100 lg:inline-flex"
-          >
-            {sidebarOpen ? (
-              <ChevronLeft className="h-5 w-5" />
-            ) : (
-              <ChevronRight className="h-5 w-5" />
-            )}
-          </button>
-
+        {/* User section */}
+        <div className="border-t border-white/10 p-4">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1.5">
-              <div className="h-2 w-2 rounded-full bg-teal-500" />
-              <span className="text-sm text-gray-600">Admin</span>
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0D9488] text-sm font-semibold">
+              AC
             </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate">Admin</p>
+              <p className="text-xs text-white/50 truncate">admin@classiccleaning.in</p>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="text-white/50 hover:text-white transition-colors"
+              title="Logout"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* Main content */}
+      <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Header */}
+        <header className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 lg:px-8">
+          <div className="flex items-center gap-4">
+            <button
+              className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 lg:hidden"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <h1
+              className="text-xl font-semibold text-gray-900 lg:text-2xl"
+              style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
+            >
+              {navItems.find((n) => n.href === pathname)?.name || 'Dashboard'}
+            </h1>
+          </div>
+          <div className="flex items-center gap-3">
+            <button className="relative rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors">
+              <Bell className="h-5 w-5" />
+              <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-[#EA580C]" />
+            </button>
+            <button
+              onClick={handleLogout}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0D9488] text-sm font-semibold text-white cursor-pointer hover:bg-[#0a7a70] transition-colors"
+              title="Logout"
+            >
+              AC
+            </button>
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
+        {/* Page content */}
+        <main className="flex-1 overflow-y-auto p-4 lg:p-8">
           {children}
         </main>
-
-        {/* Footer */}
-        <footer className="border-t border-gray-200 bg-white px-6 py-3">
-          <div className="flex items-center justify-between">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm font-medium transition-colors"
-              style={{ color: '#EA580C' }}
-            >
-              <ChevronLeft className="h-4 w-4" />
-              Back to Website
-            </Link>
-            <span className="text-xs text-gray-400">
-              &copy; {new Date().getFullYear()} Classic Cleaning. All rights reserved.
-            </span>
-          </div>
-        </footer>
       </div>
     </div>
   );

@@ -1,131 +1,110 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Lock, Eye, EyeOff, Sparkles, AlertCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { Lock, Eye, EyeOff, Sparkles } from "lucide-react";
+
+const ADMIN_PASSWORD = "classic2026";
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/dashboard";
-
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
+    setError("");
 
-    try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        router.push(redirect);
+    setTimeout(() => {
+      if (password === ADMIN_PASSWORD) {
+        sessionStorage.setItem("admin_auth", "true");
+        router.push("/dashboard");
       } else {
-        setError(data.error || "Invalid password. Try 'classic2026'");
+        setError("Invalid password. Try again.");
         setLoading(false);
       }
-    } catch {
-      setError("Connection error. Please try again.");
-      setLoading(false);
-    }
+    }, 500);
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-navy via-navy-light to-navy flex items-center justify-center px-4 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <div className="absolute -top-20 -left-20 w-72 h-72 bg-teal rounded-full blur-[100px]" />
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-blue rounded-full blur-[100px]" />
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative w-full max-w-md"
-      >
-        <div className="bg-white rounded-2xl shadow-2xl p-8">
-          {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="w-14 h-14 bg-gradient-to-br from-teal to-blue rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <Sparkles className="w-7 h-7 text-white" />
-            </div>
-            <h1 className="text-2xl font-extrabold text-navy font-[family-name:var(--font-poppins)]">
-              Classic Cleaning
-            </h1>
-            <p className="text-sm text-gray-500 mt-1">Admin Dashboard Login</p>
+    <div className="min-h-screen bg-gradient-to-br from-[#0B1D3A] via-[#0D9488] to-[#0B1D3A] flex items-center justify-center p-4">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <Sparkles className="w-8 h-8 text-white" />
           </div>
-
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter admin password"
-                  className="w-full pl-11 pr-12 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-            </div>
-
-            {error && (
-              <div className="flex items-center gap-2 text-red-500 text-sm bg-red-50 p-3 rounded-xl">
-                <AlertCircle className="w-4 h-4 shrink-0" />
-                {error}
-              </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-orange to-gold text-white font-bold py-3.5 rounded-xl hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-            >
-              {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                <>
-                  <Lock className="w-4 h-4" />
-                  Sign In
-                </>
-              )}
-            </button>
-          </form>
-
-          <div className="mt-6 p-3 bg-blue-light/50 rounded-xl">
-            <p className="text-xs text-blue text-center">
-              Demo password: <strong>classic2026</strong>
-            </p>
-          </div>
-
-          <div className="mt-4 text-center">
-            <a href="/" className="text-sm text-gray-400 hover:text-teal transition-colors">
-              ← Back to Website
-            </a>
-          </div>
+          <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-poppins)]">
+            Admin Dashboard
+          </h1>
+          <p className="text-white/60 text-sm mt-2">
+            Classic Cleaning Services
+          </p>
         </div>
-      </motion.div>
-    </main>
+
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-2xl p-6 shadow-2xl"
+        >
+          <div className="flex items-center gap-2 mb-5">
+            <Lock className="w-5 h-5 text-gray-400" />
+            <h2 className="font-semibold text-gray-800">Sign in to continue</h2>
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter admin password"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0D9488]/30 focus:border-[#0D9488] transition-colors pr-12"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
+          </div>
+
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600">
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading || !password}
+            className="w-full py-3 bg-gradient-to-r from-[#0D9488] to-[#0B1D3A] text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Signing in...
+              </span>
+            ) : (
+              "Sign In"
+            )}
+          </button>
+
+          <p className="text-xs text-gray-400 text-center mt-4">
+            Protected area. Authorized personnel only.
+          </p>
+        </form>
+      </div>
+    </div>
   );
 }

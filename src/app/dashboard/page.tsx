@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Image,
@@ -13,7 +13,6 @@ import {
   Briefcase,
   Search,
   BarChart3,
-  Settings,
   LogOut,
   TrendingUp,
   Users,
@@ -23,8 +22,9 @@ import {
   Bell,
   Menu,
   X,
-} from 'lucide-react';
-import Link from 'next/link';
+  Sparkles,
+} from "lucide-react";
+import Link from "next/link";
 
 const navItems = [
   { name: 'Services', icon: Briefcase, href: '/dashboard/services' },
@@ -67,7 +67,6 @@ const recentActivity = [
   { action: 'New review added', detail: '5-star review by Rahul Sharma', time: '5 min ago', icon: Star, color: 'text-yellow-500' },
   { action: 'Blog post published', detail: 'Top 10 Cleaning Tips for Monsoon', time: '1 hour ago', icon: FileText, color: 'text-blue-500' },
   { action: 'Gallery updated', detail: '4 new images uploaded', time: '3 hours ago', icon: Image, color: 'text-purple-500' },
-  { action: 'Hero section edited', detail: 'Subtitle updated', time: '5 hours ago', icon: LayoutDashboard, color: 'text-teal-500' },
   { action: 'New FAQ added', detail: 'Question about eco-friendly products', time: '1 day ago', icon: HelpCircle, color: 'text-orange-500' },
 ];
 
@@ -82,22 +81,33 @@ const quickActions = [
   { label: 'SEO', icon: Search, href: '/dashboard/seo', color: 'from-indigo-500 to-indigo-600' },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
-
 export default function DashboardPage() {
+  const router = useRouter();
+  const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeNav, setActiveNav] = useState('Dashboard');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const auth = sessionStorage.getItem("admin_auth");
+    if (auth !== "true") {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("admin_auth");
+    router.push("/login");
+  };
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-[#F9FAFB]">
+        <div className="animate-spin h-8 w-8 border-4 border-[#0D9488] border-t-transparent rounded-full" />
+      </div>
+    );
+  }
 
   const maxVisitors = Math.max(...trafficData.map((d) => d.visitors));
 
@@ -121,7 +131,7 @@ export default function DashboardPage() {
         <div className="flex h-16 items-center justify-between border-b border-white/10 px-6">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0D9488]">
-              <Briefcase className="h-4 w-4 text-white" />
+              <Sparkles className="h-4 w-4 text-white" />
             </div>
             <span className="font-semibold text-lg">Classic Cleaning</span>
           </div>
@@ -139,9 +149,9 @@ export default function DashboardPage() {
             Main
           </p>
           <button
-            onClick={() => setActiveNav('Dashboard')}
+            onClick={() => setSidebarOpen(false)}
             className={`mb-1 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-              activeNav === 'Dashboard'
+              pathname === '/dashboard'
                 ? 'bg-[#0D9488] text-white'
                 : 'text-white/70 hover:bg-white/10 hover:text-white'
             }`}
@@ -157,12 +167,9 @@ export default function DashboardPage() {
             <Link
               key={item.name}
               href={item.href}
-              onClick={() => {
-                setActiveNav(item.name);
-                setSidebarOpen(false);
-              }}
+              onClick={() => setSidebarOpen(false)}
               className={`mb-1 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                activeNav === item.name
+                pathname === item.href
                   ? 'bg-[#0D9488] text-white'
                   : 'text-white/70 hover:bg-white/10 hover:text-white'
               }`}
@@ -171,17 +178,6 @@ export default function DashboardPage() {
               {item.name}
             </Link>
           ))}
-
-          <p className="mb-2 mt-6 px-3 text-xs font-semibold uppercase tracking-wider text-white/40">
-            Settings
-          </p>
-          <Link
-            href="/dashboard/settings"
-            className="mb-1 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
-          >
-            <Settings className="h-4.5 w-4.5" />
-            Settings
-          </Link>
         </nav>
 
         {/* User section */}
@@ -194,7 +190,11 @@ export default function DashboardPage() {
               <p className="text-sm font-medium truncate">Admin</p>
               <p className="text-xs text-white/50 truncate">admin@classiccleaning.in</p>
             </div>
-            <button className="text-white/50 hover:text-white transition-colors">
+            <button
+              onClick={handleLogout}
+              className="text-white/50 hover:text-white transition-colors"
+              title="Logout"
+            >
               <LogOut className="h-4 w-4" />
             </button>
           </div>
@@ -224,25 +224,21 @@ export default function DashboardPage() {
               <Bell className="h-5 w-5" />
               <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-[#EA580C]" />
             </button>
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0D9488] text-sm font-semibold text-white cursor-pointer">
+            <button
+              onClick={handleLogout}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0D9488] text-sm font-semibold text-white cursor-pointer hover:bg-[#0a7a70] transition-colors"
+              title="Logout"
+            >
               AC
-            </div>
+            </button>
           </div>
         </header>
 
         {/* Scrollable content */}
         <main className="flex-1 overflow-y-auto p-4 lg:p-8">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="mx-auto max-w-7xl space-y-6"
-          >
+          <div className="mx-auto max-w-7xl space-y-6">
             {/* Welcome banner */}
-            <motion.div
-              variants={itemVariants}
-              className="rounded-xl bg-gradient-to-r from-[#0B1D3A] to-[#0D9488] p-6 text-white"
-            >
+            <div className="rounded-xl bg-gradient-to-r from-[#0B1D3A] to-[#0D9488] p-6 text-white">
               <h2
                 className="text-lg font-semibold"
                 style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
@@ -252,14 +248,13 @@ export default function DashboardPage() {
               <p className="mt-1 text-sm text-white/70">
                 Here&apos;s what&apos;s happening with your Classic Cleaning website today.
               </p>
-            </motion.div>
+            </div>
 
             {/* Stats cards */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {stats.map((stat) => (
-                <motion.div
+                <div
                   key={stat.label}
-                  variants={itemVariants}
                   className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm"
                 >
                   <div className="flex items-center justify-between">
@@ -285,17 +280,14 @@ export default function DashboardPage() {
                     </span>
                     <span className="ml-1 text-sm text-gray-400">vs last week</span>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             {/* Traffic chart + Popular pages */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
               {/* Traffic chart */}
-              <motion.div
-                variants={itemVariants}
-                className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm lg:col-span-2"
-              >
+              <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm lg:col-span-2">
                 <div className="mb-4 flex items-center justify-between">
                   <h3
                     className="font-semibold text-gray-900"
@@ -308,24 +300,19 @@ export default function DashboardPage() {
                 <div className="flex h-48 items-end gap-3">
                   {trafficData.map((data) => (
                     <div key={data.day} className="flex flex-1 flex-col items-center gap-2">
-                      <motion.div
-                        initial={{ height: 0 }}
-                        animate={{ height: `${(data.visitors / maxVisitors) * 100}%` }}
-                        transition={{ duration: 0.5, delay: 0.1 * trafficData.indexOf(data) }}
+                      <div
                         className="w-full rounded-t-md bg-gradient-to-t from-[#0D9488] to-[#14B8A6]"
+                        style={{ height: `${(data.visitors / maxVisitors) * 100}%` }}
                         title={`${data.visitors} visitors`}
                       />
                       <span className="text-xs text-gray-500">{data.day}</span>
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
 
               {/* Popular pages */}
-              <motion.div
-                variants={itemVariants}
-                className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm"
-              >
+              <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
                 <h3
                   className="mb-4 font-semibold text-gray-900"
                   style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
@@ -340,26 +327,21 @@ export default function DashboardPage() {
                         <span className="font-medium text-gray-900">{page.views.toLocaleString()}</span>
                       </div>
                       <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-gray-100">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${page.percentage}%` }}
-                          transition={{ duration: 0.8, delay: 0.3 }}
-                          className="h-full rounded-full bg-[#0D9488]"
+                        <div
+                          className="h-full rounded-full bg-[#0D9488] transition-all duration-700"
+                          style={{ width: `${page.percentage}%` }}
                         />
                       </div>
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             {/* Recent activity + Quick actions */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
               {/* Recent activity */}
-              <motion.div
-                variants={itemVariants}
-                className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm lg:col-span-2"
-              >
+              <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm lg:col-span-2">
                 <h3
                   className="mb-4 font-semibold text-gray-900"
                   style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
@@ -368,11 +350,8 @@ export default function DashboardPage() {
                 </h3>
                 <div className="space-y-4">
                   {recentActivity.map((item, index) => (
-                    <motion.div
+                    <div
                       key={index}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 * index }}
                       className="flex items-start gap-3 rounded-lg p-3 hover:bg-gray-50 transition-colors"
                     >
                       <div className={`mt-0.5 flex h-8 w-8 items-center justify-center rounded-lg bg-gray-50 ${item.color}`}>
@@ -383,16 +362,13 @@ export default function DashboardPage() {
                         <p className="text-xs text-gray-500 truncate">{item.detail}</p>
                       </div>
                       <span className="text-xs text-gray-400 whitespace-nowrap">{item.time}</span>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
 
               {/* Quick actions */}
-              <motion.div
-                variants={itemVariants}
-                className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm"
-              >
+              <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
                 <h3
                   className="mb-4 font-semibold text-gray-900"
                   style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
@@ -415,14 +391,11 @@ export default function DashboardPage() {
                     </Link>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             {/* All sections quick links */}
-            <motion.div
-              variants={itemVariants}
-              className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm"
-            >
+            <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
               <h3
                 className="mb-4 font-semibold text-gray-900"
                 style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
@@ -442,8 +415,8 @@ export default function DashboardPage() {
                   </Link>
                 ))}
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </main>
       </div>
     </div>

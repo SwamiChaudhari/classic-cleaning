@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import {
   BarChart3,
   TrendingUp,
@@ -12,6 +11,7 @@ import {
   Clock,
   ArrowUpRight,
 } from 'lucide-react';
+import DashboardLayout from '../layout';
 
 const trafficData = [
   { day: 'Mon', visitors: 380 },
@@ -83,45 +83,35 @@ export default function AnalyticsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 lg:p-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
-        <div>
-          <h1 className="text-2xl font-bold" style={{ color: '#0B1D3A' }}>
-            Analytics
-          </h1>
-          <p className="text-gray-500 mt-1">Track your website performance and traffic.</p>
-        </div>
-        <div className="flex gap-2 mt-4 sm:mt-0">
-          {(['7d', '30d', '90d'] as const).map((period) => (
-            <button
-              key={period}
-              onClick={() => setDateFilter(period)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                dateFilter === period
-                  ? 'text-white shadow-md'
-                  : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
-              }`}
-              style={
-                dateFilter === period
-                  ? { backgroundColor: '#0D9488' }
-                  : {}
-              }
-            >
-              {period === '7d' ? '7 Days' : period === '30d' ? '30 Days' : '90 Days'}
-            </button>
-          ))}
-        </div>
+    <DashboardLayout>
+      <div className="space-y-6">
+      {/* Filter Buttons */}
+      <div className="flex justify-end gap-2">
+        {(['7d', '30d', '90d'] as const).map((period) => (
+          <button
+            key={period}
+            onClick={() => setDateFilter(period)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              dateFilter === period
+                ? 'text-white shadow-md'
+                : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+            }`}
+            style={
+              dateFilter === period
+                ? { backgroundColor: '#0D9488' }
+                : {}
+            }
+          >
+            {period === '7d' ? '7 Days' : period === '30d' ? '30 Days' : '90 Days'}
+          </button>
+        ))}
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {stats.map((stat, index) => (
-          <motion.div
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {stats.map((stat) => (
+          <div
             key={stat.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
             className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
           >
             <div className="flex items-center justify-between mb-4">
@@ -151,19 +141,14 @@ export default function AnalyticsPage() {
             <p className="text-2xl font-bold" style={{ color: '#0B1D3A' }}>
               {stat.value}
             </p>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Traffic Overview + Traffic Sources */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Traffic Overview Chart */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="lg:col-span-2 bg-white rounded-xl p-6 shadow-sm border border-gray-100"
-        >
+        <div className="lg:col-span-2 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-lg font-semibold" style={{ color: '#0B1D3A' }}>
@@ -176,12 +161,10 @@ export default function AnalyticsPage() {
           <div className="flex items-end justify-between gap-3 h-52">
             {trafficData.map((item, index) => (
               <div key={item.day} className="flex flex-col items-center flex-1 gap-2">
-                <motion.div
-                  initial={{ height: 0 }}
-                  animate={{ height: `${(item.visitors / maxVisitors) * 100}%` }}
-                  transition={{ delay: 0.5 + index * 0.1, duration: 0.6, ease: 'easeOut' }}
+                <div
                   className="w-full rounded-t-md min-h-[8px]"
                   style={{
+                    height: `${(item.visitors / maxVisitors) * 100}%`,
                     backgroundColor: index === 3 ? '#0D9488' : '#0D948840',
                   }}
                 />
@@ -189,15 +172,10 @@ export default function AnalyticsPage() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Traffic Sources */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
-        >
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
           <h2 className="text-lg font-semibold mb-1" style={{ color: '#0B1D3A' }}>
             Traffic Sources
           </h2>
@@ -212,29 +190,21 @@ export default function AnalyticsPage() {
                   </span>
                 </div>
                 <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${source.percentage}%` }}
-                    transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
+                  <div
                     className="h-full rounded-full"
-                    style={{ backgroundColor: source.color }}
+                    style={{ width: `${source.percentage}%`, backgroundColor: source.color }}
                   />
                 </div>
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Popular Pages + Recent Conversions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Popular Pages Table */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
-        >
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
           <h2 className="text-lg font-semibold mb-1" style={{ color: '#0B1D3A' }}>
             Popular Pages
           </h2>
@@ -258,12 +228,9 @@ export default function AnalyticsPage() {
                 </tr>
               </thead>
               <tbody>
-                {popularPages.map((page, index) => (
-                  <motion.tr
+                {popularPages.map((page) => (
+                  <tr
                     key={page.page}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.7 + index * 0.05 }}
                     className="border-b border-gray-50 last:border-0"
                   >
                     <td className="py-3 text-sm font-medium text-gray-700">
@@ -278,20 +245,15 @@ export default function AnalyticsPage() {
                     <td className="py-3 text-sm text-right text-gray-600">
                       {page.avgTime}
                     </td>
-                  </motion.tr>
+                  </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </motion.div>
+        </div>
 
         {/* Recent Conversions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
-        >
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-lg font-semibold" style={{ color: '#0B1D3A' }}>
@@ -303,11 +265,8 @@ export default function AnalyticsPage() {
           </div>
           <div className="space-y-4">
             {recentConversions.map((conversion, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8 + index * 0.08 }}
                 className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
               >
                 <div className="flex items-center gap-3">
@@ -325,11 +284,12 @@ export default function AnalyticsPage() {
                   </div>
                 </div>
                 <span className="text-xs text-gray-400">{conversion.time}</span>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }

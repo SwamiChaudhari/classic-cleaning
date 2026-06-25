@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   FileText,
   Plus,
@@ -15,6 +14,7 @@ import {
   Star,
 } from 'lucide-react';
 import { blogPosts, BlogPost, blogCategories } from '@/config/blog';
+import DashboardLayout from '../layout';
 
 interface BlogFormData {
   id: string;
@@ -159,301 +159,289 @@ export default function BlogManagement() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold" style={{ color: '#0B1D3A' }}>
-            Blog Management
-          </h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Manage your blog posts — create, edit, or remove articles.
-          </p>
-        </div>
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={openAddModal}
-          className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-shadow hover:shadow-lg"
-          style={{ backgroundColor: '#0D9488' }}
-        >
-          <Plus className="h-4 w-4" />
-          New Post
-        </motion.button>
-      </div>
-
-      {/* Stats Row */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <div className="rounded-xl bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Total Posts</p>
-          <p className="mt-1 text-2xl font-bold" style={{ color: '#0B1D3A' }}>
-            {totalPosts}
-          </p>
-        </div>
-        <div className="rounded-xl bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Published</p>
-          <p className="mt-1 text-2xl font-bold text-teal-600">
-            {publishedPosts}
-          </p>
-        </div>
-        <div className="rounded-xl bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Drafts</p>
-          <p className="mt-1 text-2xl font-bold text-amber-600">
-            {draftPosts}
-          </p>
-        </div>
-        <div className="rounded-xl bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Total Views</p>
-          <p className="mt-1 text-2xl font-bold" style={{ color: '#EA580C' }}>
-            {totalViews.toLocaleString()}
-          </p>
-        </div>
-      </div>
-
-      {/* Category Filter */}
-      <div className="flex flex-wrap gap-2">
-        {blogCategories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setFilterCategory(cat)}
-            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-              filterCategory === cat
-                ? 'text-white'
-                : 'bg-white text-gray-600 hover:bg-gray-100'
-            }`}
-            style={
-              filterCategory === cat ? { backgroundColor: '#0B1D3A' } : {}
-            }
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* Desktop Table */}
-      <div className="hidden overflow-hidden rounded-xl bg-white shadow-sm lg:block">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-gray-100 bg-gray-50/50">
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Post
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Category
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Author
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Date
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Status
-              </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-50">
-            {filteredBlogs.map((blog) => (
-              <motion.tr
-                key={blog.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="transition-colors hover:bg-gray-50/50"
-              >
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
-                      style={{ backgroundColor: '#0D948815' }}
-                    >
-                      <FileText
-                        className="h-5 w-5"
-                        style={{ color: '#0D9488' }}
-                      />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="truncate font-medium text-gray-900">
-                        {blog.title}
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {blog.readTime} read
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <span
-                    className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                      categoryColors[blog.category] || 'bg-gray-100 text-gray-600'
-                    }`}
-                  >
-                    {blog.category}
-                  </span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-sm text-gray-600">{blog.author}</span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-1.5 text-sm text-gray-500">
-                    <Calendar className="h-3.5 w-3.5" />
-                    {blog.date}
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  {blog.featured ? (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700">
-                      <Star className="h-3 w-3 fill-current" />
-                      Featured
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-500">
-                      Standard
-                    </span>
-                  )}
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center justify-end gap-1">
-                    <a
-                      href={`/blog/${blog.slug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
-                      title="View Post"
-                    >
-                      <Eye className="h-4 w-4" />
-                    </a>
-                    <button
-                      onClick={() => openEditModal(blog)}
-                      className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-teal-50 hover:text-teal-600"
-                      title="Edit"
-                    >
-                      <Edit2 className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => setDeleteConfirm(blog.id)}
-                      className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
-                      title="Delete"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                </td>
-              </motion.tr>
-            ))}
-          </tbody>
-        </table>
-        {filteredBlogs.length === 0 && (
-          <div className="py-12 text-center">
-            <FileText className="mx-auto h-12 w-12 text-gray-300" />
-            <p className="mt-2 text-gray-400">No blog posts found.</p>
-          </div>
-        )}
-      </div>
-
-      {/* Mobile Cards */}
-      <div className="space-y-4 lg:hidden">
-        {filteredBlogs.map((blog) => (
-          <motion.div
-            key={blog.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-xl bg-white p-4 shadow-sm"
-          >
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <div
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
-                  style={{ backgroundColor: '#0D948815' }}
-                >
-                  <FileText
-                    className="h-5 w-5"
-                    style={{ color: '#0D9488' }}
-                  />
-                </div>
-                <div className="min-w-0">
-                  <p className="truncate font-medium text-gray-900">
-                    {blog.title}
-                  </p>
-                  <span
-                    className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
-                      categoryColors[blog.category] || 'bg-gray-100 text-gray-600'
-                    }`}
-                  >
-                    {blog.category}
-                  </span>
-                </div>
-              </div>
-              {blog.featured && (
-                <Star className="h-4 w-4 shrink-0 fill-current text-amber-500" />
-              )}
-            </div>
-
-            <p className="mt-2 line-clamp-2 text-sm text-gray-500">
-              {blog.excerpt}
+    <DashboardLayout>
+      <div className="space-y-6">
+        {/* Page Header */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-bold" style={{ color: '#0B1D3A' }}>
+              Blog Management
+            </h1>
+            <p className="mt-1 text-sm text-gray-500">
+              Manage your blog posts — create, edit, or remove articles.
             </p>
+          </div>
+          <button
+            onClick={openAddModal}
+            className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-shadow hover:shadow-lg"
+            style={{ backgroundColor: '#0D9488' }}
+          >
+            <Plus className="h-4 w-4" />
+            New Post
+          </button>
+        </div>
 
-            <div className="mt-3 flex items-center justify-between border-t border-gray-50 pt-3">
-              <div className="flex items-center gap-3 text-xs text-gray-400">
-                <span>{blog.author}</span>
-                <span className="flex items-center gap-1">
-                  <Calendar className="h-3 w-3" />
-                  {blog.date}
-                </span>
-                <span>{blog.readTime}</span>
+        {/* Stats Row */}
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="rounded-xl bg-white p-4 shadow-sm">
+            <p className="text-sm text-gray-500">Total Posts</p>
+            <p className="mt-1 text-2xl font-bold" style={{ color: '#0B1D3A' }}>
+              {totalPosts}
+            </p>
+          </div>
+          <div className="rounded-xl bg-white p-4 shadow-sm">
+            <p className="text-sm text-gray-500">Published</p>
+            <p className="mt-1 text-2xl font-bold text-teal-600">
+              {publishedPosts}
+            </p>
+          </div>
+          <div className="rounded-xl bg-white p-4 shadow-sm">
+            <p className="text-sm text-gray-500">Drafts</p>
+            <p className="mt-1 text-2xl font-bold text-amber-600">
+              {draftPosts}
+            </p>
+          </div>
+          <div className="rounded-xl bg-white p-4 shadow-sm">
+            <p className="text-sm text-gray-500">Total Views</p>
+            <p className="mt-1 text-2xl font-bold" style={{ color: '#EA580C' }}>
+              {totalViews.toLocaleString()}
+            </p>
+          </div>
+        </div>
+
+        {/* Category Filter */}
+        <div className="flex flex-wrap gap-2">
+          {blogCategories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setFilterCategory(cat)}
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                filterCategory === cat
+                  ? 'text-white'
+                  : 'bg-white text-gray-600 hover:bg-gray-100'
+              }`}
+              style={
+                filterCategory === cat ? { backgroundColor: '#0B1D3A' } : {}
+              }
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Desktop Table */}
+        <div className="hidden overflow-hidden rounded-xl bg-white shadow-sm lg:block">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-100 bg-gray-50/50">
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Post
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Category
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Author
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Date
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Status
+                </th>
+                <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {filteredBlogs.map((blog) => (
+                <tr
+                  key={blog.id}
+                  className="transition-colors hover:bg-gray-50/50"
+                >
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
+                        style={{ backgroundColor: '#0D948815' }}
+                      >
+                        <FileText
+                          className="h-5 w-5"
+                          style={{ color: '#0D9488' }}
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="truncate font-medium text-gray-900">
+                          {blog.title}
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          {blog.readTime} read
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                        categoryColors[blog.category] || 'bg-gray-100 text-gray-600'
+                      }`}
+                    >
+                      {blog.category}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className="text-sm text-gray-600">{blog.author}</span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-1.5 text-sm text-gray-500">
+                      <Calendar className="h-3.5 w-3.5" />
+                      {blog.date}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3">
+                    {blog.featured ? (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700">
+                        <Star className="h-3 w-3 fill-current" />
+                        Featured
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-500">
+                        Standard
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center justify-end gap-1">
+                      <a
+                        href={`/blog/${blog.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+                        title="View Post"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </a>
+                      <button
+                        onClick={() => openEditModal(blog)}
+                        className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-teal-50 hover:text-teal-600"
+                        title="Edit"
+                      >
+                        <Edit2 className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => setDeleteConfirm(blog.id)}
+                        className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
+                        title="Delete"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {filteredBlogs.length === 0 && (
+            <div className="py-12 text-center">
+              <FileText className="mx-auto h-12 w-12 text-gray-300" />
+              <p className="mt-2 text-gray-400">No blog posts found.</p>
+            </div>
+          )}
+        </div>
+
+        {/* Mobile Cards */}
+        <div className="space-y-4 lg:hidden">
+          {filteredBlogs.map((blog) => (
+            <div
+              key={blog.id}
+              className="rounded-xl bg-white p-4 shadow-sm"
+            >
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
+                    style={{ backgroundColor: '#0D948815' }}
+                  >
+                    <FileText
+                      className="h-5 w-5"
+                      style={{ color: '#0D9488' }}
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="truncate font-medium text-gray-900">
+                      {blog.title}
+                    </p>
+                    <span
+                      className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
+                        categoryColors[blog.category] || 'bg-gray-100 text-gray-600'
+                      }`}
+                    >
+                      {blog.category}
+                    </span>
+                  </div>
+                </div>
+                {blog.featured && (
+                  <Star className="h-4 w-4 shrink-0 fill-current text-amber-500" />
+                )}
               </div>
-              <div className="flex items-center gap-1">
-                <a
-                  href={`/blog/${blog.slug}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100"
-                  title="View"
-                >
-                  <Eye className="h-4 w-4" />
-                </a>
-                <button
-                  onClick={() => openEditModal(blog)}
-                  className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-teal-50 hover:text-teal-600"
-                  title="Edit"
-                >
-                  <Edit2 className="h-4 w-4" />
-                </button>
-                <button
-                  onClick={() => setDeleteConfirm(blog.id)}
-                  className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
-                  title="Delete"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
+
+              <p className="mt-2 line-clamp-2 text-sm text-gray-500">
+                {blog.excerpt}
+              </p>
+
+              <div className="mt-3 flex items-center justify-between border-t border-gray-50 pt-3">
+                <div className="flex items-center gap-3 text-xs text-gray-400">
+                  <span>{blog.author}</span>
+                  <span className="flex items-center gap-1">
+                    <Calendar className="h-3 w-3" />
+                    {blog.date}
+                  </span>
+                  <span>{blog.readTime}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <a
+                    href={`/blog/${blog.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100"
+                    title="View"
+                  >
+                    <Eye className="h-4 w-4" />
+                  </a>
+                  <button
+                    onClick={() => openEditModal(blog)}
+                    className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-teal-50 hover:text-teal-600"
+                    title="Edit"
+                  >
+                    <Edit2 className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => setDeleteConfirm(blog.id)}
+                    className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
+                    title="Delete"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
             </div>
-          </motion.div>
-        ))}
-        {filteredBlogs.length === 0 && (
-          <div className="rounded-xl bg-white py-12 text-center shadow-sm">
-            <FileText className="mx-auto h-12 w-12 text-gray-300" />
-            <p className="mt-2 text-gray-400">No blog posts found.</p>
-          </div>
-        )}
-      </div>
+          ))}
+          {filteredBlogs.length === 0 && (
+            <div className="rounded-xl bg-white py-12 text-center shadow-sm">
+              <FileText className="mx-auto h-12 w-12 text-gray-300" />
+              <p className="mt-2 text-gray-400">No blog posts found.</p>
+            </div>
+          )}
+        </div>
 
-      {/* Add/Edit Modal */}
-      <AnimatePresence>
+        {/* Add/Edit Modal */}
         {modalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
             onClick={closeModal}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            <div
               className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
@@ -660,36 +648,26 @@ export default function BlogManagement() {
                 >
                   Cancel
                 </button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <button
                   onClick={handleSave}
                   className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white shadow-md transition-shadow hover:shadow-lg"
                   style={{ backgroundColor: '#0D9488' }}
                 >
                   <Save className="h-4 w-4" />
                   {editingId ? 'Update Post' : 'Create Post'}
-                </motion.button>
+                </button>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
 
-      {/* Delete Confirmation Dialog */}
-      <AnimatePresence>
+        {/* Delete Confirmation Dialog */}
         {deleteConfirm && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
             onClick={() => setDeleteConfirm(null)}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            <div
               className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
@@ -717,20 +695,18 @@ export default function BlogManagement() {
                 >
                   Cancel
                 </button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <button
                   onClick={() => handleDelete(deleteConfirm)}
                   className="rounded-lg px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-600"
                   style={{ backgroundColor: '#EA580C' }}
                 >
                   Delete
-                </motion.button>
+                </button>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }

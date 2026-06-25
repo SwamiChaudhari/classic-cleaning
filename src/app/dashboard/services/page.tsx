@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus,
   Edit2,
@@ -23,6 +22,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { services, formatPrice, Service } from '@/config/services';
+import DashboardLayout from '../layout';
 
 const iconMap: Record<string, React.ElementType> = {
   Home,
@@ -158,348 +158,335 @@ export default function ServicesManagement() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold" style={{ color: '#0B1D3A' }}>
-            Services Management
-          </h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Manage your cleaning services — add, edit, or remove offerings.
-          </p>
-        </div>
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={openAddModal}
-          className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-shadow hover:shadow-lg"
-          style={{ backgroundColor: '#0D9488' }}
-        >
-          <Plus className="h-4 w-4" />
-          Add Service
-        </motion.button>
-      </div>
-
-      {/* Stats Row */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <div className="rounded-xl bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Total Services</p>
-          <p className="mt-1 text-2xl font-bold" style={{ color: '#0B1D3A' }}>
-            {serviceList.length}
-          </p>
-        </div>
-        <div className="rounded-xl bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Active</p>
-          <p className="mt-1 text-2xl font-bold text-teal-600">
-            {serviceList.filter((s) => s.popular).length}
-          </p>
-        </div>
-        <div className="rounded-xl bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Residential</p>
-          <p className="mt-1 text-2xl font-bold text-blue-600">
-            {serviceList.filter((s) => s.category === 'residential').length}
-          </p>
-        </div>
-        <div className="rounded-xl bg-white p-4 shadow-sm">
-          <p className="text-sm text-gray-500">Commercial</p>
-          <p className="mt-1 text-2xl font-bold text-purple-600">
-            {serviceList.filter((s) => s.category === 'commercial').length}
-          </p>
-        </div>
-      </div>
-
-      {/* Filter */}
-      <div className="flex flex-wrap gap-2">
-        <button
-          onClick={() => setFilterCategory('all')}
-          className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-            filterCategory === 'all'
-              ? 'text-white'
-              : 'bg-white text-gray-600 hover:bg-gray-100'
-          }`}
-          style={
-            filterCategory === 'all' ? { backgroundColor: '#0B1D3A' } : {}
-          }
-        >
-          All
-        </button>
-        <button
-          onClick={() => setFilterCategory('residential')}
-          className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-            filterCategory === 'residential'
-              ? 'text-white'
-              : 'bg-white text-gray-600 hover:bg-gray-100'
-          }`}
-          style={
-            filterCategory === 'residential'
-              ? { backgroundColor: '#0B1D3A' }
-              : {}
-          }
-        >
-          Residential
-        </button>
-        <button
-          onClick={() => setFilterCategory('commercial')}
-          className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-            filterCategory === 'commercial'
-              ? 'text-white'
-              : 'bg-white text-gray-600 hover:bg-gray-100'
-          }`}
-          style={
-            filterCategory === 'commercial'
-              ? { backgroundColor: '#0B1D3A' }
-              : {}
-          }
-        >
-          Commercial
-        </button>
-        <button
-          onClick={() => setFilterCategory('specialty')}
-          className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-            filterCategory === 'specialty'
-              ? 'text-white'
-              : 'bg-white text-gray-600 hover:bg-gray-100'
-          }`}
-          style={
-            filterCategory === 'specialty'
-              ? { backgroundColor: '#0B1D3A' }
-              : {}
-          }
-        >
-          Specialty
-        </button>
-      </div>
-
-      {/* Desktop Table */}
-      <div className="hidden overflow-hidden rounded-xl bg-white shadow-sm md:block">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-gray-100 bg-gray-50/50">
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Service
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Category
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Price
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Status
-              </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-50">
-            {filteredServices.map((service) => {
-              const Icon = getIconComponent(service.icon);
-              return (
-                <motion.tr
-                  key={service.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="transition-colors hover:bg-gray-50/50"
-                >
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="flex h-10 w-10 items-center justify-center rounded-lg"
-                        style={{ backgroundColor: '#0D948815' }}
-                      >
-                        <Icon
-                          className="h-5 w-5"
-                          style={{ color: '#0D9488' }}
-                        />
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900">
-                          {service.title}
-                        </p>
-                        <p className="text-xs text-gray-400">
-                          {service.shortDescription.slice(0, 40)}...
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${
-                        categoryColors[service.category]
-                      }`}
-                    >
-                      {service.category}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="font-semibold" style={{ color: '#0B1D3A' }}>
-                      {formatPrice(service.startingPrice)}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    {service.popular ? (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
-                        <Star className="h-3 w-3 fill-current" />
-                        Active
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-500">
-                        Inactive
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center justify-end gap-1">
-                      <button
-                        onClick={() => toggleVisibility(service.id)}
-                        className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
-                        title={
-                          service.popular ? 'Mark as inactive' : 'Mark as active'
-                        }
-                      >
-                        {service.popular ? (
-                          <Eye className="h-4 w-4" />
-                        ) : (
-                          <EyeOff className="h-4 w-4" />
-                        )}
-                      </button>
-                      <button
-                        onClick={() => openEditModal(service)}
-                        className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-teal-50 hover:text-teal-600"
-                        title="Edit"
-                      >
-                        <Edit2 className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => setDeleteConfirm(service.id)}
-                        className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
-                        title="Delete"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </td>
-                </motion.tr>
-              );
-            })}
-          </tbody>
-        </table>
-        {filteredServices.length === 0 && (
-          <div className="py-12 text-center">
-            <p className="text-gray-400">No services found.</p>
+    <DashboardLayout>
+      <div className="space-y-6">
+        {/* Page Header */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-bold" style={{ color: '#0B1D3A' }}>
+              Services Management
+            </h1>
+            <p className="mt-1 text-sm text-gray-500">
+              Manage your cleaning services — add, edit, or remove offerings.
+            </p>
           </div>
-        )}
-      </div>
+          <button
+            onClick={openAddModal}
+            className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-shadow hover:shadow-lg"
+            style={{ backgroundColor: '#0D9488' }}
+          >
+            <Plus className="h-4 w-4" />
+            Add Service
+          </button>
+        </div>
 
-      {/* Mobile Cards */}
-      <div className="space-y-4 md:hidden">
-        {filteredServices.map((service) => {
-          const Icon = getIconComponent(service.icon);
-          return (
-            <motion.div
-              key={service.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="rounded-xl bg-white p-4 shadow-sm"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="flex h-10 w-10 items-center justify-center rounded-lg"
-                    style={{ backgroundColor: '#0D948815' }}
+        {/* Stats Row */}
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="rounded-xl bg-white p-4 shadow-sm">
+            <p className="text-sm text-gray-500">Total Services</p>
+            <p className="mt-1 text-2xl font-bold" style={{ color: '#0B1D3A' }}>
+              {serviceList.length}
+            </p>
+          </div>
+          <div className="rounded-xl bg-white p-4 shadow-sm">
+            <p className="text-sm text-gray-500">Active</p>
+            <p className="mt-1 text-2xl font-bold text-teal-600">
+              {serviceList.filter((s) => s.popular).length}
+            </p>
+          </div>
+          <div className="rounded-xl bg-white p-4 shadow-sm">
+            <p className="text-sm text-gray-500">Residential</p>
+            <p className="mt-1 text-2xl font-bold text-blue-600">
+              {serviceList.filter((s) => s.category === 'residential').length}
+            </p>
+          </div>
+          <div className="rounded-xl bg-white p-4 shadow-sm">
+            <p className="text-sm text-gray-500">Commercial</p>
+            <p className="mt-1 text-2xl font-bold text-purple-600">
+              {serviceList.filter((s) => s.category === 'commercial').length}
+            </p>
+          </div>
+        </div>
+
+        {/* Filter */}
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setFilterCategory('all')}
+            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+              filterCategory === 'all'
+                ? 'text-white'
+                : 'bg-white text-gray-600 hover:bg-gray-100'
+            }`}
+            style={
+              filterCategory === 'all' ? { backgroundColor: '#0B1D3A' } : {}
+            }
+          >
+            All
+          </button>
+          <button
+            onClick={() => setFilterCategory('residential')}
+            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+              filterCategory === 'residential'
+                ? 'text-white'
+                : 'bg-white text-gray-600 hover:bg-gray-100'
+            }`}
+            style={
+              filterCategory === 'residential'
+                ? { backgroundColor: '#0B1D3A' }
+                : {}
+            }
+          >
+            Residential
+          </button>
+          <button
+            onClick={() => setFilterCategory('commercial')}
+            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+              filterCategory === 'commercial'
+                ? 'text-white'
+                : 'bg-white text-gray-600 hover:bg-gray-100'
+            }`}
+            style={
+              filterCategory === 'commercial'
+                ? { backgroundColor: '#0B1D3A' }
+                : {}
+            }
+          >
+            Commercial
+          </button>
+          <button
+            onClick={() => setFilterCategory('specialty')}
+            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+              filterCategory === 'specialty'
+                ? 'text-white'
+                : 'bg-white text-gray-600 hover:bg-gray-100'
+            }`}
+            style={
+              filterCategory === 'specialty'
+                ? { backgroundColor: '#0B1D3A' }
+                : {}
+            }
+          >
+            Specialty
+          </button>
+        </div>
+
+        {/* Desktop Table */}
+        <div className="hidden overflow-hidden rounded-xl bg-white shadow-sm md:block">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-100 bg-gray-50/50">
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Service
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Category
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Price
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Status
+                </th>
+                <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {filteredServices.map((service) => {
+                const Icon = getIconComponent(service.icon);
+                return (
+                  <tr
+                    key={service.id}
+                    className="transition-colors hover:bg-gray-50/50"
                   >
-                    <Icon className="h-5 w-5" style={{ color: '#0D9488' }} />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900">
-                      {service.title}
-                    </p>
-                    <span
-                      className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium capitalize ${
-                        categoryColors[service.category]
-                      }`}
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="flex h-10 w-10 items-center justify-center rounded-lg"
+                          style={{ backgroundColor: '#0D948815' }}
+                        >
+                          <Icon
+                            className="h-5 w-5"
+                            style={{ color: '#0D9488' }}
+                          />
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            {service.title}
+                          </p>
+                          <p className="text-xs text-gray-400">
+                            {service.shortDescription.slice(0, 40)}...
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span
+                        className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${
+                          categoryColors[service.category]
+                        }`}
+                      >
+                        {service.category}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="font-semibold" style={{ color: '#0B1D3A' }}>
+                        {formatPrice(service.startingPrice)}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      {service.popular ? (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
+                          <Star className="h-3 w-3 fill-current" />
+                          Active
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-500">
+                          Inactive
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center justify-end gap-1">
+                        <button
+                          onClick={() => toggleVisibility(service.id)}
+                          className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+                          title={
+                            service.popular ? 'Mark as inactive' : 'Mark as active'
+                          }
+                        >
+                          {service.popular ? (
+                            <Eye className="h-4 w-4" />
+                          ) : (
+                            <EyeOff className="h-4 w-4" />
+                          )}
+                        </button>
+                        <button
+                          onClick={() => openEditModal(service)}
+                          className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-teal-50 hover:text-teal-600"
+                          title="Edit"
+                        >
+                          <Edit2 className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => setDeleteConfirm(service.id)}
+                          className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
+                          title="Delete"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          {filteredServices.length === 0 && (
+            <div className="py-12 text-center">
+              <p className="text-gray-400">No services found.</p>
+            </div>
+          )}
+        </div>
+
+        {/* Mobile Cards */}
+        <div className="space-y-4 md:hidden">
+          {filteredServices.map((service) => {
+            const Icon = getIconComponent(service.icon);
+            return (
+              <div
+                key={service.id}
+                className="rounded-xl bg-white p-4 shadow-sm"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="flex h-10 w-10 items-center justify-center rounded-lg"
+                      style={{ backgroundColor: '#0D948815' }}
                     >
-                      {service.category}
-                    </span>
+                      <Icon className="h-5 w-5" style={{ color: '#0D9488' }} />
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900">
+                        {service.title}
+                      </p>
+                      <span
+                        className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium capitalize ${
+                          categoryColors[service.category]
+                        }`}
+                      >
+                        {service.category}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <GripVertical className="h-4 w-4 text-gray-300" />
                   </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  <GripVertical className="h-4 w-4 text-gray-300" />
-                </div>
-              </div>
 
-              <p className="mt-2 text-sm text-gray-500">
-                {service.shortDescription}
-              </p>
+                <p className="mt-2 text-sm text-gray-500">
+                  {service.shortDescription}
+                </p>
 
-              <div className="mt-3 flex items-center justify-between">
-                <span
-                  className="text-lg font-bold"
-                  style={{ color: '#0B1D3A' }}
-                >
-                  {formatPrice(service.startingPrice)}
-                </span>
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => toggleVisibility(service.id)}
-                    className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100"
+                <div className="mt-3 flex items-center justify-between">
+                  <span
+                    className="text-lg font-bold"
+                    style={{ color: '#0B1D3A' }}
                   >
-                    {service.popular ? (
-                      <Eye className="h-4 w-4 text-teal-500" />
-                    ) : (
-                      <EyeOff className="h-4 w-4" />
-                    )}
-                  </button>
-                  <button
-                    onClick={() => openEditModal(service)}
-                    className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-teal-50 hover:text-teal-600"
-                  >
-                    <Edit2 className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => setDeleteConfirm(service.id)}
-                    className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-
-              {service.popular && (
-                <div className="mt-2 flex items-center gap-1">
-                  <Star className="h-3 w-3 fill-current text-amber-500" />
-                  <span className="text-xs font-medium text-amber-600">
-                    Popular Service
+                    {formatPrice(service.startingPrice)}
                   </span>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => toggleVisibility(service.id)}
+                      className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100"
+                    >
+                      {service.popular ? (
+                        <Eye className="h-4 w-4 text-teal-500" />
+                      ) : (
+                        <EyeOff className="h-4 w-4" />
+                      )}
+                    </button>
+                    <button
+                      onClick={() => openEditModal(service)}
+                      className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-teal-50 hover:text-teal-600"
+                    >
+                      <Edit2 className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => setDeleteConfirm(service.id)}
+                      className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
-              )}
-            </motion.div>
-          );
-        })}
-        {filteredServices.length === 0 && (
-          <div className="rounded-xl bg-white py-12 text-center shadow-sm">
-            <p className="text-gray-400">No services found.</p>
-          </div>
-        )}
-      </div>
 
-      {/* Add/Edit Modal */}
-      <AnimatePresence>
+                {service.popular && (
+                  <div className="mt-2 flex items-center gap-1">
+                    <Star className="h-3 w-3 fill-current text-amber-500" />
+                    <span className="text-xs font-medium text-amber-600">
+                      Popular Service
+                    </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          {filteredServices.length === 0 && (
+            <div className="rounded-xl bg-white py-12 text-center shadow-sm">
+              <p className="text-gray-400">No services found.</p>
+            </div>
+          )}
+        </div>
+
+        {/* Add/Edit Modal */}
         {modalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
             onClick={closeModal}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.2 }}
+            <div
               className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
@@ -746,37 +733,26 @@ export default function ServicesManagement() {
                 >
                   Cancel
                 </button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <button
                   onClick={handleSave}
                   className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white shadow-md transition-shadow hover:shadow-lg"
                   style={{ backgroundColor: '#0D9488' }}
                 >
                   <Save className="h-4 w-4" />
                   {editingId ? 'Update Service' : 'Save Service'}
-                </motion.button>
+                </button>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
 
-      {/* Delete Confirmation Dialog */}
-      <AnimatePresence>
+        {/* Delete Confirmation Dialog */}
         {deleteConfirm && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
             onClick={() => setDeleteConfirm(null)}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.2 }}
+            <div
               className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
@@ -800,19 +776,17 @@ export default function ServicesManagement() {
                 >
                   Cancel
                 </button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <button
                   onClick={() => handleDelete(deleteConfirm)}
                   className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700"
                 >
                   Delete
-                </motion.button>
+                </button>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }

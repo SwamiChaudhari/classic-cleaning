@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import {
   Search,
   Globe,
@@ -12,6 +11,7 @@ import {
   Save,
 } from 'lucide-react';
 import { business } from '@/config/business';
+import DashboardLayout from '../layout';
 
 type TabKey = 'general' | 'og' | 'schema' | 'sitemap';
 
@@ -127,18 +127,13 @@ export default function SeoSettingsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 lg:p-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-[#0B1D3A]">SEO Settings</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Manage your website search engine optimization settings
-          </p>
-        </div>
+    <DashboardLayout>
+      <div className="space-y-6">
+      {/* Save Button */}
+      <div className="flex justify-end">
         <button
           onClick={handleSave}
-          className="mt-4 sm:mt-0 inline-flex items-center gap-2 px-5 py-2.5 bg-[#0D9488] text-white rounded-lg font-medium hover:bg-[#0a7a70] transition-colors shadow-sm"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0D9488] text-white rounded-lg font-medium hover:bg-[#0a7a70] transition-colors shadow-sm"
         >
           {saved ? (
             <CheckCircle2 className="w-4 h-4" />
@@ -150,12 +145,7 @@ export default function SeoSettingsPage() {
       </div>
 
       {/* SEO Score Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8"
-      >
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <div className="flex flex-col md:flex-row md:items-center gap-6">
           <CircularProgress score={seoScore} />
           <div className="flex-1">
@@ -188,7 +178,7 @@ export default function SeoSettingsPage() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Tabs */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -214,12 +204,7 @@ export default function SeoSettingsPage() {
         <div className="p-6">
           {/* General Tab */}
           {activeTab === 'general' && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6"
-            >
+            <div className="space-y-6">
               {/* Meta Title */}
               <div>
                 <label className="block text-sm font-medium text-[#0B1D3A] mb-1">
@@ -358,17 +343,12 @@ export default function SeoSettingsPage() {
                   className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#0D9488]/30 focus:border-[#0D9488] transition-colors resize-none"
                 />
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* Open Graph Tab */}
           {activeTab === 'og' && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6"
-            >
+            <div className="space-y-6">
               {/* OG Title */}
               <div>
                 <label className="block text-sm font-medium text-[#0B1D3A] mb-1">
@@ -437,17 +417,12 @@ export default function SeoSettingsPage() {
                   <option value="profile">Profile</option>
                 </select>
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* Schema Tab */}
           {activeTab === 'schema' && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6"
-            >
+            <div className="space-y-6">
               {/* Schema Type */}
               <div>
                 <label className="block text-sm font-medium text-[#0B1D3A] mb-1">
@@ -481,17 +456,12 @@ export default function SeoSettingsPage() {
                   {jsonLdPreview}
                 </pre>
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* Sitemap Tab */}
           {activeTab === 'sitemap' && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6"
-            >
+            <div className="space-y-6">
               {/* Auto-generate checkbox */}
               <div className="flex items-start gap-3">
                 <input
@@ -553,10 +523,11 @@ export default function SeoSettingsPage() {
                 <Link className="w-4 h-4" />
                 Regenerate Sitemap
               </button>
-            </motion.div>
+            </div>
           )}
         </div>
       </div>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }
