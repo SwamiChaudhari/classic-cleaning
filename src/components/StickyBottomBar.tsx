@@ -25,10 +25,10 @@ export default function StickyBottomBar() {
           href={`https://wa.me/${business.whatsapp}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 flex items-center justify-center gap-2 bg-emerald text-white font-bold py-3.5 rounded-xl text-sm active:scale-95 transition-transform min-h-[48px]"
+          className="flex-1 flex items-center justify-center gap-1.5 bg-emerald text-white font-bold py-3.5 rounded-xl text-xs active:scale-95 transition-transform min-h-[48px]"
         >
-          <MessageCircle className="w-4 h-4" />
-          WhatsApp
+          <MessageCircle className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">WhatsApp</span>
         </a>
 
         {/* Get Free Quote — larger, pulsing */}
