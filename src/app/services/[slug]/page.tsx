@@ -3,7 +3,6 @@ import { services, getServiceBySlug, formatPrice } from "@/config/services";
 import { business } from "@/config/business";
 import { faqs } from "@/config/faq";
 import Footer from "@/components/Footer";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import Navbar from "@/components/Navbar";
 import QuoteForm from "@/components/QuoteForm";
 import {
@@ -243,7 +242,6 @@ export default async function ServicePage({ params }: Props) {
       </section>
 
       <Footer />
-      <StickyBottomBar />
     </main>
   );
 }

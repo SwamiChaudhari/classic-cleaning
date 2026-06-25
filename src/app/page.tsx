@@ -1,5 +1,4 @@
 import Navbar from "@/components/Navbar";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import Hero from "@/components/Hero";
 import TrustIndicators from "@/components/TrustIndicators";
 import Services from "@/components/Services";
@@ -48,7 +47,6 @@ export default function Home() {
       <FAQ />
       <FinalCTA />
       <Footer />
-      <StickyBottomBar />
     </main>
   );
 }

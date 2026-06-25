@@ -5,7 +5,6 @@ import { packages, formatPrice } from "@/config/pricing";
 import { business } from "@/config/business";
 import { faqs } from "@/config/faq";
 import Footer from "@/components/Footer";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import Navbar from "@/components/Navbar";
 import QuoteForm from "@/components/QuoteForm";
 import { Check, Star, Zap, Shield, Phone, MessageCircle, X } from "lucide-react";
@@ -203,7 +202,6 @@ export default function PricingPage() {
       </section>
 
       <Footer />
-      <StickyBottomBar />
     </main>
   );
 }

@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Navbar from "@/components/Navbar";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import QuoteForm from "@/components/QuoteForm";
 import Footer from "@/components/Footer";
 
@@ -87,7 +86,6 @@ export default async function HouseCleaningCityPage({ params }: Props) {
         </div>
       </section>
       <Footer />
-      <StickyBottomBar />
     </main>
   );
 }

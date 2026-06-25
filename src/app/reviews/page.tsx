@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { reviews, reviewStats } from "@/config/reviews";
 import { business } from "@/config/business";
 import Footer from "@/components/Footer";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import Navbar from "@/components/Navbar";
 import { Star, Quote, MapPin, CheckCircle2, ThumbsUp } from "lucide-react";
 
@@ -162,7 +161,6 @@ export default function ReviewsPage() {
       </section>
 
       <Footer />
-      <StickyBottomBar />
     </main>
   );
 }

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { areas } from "@/config/areas";
 import { business } from "@/config/business";
 import Footer from "@/components/Footer";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import Navbar from "@/components/Navbar";
 import { MapPin, Phone, MessageCircle, CheckCircle2, Navigation } from "lucide-react";
 
@@ -201,7 +200,6 @@ export default function AreasPage() {
       </section>
 
       <Footer />
-      <StickyBottomBar />
     </main>
   );
 }

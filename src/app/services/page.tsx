@@ -12,7 +12,6 @@ import {
   MessageCircle,
 } from "lucide-react";
 import Footer from "@/components/Footer";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import Navbar from "@/components/Navbar";
 
 const iconMap: Record<string, React.ElementType> = {
@@ -197,7 +196,6 @@ export default function ServicesPage() {
       </section>
 
       <Footer />
-      <StickyBottomBar />
     </main>
   );
 }

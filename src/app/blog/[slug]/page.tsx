@@ -4,7 +4,6 @@ import { blogPosts, getBlogBySlug } from "@/config/blog";
 import { business } from "@/config/business";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import { Calendar, Clock, User, ArrowLeft, Share2, Tag } from "lucide-react";
 import Link from "next/link";
 import ShareButtons from "./ShareButtons";
@@ -218,7 +217,6 @@ export default async function BlogPostPage({ params }: Props) {
       </section>
 
       <Footer />
-      <StickyBottomBar />
     </main>
   );
 }

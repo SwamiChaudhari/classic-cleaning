@@ -4,7 +4,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { business } from "@/config/business";
 import Footer from "@/components/Footer";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import Navbar from "@/components/Navbar";
 import {
   Phone,
@@ -270,7 +269,6 @@ export default function ContactPage() {
       </section>
 
       <Footer />
-      <StickyBottomBar />
     </main>
   );
 }

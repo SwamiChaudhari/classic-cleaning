@@ -5,7 +5,6 @@ import { useState } from "react";
 import { galleryItems, galleryCategories } from "@/config/gallery";
 import { business } from "@/config/business";
 import Footer from "@/components/Footer";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import Navbar from "@/components/Navbar";
 import { X, ZoomIn, Play } from "lucide-react";
 
@@ -144,7 +143,6 @@ export default function GalleryPage() {
       </section>
 
       <Footer />
-      <StickyBottomBar />
 
       {/* Lightbox */}
       {lightbox && (

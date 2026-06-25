@@ -5,7 +5,6 @@ import { useState } from "react";
 import { blogPosts, blogCategories, getBlogsByCategory } from "@/config/blog";
 import { business } from "@/config/business";
 import Footer from "@/components/Footer";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import Navbar from "@/components/Navbar";
 import { Calendar, Clock, ArrowRight, User, Mail } from "lucide-react";
 
@@ -178,7 +177,6 @@ export default function BlogPage() {
       </section>
 
       <Footer />
-      <StickyBottomBar />
     </main>
   );
 }

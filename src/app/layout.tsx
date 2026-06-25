@@ -2,14 +2,11 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import JsonLdSchema from "@/components/JsonLdSchema";
 import SkipLink from "@/components/SkipLink";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import FloatingWidgets from "@/components/FloatingWidgets";
-import ClientWidgets from "@/components/ClientWidgets";
-import AdminButton from "@/components/AdminButton";
+import BottomActionBar from "@/components/BottomActionBar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -85,10 +82,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <JsonLdSchema />
           {children}
-          <Suspense fallback={null}><ClientWidgets /></Suspense>
-          <FloatingWidgets />
-          <StickyBottomBar />
-          <AdminButton />
+          <BottomActionBar />
           <Suspense fallback={null}>
             <AnalyticsTracker />
           </Suspense>

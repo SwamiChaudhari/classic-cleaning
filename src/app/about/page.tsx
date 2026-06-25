@@ -19,7 +19,6 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Footer from "@/components/Footer";
-import StickyBottomBar from "@/components/StickyBottomBar";
 import Navbar from "@/components/Navbar";
 
 const valueIcons = [ShieldCheck, Award, Heart, Leaf];
@@ -247,7 +246,6 @@ export default function AboutPage() {
       </section>
 
       <Footer />
-      <StickyBottomBar />
     </main>
   );
 }
