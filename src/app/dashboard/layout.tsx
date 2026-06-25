@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Image,
@@ -34,32 +34,13 @@ const navItems = [
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const auth = localStorage.getItem("admin_auth");
-    if (auth !== "true") {
-      router.push("/login");
-    } else {
-      setLoading(false);
-    }
-  }, [router]);
 
   const handleLogout = () => {
     localStorage.removeItem("admin_auth");
-    router.push("/login");
+    window.location.href = "/login";
   };
-
-  if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center bg-[#F9FAFB]">
-        <div className="animate-spin h-8 w-8 border-4 border-[#0D9488] border-t-transparent rounded-full" />
-      </div>
-    );
-  }
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#F9FAFB]">
