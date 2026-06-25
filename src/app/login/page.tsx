@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Lock, Eye, EyeOff, Sparkles } from "lucide-react";
 
 const ADMIN_PASSWORD = "admin123";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -20,8 +18,11 @@ export default function LoginPage() {
 
     setTimeout(() => {
       if (password === ADMIN_PASSWORD) {
-        sessionStorage.setItem("admin_auth", "true");
-        router.push("/dashboard");
+        // Set a cookie that expires in 24 hours
+        const expires = new Date(Date.now() + 86400000).toUTCString();
+        document.cookie = `admin_auth=true; expires=${expires}; path=/`;
+        // Navigate to dashboard
+        window.location.href = "/dashboard";
       } else {
         setError("Invalid password. Try again.");
         setLoading(false);

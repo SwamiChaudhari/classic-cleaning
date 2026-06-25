@@ -40,8 +40,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const auth = sessionStorage.getItem("admin_auth");
-    if (auth !== "true") {
+    const match = document.cookie.match(/(^| )admin_auth=([^;]+)/);
+    if (!match || match[2] !== "true") {
       router.push("/login");
     } else {
       setLoading(false);
@@ -49,7 +49,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, [router]);
 
   const handleLogout = () => {
-    sessionStorage.removeItem("admin_auth");
+    document.cookie = "admin_auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     router.push("/login");
   };
 
