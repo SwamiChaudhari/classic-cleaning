@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   LayoutDashboard,
-  Home,
   Image,
   MessageSquare,
   Star,
@@ -12,10 +11,8 @@ import {
   Tag,
   HelpCircle,
   Briefcase,
-  DollarSign,
   Search,
   BarChart3,
-  Activity,
   Settings,
   LogOut,
   TrendingUp,
@@ -30,20 +27,15 @@ import {
 import Link from 'next/link';
 
 const navItems = [
-  { name: 'Hero Editor', icon: Home, href: '/dashboard/hero' },
-  { name: 'Services Management', icon: Briefcase, href: '/dashboard/services' },
-  { name: 'Gallery Management', icon: Image, href: '/dashboard/gallery' },
-  { name: 'Video Management', icon: MessageSquare, href: '/dashboard/videos' },
-  { name: 'Reviews Management', icon: Star, href: '/dashboard/reviews' },
-  { name: 'Blog Management', icon: FileText, href: '/dashboard/blog' },
-  { name: 'Offer Management', icon: Tag, href: '/dashboard/offers' },
-  { name: 'FAQ Management', icon: HelpCircle, href: '/dashboard/faq' },
-  { name: 'Case Study Management', icon: LayoutDashboard, href: '/dashboard/cases' },
-  { name: 'Pricing Management', icon: DollarSign, href: '/dashboard/pricing' },
+  { name: 'Services', icon: Briefcase, href: '/dashboard/services' },
+  { name: 'Gallery', icon: Image, href: '/dashboard/gallery' },
+  { name: 'Media Library', icon: MessageSquare, href: '/dashboard/media' },
+  { name: 'Reviews', icon: Star, href: '/dashboard/reviews' },
+  { name: 'Blogs', icon: FileText, href: '/dashboard/blogs' },
+  { name: 'Offers', icon: Tag, href: '/dashboard/offers' },
+  { name: 'FAQs', icon: HelpCircle, href: '/dashboard/faqs' },
   { name: 'SEO Settings', icon: Search, href: '/dashboard/seo' },
-  { name: 'Analytics Dashboard', icon: BarChart3, href: '/dashboard/analytics' },
-  { name: 'Activity Logs', icon: Activity, href: '/dashboard/activity' },
-  { name: 'Image Upload System', icon: Image, href: '/dashboard/uploads' },
+  { name: 'Analytics', icon: BarChart3, href: '/dashboard/analytics' },
 ];
 
 const stats = [
@@ -75,19 +67,19 @@ const recentActivity = [
   { action: 'New review added', detail: '5-star review by Rahul Sharma', time: '5 min ago', icon: Star, color: 'text-yellow-500' },
   { action: 'Blog post published', detail: 'Top 10 Cleaning Tips for Monsoon', time: '1 hour ago', icon: FileText, color: 'text-blue-500' },
   { action: 'Gallery updated', detail: '4 new images uploaded', time: '3 hours ago', icon: Image, color: 'text-purple-500' },
-  { action: 'Hero section edited', detail: 'Subtitle updated', time: '5 hours ago', icon: Home, color: 'text-teal-500' },
+  { action: 'Hero section edited', detail: 'Subtitle updated', time: '5 hours ago', icon: LayoutDashboard, color: 'text-teal-500' },
   { action: 'New FAQ added', detail: 'Question about eco-friendly products', time: '1 day ago', icon: HelpCircle, color: 'text-orange-500' },
 ];
 
 const quickActions = [
-  { label: 'Hero Editor', icon: Home, href: '/dashboard/hero', color: 'from-teal-500 to-teal-600' },
   { label: 'Services', icon: Briefcase, href: '/dashboard/services', color: 'from-blue-500 to-blue-600' },
   { label: 'Gallery', icon: Image, href: '/dashboard/gallery', color: 'from-purple-500 to-purple-600' },
+  { label: 'Media', icon: MessageSquare, href: '/dashboard/media', color: 'from-pink-500 to-pink-600' },
   { label: 'Reviews', icon: Star, href: '/dashboard/reviews', color: 'from-yellow-500 to-yellow-600' },
-  { label: 'Blog Posts', icon: FileText, href: '/dashboard/blog', color: 'from-emerald-500 to-emerald-600' },
+  { label: 'Blogs', icon: FileText, href: '/dashboard/blogs', color: 'from-emerald-500 to-emerald-600' },
   { label: 'Offers', icon: Tag, href: '/dashboard/offers', color: 'from-orange-500 to-orange-600' },
-  { label: 'Case Studies', icon: LayoutDashboard, href: '/dashboard/cases', color: 'from-indigo-500 to-indigo-600' },
-  { label: 'Pricing', icon: DollarSign, href: '/dashboard/pricing', color: 'from-cyan-500 to-cyan-600' },
+  { label: 'FAQs', icon: HelpCircle, href: '/dashboard/faqs', color: 'from-teal-500 to-teal-600' },
+  { label: 'SEO', icon: Search, href: '/dashboard/seo', color: 'from-indigo-500 to-indigo-600' },
 ];
 
 const containerVariants = {
@@ -437,7 +429,7 @@ export default function DashboardPage() {
               >
                 All Management Sections
               </h3>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8">
                 {navItems.map((item) => (
                   <Link
                     key={item.name}
