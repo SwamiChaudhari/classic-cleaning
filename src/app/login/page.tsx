@@ -18,10 +18,7 @@ export default function LoginPage() {
 
     setTimeout(() => {
       if (password === ADMIN_PASSWORD) {
-        // Set a cookie that expires in 24 hours
-        const expires = new Date(Date.now() + 86400000).toUTCString();
-        document.cookie = `admin_auth=true; expires=${expires}; path=/`;
-        // Navigate to dashboard
+        localStorage.setItem("admin_auth", "true");
         window.location.href = "/dashboard";
       } else {
         setError("Invalid password. Try again.");
@@ -45,10 +42,7 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white rounded-2xl p-6 shadow-2xl"
-        >
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-6 shadow-2xl">
           <div className="flex items-center gap-2 mb-5">
             <Lock className="w-5 h-5 text-gray-400" />
             <h2 className="font-semibold text-gray-800">Sign in to continue</h2>
