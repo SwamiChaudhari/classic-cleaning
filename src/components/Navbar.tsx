@@ -13,6 +13,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { business } from "@/config/business";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const NAV_LINKS = [
   { href: "/services", label: "Services" },
@@ -89,6 +90,7 @@ export default function Navbar() {
             </span>
           </div>
           <div className="flex items-center gap-4">
+            <LanguageSwitcher />
             <span className="text-white/70">{business.address.city}, {business.address.state}</span>
             <a
               href={`https://wa.me/${business.whatsapp}`}
