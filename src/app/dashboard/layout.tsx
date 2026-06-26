@@ -20,12 +20,14 @@ import {
   Sparkles,
   Users,
   MapPin,
+  Calendar,
 } from "lucide-react";
 import Link from "next/link";
 import { business } from "@/config/business";
 
 const navItems = [
   { name: 'Leads', icon: Users, href: '/dashboard/leads' },
+  { name: 'Bookings', icon: Calendar, href: '/dashboard/bookings' },
   { name: 'Services', icon: Briefcase, href: '/dashboard/services' },
   { name: 'Gallery', icon: Image, href: '/dashboard/gallery' },
   { name: 'Media Library', icon: MessageSquare, href: '/dashboard/media' },
