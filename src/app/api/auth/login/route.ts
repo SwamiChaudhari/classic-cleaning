@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const VALID_TOKEN = process.env.ADMIN_TOKEN || "classic-cleaning-admin-2026";
+const VALID_TOKEN = process.env.ADMIN_TOKEN || "admin123";
 const COOKIE_NAME = "auth_token";
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000; // 15 minutes
