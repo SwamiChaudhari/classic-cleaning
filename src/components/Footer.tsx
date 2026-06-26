@@ -176,6 +176,19 @@ export default function Footer() {
               </div>
             </div>
           </div>
+
+          {/* Admin Login */}
+          <div className="mt-6 pt-4 border-t border-white/10">
+            <a
+              href="/admin"
+              className="inline-flex items-center gap-2 text-xs text-white/40 hover:text-teal transition-colors"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              Admin Login
+            </a>
+          </div>
         </div>
       </div>
 
