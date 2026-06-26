@@ -11,7 +11,6 @@ import {
   Save,
 } from 'lucide-react';
 import { business } from '@/config/business';
-import DashboardLayout from '../layout';
 
 type TabKey = 'general' | 'og' | 'schema' | 'sitemap';
 
@@ -127,7 +126,6 @@ export default function SeoSettingsPage() {
   );
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
       {/* Save Button */}
       <div className="flex justify-end">
@@ -528,6 +526,5 @@ export default function SeoSettingsPage() {
         </div>
       </div>
       </div>
-    </DashboardLayout>
   );
 }

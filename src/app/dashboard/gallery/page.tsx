@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Plus, Edit2, Trash2, Upload, X, Eye, Image as ImageIcon } from "lucide-react";
 import { galleryItems } from "@/config/gallery";
-import DashboardLayout from '../layout'
 
 type MediaType = "image" | "video";
 
@@ -103,7 +102,6 @@ export default function GalleryManagement() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -355,6 +353,5 @@ export default function GalleryManagement() {
           </div>
         )}
       </div>
-    </DashboardLayout>
   );
 }

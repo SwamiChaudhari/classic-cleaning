@@ -22,7 +22,6 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { services as defaultServices, formatPrice, Service } from '@/config/services';
-import DashboardLayout from '../layout';
 
 const iconMap: Record<string, React.ElementType> = {
   Home,
@@ -192,7 +191,6 @@ export default function ServicesManagement() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
         {/* Page Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -821,6 +819,5 @@ export default function ServicesManagement() {
           </div>
         )}
       </div>
-    </DashboardLayout>
   );
 }

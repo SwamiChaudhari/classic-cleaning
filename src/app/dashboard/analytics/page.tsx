@@ -11,7 +11,6 @@ import {
   Clock,
   ArrowUpRight,
 } from 'lucide-react';
-import DashboardLayout from '../layout';
 
 const trafficData = [
   { day: 'Mon', visitors: 380 },
@@ -83,7 +82,6 @@ export default function AnalyticsPage() {
   ];
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
       {/* Filter Buttons */}
       <div className="flex justify-end gap-2">
@@ -290,6 +288,5 @@ export default function AnalyticsPage() {
         </div>
       </div>
       </div>
-    </DashboardLayout>
   );
 }

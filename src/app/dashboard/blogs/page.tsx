@@ -15,7 +15,6 @@ import {
 } from 'lucide-react';
 import { business } from "@/config/business";
 import { blogPosts as defaultBlogs, BlogPost, blogCategories } from '@/config/blog';
-import DashboardLayout from '../layout';
 
 interface BlogFormData {
   id: string;
@@ -194,7 +193,6 @@ export default function BlogManagement() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
         {/* Page Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -742,6 +740,5 @@ export default function BlogManagement() {
           </div>
         )}
       </div>
-    </DashboardLayout>
   );
 }

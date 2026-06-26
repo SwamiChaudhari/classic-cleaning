@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 import { faqs as defaultFaqs } from "@/config/faq";
-import DashboardLayout from '../layout'
 
 export default function FAQsManagement() {
   const [items, setItems] = useState(defaultFaqs);
@@ -65,7 +64,6 @@ export default function FAQsManagement() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Manage FAQs</h2>
@@ -167,6 +165,5 @@ export default function FAQsManagement() {
         </div>
       )}
       </div>
-    </DashboardLayout>
   );
 }

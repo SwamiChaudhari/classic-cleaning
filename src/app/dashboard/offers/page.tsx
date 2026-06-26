@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Tag, Plus, Edit2, Trash2, Eye, EyeOff, Calendar, Percent, X } from "lucide-react";
 import { offers as defaultOffers } from "@/config/offers";
-import DashboardLayout from '../layout'
 
 interface Offer {
   id: string;
@@ -110,7 +109,6 @@ export default function OfferManagementPage() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -264,6 +262,5 @@ export default function OfferManagementPage() {
           </div>
         )}
       </div>
-    </DashboardLayout>
   );
 }

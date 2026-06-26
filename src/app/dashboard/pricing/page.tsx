@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, Tag, Star } from 'lucide-react';
 import { packages as defaultPackages, Package, formatPrice } from '@/config/pricing';
-import DashboardLayout from '../layout';
 
 const emptyPackage: Package = {
   id: '',
@@ -92,7 +91,6 @@ export default function PricingManagement() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -276,6 +274,5 @@ export default function PricingManagement() {
           </div>
         )}
       </div>
-    </DashboardLayout>
   );
 }

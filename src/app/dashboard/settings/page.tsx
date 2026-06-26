@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Save, Globe, Phone, MapPin, Mail } from 'lucide-react';
 import { business } from '@/config/business';
-import DashboardLayout from '../layout';
 
 export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
@@ -51,7 +50,6 @@ export default function SettingsPage() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6 max-w-3xl">
         <div>
           <h1 className="text-2xl font-bold text-navy">Business Settings</h1>
@@ -262,6 +260,5 @@ export default function SettingsPage() {
           )}
         </div>
       </div>
-    </DashboardLayout>
   );
 }

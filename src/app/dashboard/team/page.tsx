@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, User, Briefcase, Star } from 'lucide-react';
 import { team as defaultTeam, TeamMember } from '@/config/team';
-import DashboardLayout from '../layout';
 
 const emptyMember: TeamMember = {
   id: '',
@@ -73,7 +72,6 @@ export default function TeamManagement() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -190,6 +188,5 @@ export default function TeamManagement() {
           </div>
         )}
       </div>
-    </DashboardLayout>
   );
 }

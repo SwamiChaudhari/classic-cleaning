@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Calendar, Clock, MapPin, Phone, User, CheckCircle2, XCircle, AlertCircle, Eye, Trash2, Download } from 'lucide-react';
 import { readData, writeData } from '@/lib/data-store';
-import DashboardLayout from '../layout';
 
 interface Booking {
   id: string;
@@ -88,7 +87,6 @@ export default function BookingsPage() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -215,6 +213,5 @@ export default function BookingsPage() {
           </div>
         )}
       </div>
-    </DashboardLayout>
   );
 }

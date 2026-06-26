@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Star, Plus, Edit2, Trash2, CheckCircle2, X, Eye } from 'lucide-react';
 import { reviews as defaultReviews } from '@/config/reviews';
-import DashboardLayout from '../layout';
 
 interface Review {
   id: number;
@@ -171,7 +170,6 @@ export default function ReviewsManagement() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -543,6 +541,5 @@ export default function ReviewsManagement() {
         </div>
       )}
       </div>
-    </DashboardLayout>
   );
 }

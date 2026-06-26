@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Image, Plus, Trash2, Upload, X, Copy, ExternalLink } from "lucide-react";
-import DashboardLayout from '../layout'
 
 interface MediaItem {
   id: string;
@@ -57,7 +56,6 @@ export default function MediaLibrary() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Media Library</h2>
@@ -156,6 +154,5 @@ export default function MediaLibrary() {
         ))}
       </div>
       </div>
-    </DashboardLayout>
   );
 }

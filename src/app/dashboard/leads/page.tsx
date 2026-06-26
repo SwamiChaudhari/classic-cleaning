@@ -12,7 +12,6 @@ import {
   Eye,
   MessageSquare,
 } from 'lucide-react';
-import DashboardLayout from '../layout';
 import { business } from '@/config/business';
 
 interface Lead {
@@ -165,7 +164,6 @@ export default function LeadsManagement() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
         {/* Page Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -615,6 +613,5 @@ export default function LeadsManagement() {
           </div>
         )}
       </div>
-    </DashboardLayout>
   );
 }
