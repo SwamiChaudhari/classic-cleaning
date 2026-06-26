@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tag, Plus, Edit2, Trash2, Eye, EyeOff, Calendar, Percent, X } from "lucide-react";
-import { offers as initialOffers } from "@/config/offers";
+import { offers as defaultOffers } from "@/config/offers";
 import DashboardLayout from '../layout'
 
 interface Offer {
@@ -18,11 +18,31 @@ interface Offer {
 }
 
 export default function OfferManagementPage() {
-  const [offersList, setOffersList] = useState<Offer[]>(initialOffers);
+  const [offersList, setOffersList] = useState<Offer[]>(defaultOffers);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [editingOffer, setEditingOffer] = useState<Offer | null>(null);
   const [deletingOfferId, setDeletingOfferId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/config/offers')
+      .then((r) => r.json())
+      .then((data) => { if (Array.isArray(data) && data.length > 0) setOffersList(data); })
+      .catch(() => {});
+  }, []);
+
+  const persist = async (data: Offer[]) => {
+    setSaving(true);
+    try {
+      await fetch('/api/config/offers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    } catch (e) { console.error('Failed to save offers:', e); }
+    finally { setSaving(false); }
+  };
 
   const [formData, setFormData] = useState({
     title: "", description: "", discount: "", code: "",
@@ -48,24 +68,31 @@ export default function OfferManagementPage() {
   };
 
   const handleSave = () => {
+    let updated: Offer[];
     if (editingOffer) {
-      setOffersList((prev) => prev.map((o) => o.id === editingOffer.id ? { ...o, ...formData } : o));
+      updated = offersList.map((o) => o.id === editingOffer.id ? { ...o, ...formData } : o);
     } else {
-      setOffersList((prev) => [...prev, { id: `offer-${Date.now()}`, ...formData }]);
+      updated = [...offersList, { id: `offer-${Date.now()}`, ...formData } as Offer];
     }
+    setOffersList(updated);
+    persist(updated);
     setIsModalOpen(false);
   };
 
   const handleDelete = () => {
     if (deletingOfferId) {
-      setOffersList((prev) => prev.filter((o) => o.id !== deletingOfferId));
+      const updated = offersList.filter((o) => o.id !== deletingOfferId);
+      setOffersList(updated);
+      persist(updated);
       setDeletingOfferId(null);
     }
     setIsDeleteDialogOpen(false);
   };
 
   const toggleActive = (id: string) => {
-    setOffersList((prev) => prev.map((o) => (o.id === id ? { ...o, active: !o.active } : o)));
+    const updated = offersList.map((o) => (o.id === id ? { ...o, active: !o.active } : o));
+    setOffersList(updated);
+    persist(updated);
   };
 
   const getTypeBadgeColor = (type: string) => {

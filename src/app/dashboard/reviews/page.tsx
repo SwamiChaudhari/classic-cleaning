@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Star, Plus, Edit2, Trash2, CheckCircle2, X, Eye } from 'lucide-react';
-import { reviews } from '@/config/reviews';
+import { reviews as defaultReviews } from '@/config/reviews';
 import DashboardLayout from '../layout';
 
 interface Review {
@@ -29,12 +29,32 @@ const defaultReview: Omit<Review, 'id'> = {
 };
 
 export default function ReviewsManagement() {
-  const [reviewList, setReviewList] = useState<Review[]>(reviews);
+  const [reviewList, setReviewList] = useState<Review[]>(defaultReviews);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [editingReview, setEditingReview] = useState<Review | null>(null);
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
   const [formData, setFormData] = useState(defaultReview);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/config/reviews')
+      .then((r) => r.json())
+      .then((data) => { if (Array.isArray(data) && data.length > 0) setReviewList(data); })
+      .catch(() => {});
+  }, []);
+
+  const persist = async (data: Review[]) => {
+    setSaving(true);
+    try {
+      await fetch('/api/config/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    } catch (e) { console.error('Failed to save reviews:', e); }
+    finally { setSaving(false); }
+  };
 
   const avgRating = reviewList.length > 0
     ? (reviewList.reduce((sum, r) => sum + r.rating, 0) / reviewList.length).toFixed(1)
@@ -72,21 +92,20 @@ export default function ReviewsManagement() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    let updated: Review[];
     if (editingReview) {
-      setReviewList((prev) =>
-        prev.map((r) =>
-          r.id === editingReview.id
-            ? { ...r, ...formData }
-            : r
-        )
+      updated = reviewList.map((r) =>
+        r.id === editingReview.id ? { ...r, ...formData } : r
       );
     } else {
       const newReview: Review = {
         id: Math.max(0, ...reviewList.map((r) => r.id)) + 1,
         ...formData,
       };
-      setReviewList((prev) => [newReview, ...prev]);
+      updated = [newReview, ...reviewList];
     }
+    setReviewList(updated);
+    persist(updated);
     closeModal();
   };
 
@@ -97,7 +116,9 @@ export default function ReviewsManagement() {
 
   const executeDelete = () => {
     if (deleteTargetId !== null) {
-      setReviewList((prev) => prev.filter((r) => r.id !== deleteTargetId));
+      const updated = reviewList.filter((r) => r.id !== deleteTargetId);
+      setReviewList(updated);
+      persist(updated);
     }
     setIsDeleteDialogOpen(false);
     setDeleteTargetId(null);

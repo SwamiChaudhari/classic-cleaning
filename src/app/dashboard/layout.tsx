@@ -18,11 +18,14 @@ import {
   Menu,
   X,
   Sparkles,
+  Users,
+  MapPin,
 } from "lucide-react";
 import Link from "next/link";
 import { business } from "@/config/business";
 
 const navItems = [
+  { name: 'Leads', icon: Users, href: '/dashboard/leads' },
   { name: 'Services', icon: Briefcase, href: '/dashboard/services' },
   { name: 'Gallery', icon: Image, href: '/dashboard/gallery' },
   { name: 'Media Library', icon: MessageSquare, href: '/dashboard/media' },
@@ -30,6 +33,9 @@ const navItems = [
   { name: 'Blogs', icon: FileText, href: '/dashboard/blogs' },
   { name: 'Offers', icon: Tag, href: '/dashboard/offers' },
   { name: 'FAQs', icon: HelpCircle, href: '/dashboard/faqs' },
+  { name: 'Team', icon: Users, href: '/dashboard/team' },
+  { name: 'Pricing', icon: Tag, href: '/dashboard/pricing' },
+  { name: 'Areas', icon: MapPin, href: '/dashboard/areas' },
   { name: 'SEO Settings', icon: Search, href: '/dashboard/seo' },
   { name: 'Analytics', icon: BarChart3, href: '/dashboard/analytics' },
   { name: 'Settings', icon: Sparkles, href: '/dashboard/settings' },

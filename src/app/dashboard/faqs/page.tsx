@@ -1,12 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Edit2, Trash2 } from "lucide-react";
-import { faqs } from "@/config/faq";
+import { faqs as defaultFaqs } from "@/config/faq";
 import DashboardLayout from '../layout'
 
 export default function FAQsManagement() {
-  const [items, setItems] = useState(faqs);
+  const [items, setItems] = useState(defaultFaqs);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/config/faqs')
+      .then((r) => r.json())
+      .then((data) => { if (Array.isArray(data) && data.length > 0) setItems(data); })
+      .catch(() => {});
+  }, []);
+
+  const persist = async (data: typeof items) => {
+    setSaving(true);
+    try {
+      await fetch('/api/config/faqs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    } catch (e) { console.error('Failed to save FAQs:', e); }
+    finally { setSaving(false); }
+  };
   const [editId, setEditId] = useState<string | null>(null);
   const [editQ, setEditQ] = useState("");
   const [editA, setEditA] = useState("");
@@ -14,10 +34,9 @@ export default function FAQsManagement() {
 
   const handleAdd = () => {
     const newId = String(Date.now());
-    setItems([
-      ...items,
-      { id: newId, question: "New Question?", answer: "Answer goes here.", category: "General" },
-    ]);
+    const updated = [...items, { id: newId, question: "New Question?", answer: "Answer goes here.", category: "General" }];
+    setItems(updated);
+    persist(updated);
   };
 
   const handleEdit = (id: string) => {
@@ -32,13 +51,17 @@ export default function FAQsManagement() {
 
   const handleSave = () => {
     if (editId) {
-      setItems(items.map((f) => (f.id === editId ? { ...f, question: editQ, answer: editA, category: editCat } : f)));
+      const updated = items.map((f) => (f.id === editId ? { ...f, question: editQ, answer: editA, category: editCat } : f));
+      setItems(updated);
+      persist(updated);
       setEditId(null);
     }
   };
 
   const handleDelete = (id: string) => {
-    setItems(items.filter((f) => f.id !== id));
+    const updated = items.filter((f) => f.id !== id);
+    setItems(updated);
+    persist(updated);
   };
 
   return (

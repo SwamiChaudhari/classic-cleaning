@@ -18,14 +18,42 @@ import {
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    service: '',
+    message: '',
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call
-    await new Promise((r) => setTimeout(r, 800));
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          email: form.email,
+          service: form.service,
+          message: form.message,
+          source: 'contact_form',
+        }),
+      });
+    } catch (err) {
+      console.error('Failed to submit:', err);
+    } finally {
+      setLoading(false);
+      setSubmitted(true);
+    }
   };
 
   return (
@@ -94,6 +122,9 @@ export default function ContactPage() {
                     </label>
                     <input
                       type="text"
+                      name="name"
+                      value={form.name}
+                      onChange={handleChange}
                       placeholder="Full name"
                       required
                       className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
@@ -105,6 +136,9 @@ export default function ContactPage() {
                     </label>
                     <input
                       type="tel"
+                      name="phone"
+                      value={form.phone}
+                      onChange={handleChange}
                       placeholder="+91 XXXXX XXXXX"
                       required
                       className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
@@ -117,6 +151,9 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
                     placeholder="your@email.com"
                     required
                     className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
@@ -126,15 +163,20 @@ export default function ContactPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">
                     Service Needed
                   </label>
-                  <select className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent text-gray-500">
+                  <select
+                    name="service"
+                    value={form.service}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent text-gray-500"
+                  >
                     <option value="">Select a service</option>
-                    <option value="home">Home Cleaning</option>
-                    <option value="deep">Deep Cleaning</option>
-                    <option value="kitchen">Kitchen Cleaning</option>
-                    <option value="bathroom">Bathroom Cleaning</option>
-                    <option value="sofa">Sofa Cleaning</option>
-                    <option value="office">Office Cleaning</option>
-                    <option value="commercial">Commercial Cleaning</option>
+                    <option value="home-cleaning">Home Cleaning</option>
+                    <option value="deep-cleaning">Deep Cleaning</option>
+                    <option value="kitchen-cleaning">Kitchen Cleaning</option>
+                    <option value="bathroom-cleaning">Bathroom Cleaning</option>
+                    <option value="sofa-cleaning">Sofa Cleaning</option>
+                    <option value="office-cleaning">Office Cleaning</option>
+                    <option value="commercial-cleaning">Commercial Cleaning</option>
                     <option value="moveout">Move-In / Move-Out</option>
                   </select>
                 </div>
@@ -143,6 +185,9 @@ export default function ContactPage() {
                     Message
                   </label>
                   <textarea
+                    name="message"
+                    value={form.message}
+                    onChange={handleChange}
                     rows={4}
                     placeholder="Tell us about your cleaning needs..."
                     className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent resize-none"

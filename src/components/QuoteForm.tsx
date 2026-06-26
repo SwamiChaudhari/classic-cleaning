@@ -79,10 +79,27 @@ export default function QuoteForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      const selectedService = services.find((s) => s.id === form.service);
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          service: form.service,
+          propertyType: form.propertyType,
+          area: form.area,
+          message: form.message,
+          source: 'quote_form',
+        }),
+      });
+    } catch (err) {
+      console.error('Failed to submit lead:', err);
+    } finally {
+      setLoading(false);
+      setSubmitted(true);
+    }
   };
 
   // Success state
@@ -109,7 +126,7 @@ export default function QuoteForm({
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a
-            href="tel:07385169523"
+            href={`tel:${business.phone}`}
             className="inline-flex items-center justify-center gap-2 bg-navy text-white font-bold px-6 py-3.5 rounded-xl hover:bg-navy-light transition-all"
           >
             Call Us Now

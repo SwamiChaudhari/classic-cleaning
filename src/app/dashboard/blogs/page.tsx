@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   FileText,
   Plus,
@@ -14,7 +14,7 @@ import {
   Star,
 } from 'lucide-react';
 import { business } from "@/config/business";
-import { blogPosts, BlogPost, blogCategories } from '@/config/blog';
+import { blogPosts as defaultBlogs, BlogPost, blogCategories } from '@/config/blog';
 import DashboardLayout from '../layout';
 
 interface BlogFormData {
@@ -68,12 +68,43 @@ function generateSlug(title: string): string {
 }
 
 export default function BlogManagement() {
-  const [blogList, setBlogList] = useState<BlogPost[]>(blogPosts);
+  const [blogList, setBlogList] = useState<BlogPost[]>(defaultBlogs);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<BlogFormData>(emptyForm);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [filterCategory, setFilterCategory] = useState<string>('All');
+  const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Load blogs from API on mount
+  useEffect(() => {
+    fetch('/api/config/blogs')
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setBlogList(data);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  // Persist blogs to API
+  const persistBlogs = async (blogs: BlogPost[]) => {
+    setSaving(true);
+    try {
+      await fetch('/api/config/blogs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(blogs),
+      });
+    } catch (e) {
+      console.error('Failed to save blogs:', e);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const filteredBlogs =
     filterCategory === 'All'
@@ -136,18 +167,21 @@ export default function BlogManagement() {
       featured: formData.featured,
     };
 
+    let updated: BlogPost[];
     if (editingId) {
-      setBlogList((prev) =>
-        prev.map((b) => (b.id === editingId ? blogData : b))
-      );
+      updated = blogList.map((b) => (b.id === editingId ? blogData : b));
     } else {
-      setBlogList((prev) => [blogData, ...prev]);
+      updated = [blogData, ...blogList];
     }
+    setBlogList(updated);
+    persistBlogs(updated);
     closeModal();
   };
 
   const handleDelete = (id: string) => {
-    setBlogList((prev) => prev.filter((b) => b.id !== id));
+    const updated = blogList.filter((b) => b.id !== id);
+    setBlogList(updated);
+    persistBlogs(updated);
     setDeleteConfirm(null);
   };
 
