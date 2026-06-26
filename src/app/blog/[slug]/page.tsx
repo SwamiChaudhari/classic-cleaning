@@ -42,7 +42,7 @@ export default async function BlogPostPage({ params }: Props) {
     relatedPosts.push(...others);
   }
 
-  const shareUrl = `https://classic-cleaning.vercel.app/blog/${post.slug}`;
+  const shareUrl = `${business.domain}/blog/${post.slug}`;
 
   return (
     <main className="min-h-screen">
@@ -195,7 +195,7 @@ export default async function BlogPostPage({ params }: Props) {
             Ready to Get Started?
           </h2>
           <p className="text-white/70 mb-6">
-            Book Classic Cleaning today and see why 1,500+ families trust us.
+            Book {business.name} today and see why 1,500+ families trust us.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

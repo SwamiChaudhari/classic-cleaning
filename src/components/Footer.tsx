@@ -58,7 +58,7 @@ export default function Footer() {
               </div>
               <div className="leading-tight">
                 <span className="text-xl font-bold text-white">
-                  Classic Cleaning
+                  {business.name}
                 </span>
                 <span className="block text-[10px] text-white/40 tracking-widest uppercase">
                   SERVICES

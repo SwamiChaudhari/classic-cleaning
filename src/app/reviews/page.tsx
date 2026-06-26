@@ -139,7 +139,7 @@ export default function ReviewsPage() {
             Join Our Happy Customers
           </h2>
           <p className="text-white/70 mb-8">
-            Book today and see why 1,500+ families trust Classic Cleaning.
+            Book today and see why 1,500+ families trust {business.name}.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

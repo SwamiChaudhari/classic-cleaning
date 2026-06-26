@@ -7,6 +7,7 @@ import JsonLdSchema from "@/components/JsonLdSchema";
 import SkipLink from "@/components/SkipLink";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import BottomActionBar from "@/components/BottomActionBar";
+import { business } from "@/config/business";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,7 +23,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Classic Cleaning Services | Professional Cleaning In Pune",
+  title: business.seo.title,
   description:
     "Premium residential and commercial cleaning services in Pune. Background-verified staff, same-day service, 4.8★ rating. Get free quote now.",
   keywords: [
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     "best cleaning company pune",
   ],
   openGraph: {
-    title: "Classic Cleaning Services | Professional Cleaning In Pune",
+    title: business.seo.title,
     description:
       "Premium residential and commercial cleaning services in Pune. 4.8★ rating, 1500+ homes cleaned.",
     type: "website",
@@ -44,18 +45,18 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Classic Cleaning Services | Professional Cleaning In Pune",
+    title: business.seo.title,
     description:
       "Premium residential and commercial cleaning services in Pune. 4.8★ rating, 1500+ homes cleaned.",
   },
   alternates: {
-    canonical: "https://classic-cleaning.vercel.app",
+    canonical: business.domain,
   },
   manifest: "/manifest.json",
 };
 
 export const viewport = {
-  themeColor: "#0B1D3A",
+  themeColor: business.brand.primary,
 };
 
 export default function RootLayout({

@@ -13,6 +13,7 @@ import {
   AlertTriangle,
   Star,
 } from 'lucide-react';
+import { business } from "@/config/business";
 import { blogPosts, BlogPost, blogCategories } from '@/config/blog';
 import DashboardLayout from '../layout';
 
@@ -38,7 +39,7 @@ const emptyForm: BlogFormData = {
   excerpt: '',
   content: '',
   category: 'Guides',
-  author: 'Classic Cleaning Team',
+  author: `${business.name} Team`,
   date: new Date().toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',

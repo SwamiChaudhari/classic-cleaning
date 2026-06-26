@@ -5,6 +5,27 @@ export const business = {
   description:
     "Premium residential and commercial cleaning services in Pune. Background-verified staff, eco-friendly products, same-day service available.",
 
+  // Domain
+  domain: "https://classic-cleaning.vercel.app",
+
+  // Branding
+  logo: "/logo.svg",
+  favicon: "/favicon.ico",
+
+  // Brand Colors
+  brand: {
+    primary: "#0B1D3A",
+    secondary: "#0D9488",
+    accent: "#EA580C",
+    success: "#059669",
+  },
+
+  // Fonts
+  fonts: {
+    heading: "Poppins",
+    body: "Inter",
+  },
+
   // Contact
   phone: "07385169523",
   whatsapp: "917385169523",
@@ -20,6 +41,17 @@ export const business = {
     pincode: "411038",
     full: "Flat No.09, Marne Building, Left Bhusari Colony, Right Bhusari Colony, Kothrud, Pune – 411038",
   },
+
+  // Google Maps
+  googleMaps: {
+    embed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.203456!2d73.8076!3d18.5074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTjCsDMwJzI2LjYiTiA3M8KwNDgnMjcuNCJF!5e0!3m2!1sen!2sin!4v1700000000000",
+    lat: 18.5074,
+    lng: 73.8076,
+    directions: "https://www.google.com/maps/dir/?api=1&destination=18.5074,73.8076",
+  },
+
+  // GST (for Indian clients)
+  gst: "",
 
   // Hours
   hours: "Open Daily, 8 AM – 11 PM",

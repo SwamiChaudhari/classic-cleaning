@@ -149,7 +149,7 @@ export default function Reviews() {
           </h2>
           <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
             Don&apos;t just take our word for it — hear from homeowners and
-            businesses across Pune who trust Classic Cleaning.
+            businesses across Pune who trust {business.name}.
           </p>
 
           {/* Overall Rating */}

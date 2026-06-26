@@ -61,7 +61,7 @@ export default function ExitIntentPopup() {
 
   const handleWhatsAppRedirect = () => {
     const message = encodeURIComponent(
-      `Hi Classic Cleaning! I'd like to claim my 10% off my first cleaning service. My email is: ${email}`
+      `Hi ${business.name}! I'd like to claim my 10% off my first cleaning service. My email is: ${email}`
     );
     const whatsappUrl = `https://wa.me/${business.whatsapp}?text=${message}`;
     window.open(whatsappUrl, '_blank');

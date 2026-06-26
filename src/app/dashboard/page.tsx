@@ -18,6 +18,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
+import { business } from "@/config/business";
 
 const stats = [
   { label: 'Total Visitors', value: '2,847', change: '+12.5%', icon: Users, color: 'bg-teal-500', bgLight: 'bg-teal-50' },
@@ -85,7 +86,7 @@ export default function DashboardPage() {
             Welcome back, Admin!
           </h2>
           <p className="mt-1 text-sm text-white/70">
-            Here&apos;s what&apos;s happening with your Classic Cleaning website today.
+            Here&apos;s what&apos;s happening with your {business.name} website today.
           </p>
         </div>
 

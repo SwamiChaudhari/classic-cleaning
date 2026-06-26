@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import QuoteForm from "@/components/QuoteForm";
 import Footer from "@/components/Footer";
+import { business } from "@/config/business";
 
 interface Props {
   params: Promise<{ city: string }>;
@@ -11,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { city } = await params;
   const cityName = city.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   return {
-    title: `House Cleaning in ${cityName} | ProClean Services`,
+    title: `House Cleaning in ${cityName} | ${business.fullName}`,
     description: `Professional house cleaning in ${cityName}. Trusted by local families. Fully insured, background-checked staff. Get your free quote today.`,
   };
 }

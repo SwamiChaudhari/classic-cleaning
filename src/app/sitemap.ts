@@ -2,9 +2,10 @@ import { MetadataRoute } from 'next';
 import { services } from '@/config/services';
 import { blogPosts } from '@/config/blog';
 import { areas } from '@/config/areas';
+import { business } from '@/config/business';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://classic-cleaning.vercel.app';
+  const baseUrl = business.domain;
 
   const staticPages: MetadataRoute.Sitemap = [
     {

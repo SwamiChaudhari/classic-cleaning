@@ -114,13 +114,13 @@ export default function PricingPage() {
           <div className="text-center mb-10">
             <span className="text-orange font-semibold text-sm tracking-wider uppercase">Comparison</span>
             <h2 className="text-3xl font-extrabold text-navy mt-2 font-[family-name:var(--font-poppins)]">
-              Classic Cleaning vs Others
+              {business.name} vs Others
             </h2>
           </div>
           <div className="bg-white rounded-2xl shadow-card border border-border overflow-hidden">
             <div className="grid grid-cols-3 text-center font-semibold text-sm border-b border-border">
               <div className="p-4 text-gray-500">Feature</div>
-              <div className="p-4 bg-teal text-white">Classic Cleaning</div>
+              <div className="p-4 bg-teal text-white">{business.name}</div>
               <div className="p-4 text-gray-500">Others</div>
             </div>
             {[

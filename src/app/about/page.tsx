@@ -89,7 +89,7 @@ export default function AboutPage() {
                 From a Simple Idea to Pune&apos;s Trusted Cleaning Brand
               </h2>
               <p className="text-gray-600 leading-relaxed mb-4">
-                Classic Cleaning Services was founded in {companyInfo.founded} with a
+                {business.fullName} was founded in {companyInfo.founded} with a
                 simple observation: families and businesses in Pune deserved
                 access to professional, reliable, and affordable cleaning
                 services — without the hassle of finding trustworthy local help.
@@ -111,7 +111,7 @@ export default function AboutPage() {
               <div className="rounded-2xl overflow-hidden shadow-xl">
                 <Image
                   src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80"
-                  alt="Classic Cleaning team"
+                  alt={`${business.name} team`}
                   width={800}
                   height={400}
                   className="w-full h-[400px] object-cover"
@@ -191,7 +191,7 @@ export default function AboutPage() {
           <div className="text-center mb-12">
             <span className="text-orange font-semibold text-sm tracking-wider uppercase">Our Team</span>
             <h2 className="text-3xl font-extrabold text-navy mt-2 font-[family-name:var(--font-poppins)]">
-              Meet the People Behind Classic Cleaning
+              Meet the People Behind {business.name}
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -3,6 +3,7 @@
 import { Check, Star, Zap } from "lucide-react";
 import Link from "next/link";
 import { packages, formatPrice } from "@/config/pricing";
+import { business } from "@/config/business";
 
 const comparisonData = [
   { label: "Transparent Pricing", classic: true, others: false },
@@ -111,7 +112,7 @@ export default function Pricing() {
         <div className="mt-16 lg:mt-20 bg-gray-50 rounded-2xl p-6 sm:p-8">
           <div className="text-center mb-8">
             <h3 className="text-2xl sm:text-3xl font-extrabold text-navy mb-2">
-              Why Choose Classic Cleaning?
+              Why Choose {business.name}?
             </h3>
             <p className="text-gray-500 text-sm">
               See how we compare to the competition
@@ -125,7 +126,7 @@ export default function Pricing() {
                 Feature
               </div>
               <div className="text-xs sm:text-sm font-bold text-navy text-center">
-                Classic Cleaning
+                {business.name}
               </div>
               <div className="text-xs sm:text-sm font-semibold text-gray-500 text-center">
                 Others

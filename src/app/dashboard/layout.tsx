@@ -20,6 +20,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import Link from "next/link";
+import { business } from "@/config/business";
 
 const navItems = [
   { name: 'Services', icon: Briefcase, href: '/dashboard/services' },
@@ -31,14 +32,15 @@ const navItems = [
   { name: 'FAQs', icon: HelpCircle, href: '/dashboard/faqs' },
   { name: 'SEO Settings', icon: Search, href: '/dashboard/seo' },
   { name: 'Analytics', icon: BarChart3, href: '/dashboard/analytics' },
+  { name: 'Settings', icon: Sparkles, href: '/dashboard/settings' },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("admin_auth");
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
     window.location.href = "/login";
   };
 
@@ -64,7 +66,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0D9488]">
               <Sparkles className="h-4 w-4 text-white" />
             </div>
-            <span className="font-semibold text-lg">Classic Cleaning</span>
+            <span className="font-semibold text-lg">{business.name}</span>
           </div>
           <button
             className="lg:hidden text-white/70 hover:text-white"
@@ -120,7 +122,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">Admin</p>
-              <p className="text-xs text-white/50 truncate">admin@classiccleaning.in</p>
+              <p className="text-xs text-white/50 truncate">{business.email}</p>
             </div>
             <button
               onClick={handleLogout}

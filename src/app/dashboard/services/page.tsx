@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Plus,
   Edit2,
@@ -21,7 +21,7 @@ import {
   Save,
   AlertTriangle,
 } from 'lucide-react';
-import { services, formatPrice, Service } from '@/config/services';
+import { services as defaultServices, formatPrice, Service } from '@/config/services';
 import DashboardLayout from '../layout';
 
 const iconMap: Record<string, React.ElementType> = {
@@ -64,12 +64,43 @@ const emptyForm: ServiceFormData = {
 };
 
 export default function ServicesManagement() {
-  const [serviceList, setServiceList] = useState<Service[]>(services);
+  const [serviceList, setServiceList] = useState<Service[]>(defaultServices);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<ServiceFormData>(emptyForm);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [filterCategory, setFilterCategory] = useState<string>('all');
+  const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Load services from API on mount
+  useEffect(() => {
+    fetch('/api/config/services')
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setServiceList(data);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  // Persist services to API
+  const persistServices = async (services: Service[]) => {
+    setSaving(true);
+    try {
+      await fetch('/api/config/services', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(services),
+      });
+    } catch (e) {
+      console.error('Failed to save services:', e);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const filteredServices =
     filterCategory === 'all'
@@ -124,18 +155,21 @@ export default function ServicesManagement() {
       popular: formData.popular,
     };
 
+    let updated: Service[];
     if (editingId) {
-      setServiceList((prev) =>
-        prev.map((s) => (s.id === editingId ? serviceData : s))
-      );
+      updated = serviceList.map((s) => (s.id === editingId ? serviceData : s));
     } else {
-      setServiceList((prev) => [...prev, serviceData]);
+      updated = [...serviceList, serviceData];
     }
+    setServiceList(updated);
+    persistServices(updated);
     closeModal();
   };
 
   const handleDelete = (id: string) => {
-    setServiceList((prev) => prev.filter((s) => s.id !== id));
+    const updated = serviceList.filter((s) => s.id !== id);
+    setServiceList(updated);
+    persistServices(updated);
     setDeleteConfirm(null);
   };
 

@@ -67,10 +67,10 @@ export default function SeoSettingsPage() {
 
   // General tab state
   const [metaTitle, setMetaTitle] = useState(
-    'Classic Cleaning Services - Professional Cleaning Solutions'
+    `${business.fullName} - Professional Cleaning Solutions`
   );
   const [metaDescription, setMetaDescription] = useState(
-    'Classic Cleaning Services offers professional residential and commercial cleaning solutions. Trusted, reliable, and affordable cleaning services near you.'
+    `${business.fullName} offers professional residential and commercial cleaning solutions. Trusted, reliable, and affordable cleaning services near you.`
   );
   const [metaKeywords, setMetaKeywords] = useState(
     'cleaning services, house cleaning, office cleaning, deep cleaning, move-in cleaning'
@@ -82,10 +82,10 @@ export default function SeoSettingsPage() {
 
   // Open Graph tab state
   const [ogTitle, setOgTitle] = useState(
-    'Classic Cleaning Services - Professional Cleaning Solutions'
+    `${business.fullName} - Professional Cleaning Solutions`
   );
   const [ogDescription, setOgDescription] = useState(
-    'Classic Cleaning Services offers professional residential and commercial cleaning solutions.'
+    `${business.fullName} offers professional residential and commercial cleaning solutions.`
   );
   const [ogImageUrl, setOgImageUrl] = useState(
     'https://classiccleaning.com/images/og-image.jpg'

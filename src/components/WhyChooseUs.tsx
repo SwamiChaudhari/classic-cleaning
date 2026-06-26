@@ -12,6 +12,7 @@ import {
   Heart,
 } from "lucide-react";
 import Link from "next/link";
+import { business } from "@/config/business";
 
 const benefits = [
   {
@@ -144,7 +145,7 @@ export default function WhyChooseUs() {
                         1,500+ Happy Customers
                       </p>
                       <p className="text-white/70 text-xs">
-                        Trust Classic Cleaning for their homes & offices
+                        Trust {business.name} for their homes & offices
                       </p>
                     </div>
                   </div>

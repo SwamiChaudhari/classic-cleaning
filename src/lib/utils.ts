@@ -1,3 +1,4 @@
+import { business } from "@/config/business";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -29,7 +30,7 @@ export function generateQuoteMessage(data: {
   area: string;
   name: string;
 }): string {
-  return `Hi Classic Cleaning! 👋
+  return `Hi ${business.name}! 👋
 
 I'd like to get a quote for:
 🏠 Service: ${data.service}

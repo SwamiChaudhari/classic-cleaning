@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# Data directory — contains persisted CMS data
+# These JSON files are created by the dashboard CMS
+# They override config/ values at runtime
+src/data/
+

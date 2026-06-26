@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { business } from '@/config/business';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/dashboard", "/dashboard/*", "/api/*"],
     },
-    sitemap: "https://classic-cleaning.vercel.app/sitemap.xml",
-    host: "https://classic-cleaning.vercel.app",
+    sitemap: `${business.domain}/sitemap.xml`,
+    host: business.domain,
   };
 }

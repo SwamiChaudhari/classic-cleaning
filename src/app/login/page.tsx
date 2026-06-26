@@ -1,45 +1,49 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Lock, Eye, EyeOff, Sparkles } from "lucide-react";
-
-const ADMIN_PASSWORD = "admin123";
+import { business } from "@/config/business";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "/dashboard";
+
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // If already logged in, redirect to dashboard
-  useEffect(() => {
-    const auth = localStorage.getItem("admin_auth");
-    if (auth === "true") {
-      router.push("/dashboard");
-    }
-  }, [router]);
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    setTimeout(() => {
-      if (password === ADMIN_PASSWORD) {
-        localStorage.setItem("admin_auth", "true");
-        // Use location.replace to avoid back-button returning to login
-        window.location.replace("/dashboard");
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        // Cookie is set by the API route (httpOnly)
+        window.location.replace(redirect);
       } else {
-        setError("Invalid password. Try again.");
+        setError(data.error || "Invalid password. Try again.");
         setLoading(false);
       }
-    }, 300);
+    } catch {
+      setError("Network error. Please try again.");
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0B1D3A] via-[#0D9488] to-[#0B1D3A] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-navy via-navy-light to-navy flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -49,7 +53,7 @@ export default function LoginPage() {
             Admin Dashboard
           </h1>
           <p className="text-white/60 text-sm mt-2">
-            Classic Cleaning Services
+            {business.fullName}
           </p>
         </div>
 
@@ -69,7 +73,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter admin password"
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0D9488]/30 focus:border-[#0D9488] transition-colors pr-12"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal/30 focus:border-teal transition-colors pr-12"
                 required
               />
               <button
@@ -91,7 +95,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading || !password}
-            className="w-full py-3 bg-gradient-to-r from-[#0D9488] to-[#0B1D3A] text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 bg-gradient-to-r from-teal to-navy text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">
@@ -109,9 +113,6 @@ export default function LoginPage() {
           <p className="text-xs text-gray-400 text-center mt-4">
             Protected area. Authorized personnel only.
           </p>
-          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-xs text-blue-600 font-medium">Default password: admin123</p>
-          </div>
         </form>
       </div>
     </div>

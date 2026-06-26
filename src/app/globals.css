@@ -1,18 +1,28 @@
 @import "tailwindcss";
 
+/* ===== CSS CUSTOM PROPERTIES (White-Label Configurable) =====
+   These mirror src/config/business.ts brand colors.
+   To rebrand, change these values OR the config — both stay in sync. */
+:root {
+  --brand-primary: #0B1D3A;
+  --brand-secondary: #0D9488;
+  --brand-accent: #EA580C;
+  --brand-success: #059669;
+}
+
 @theme {
-  /* Classic Cleaning Brand Colors */
-  --color-navy: #0B1D3A;
+  /* Brand Colors — references CSS variables for white-label theming */
+  --color-navy: var(--brand-primary);
   --color-navy-light: #132B52;
   --color-navy-50: #F0F3F9;
-  --color-teal: #0D9488;
+  --color-teal: var(--brand-secondary);
   --color-teal-light: #F0FDFA;
   --color-blue: #2563EB;
   --color-blue-light: #EFF6FF;
   --color-blue-50: #F0F7FF;
-  --color-emerald: #059669;
+  --color-emerald: var(--brand-success);
   --color-emerald-light: #ECFDF5;
-  --color-orange: #EA580C;
+  --color-orange: var(--brand-accent);
   --color-orange-light: #FFF7ED;
   --color-surface: #FAFBFC;
   --color-border: #E5E7EB;

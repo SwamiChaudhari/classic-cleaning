@@ -121,7 +121,7 @@ export default function GalleryPage() {
             Want Your Home to Look Like This?
           </h2>
           <p className="text-white/70 mb-8">
-            Book Classic Cleaning today and see the difference.
+            Book {business.name} today and see the difference.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

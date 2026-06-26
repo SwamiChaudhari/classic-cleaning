@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Download, X, Smartphone } from "lucide-react";
+import { business } from "@/config/business";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
@@ -76,7 +77,7 @@ export default function PWAInstallPrompt() {
             </div>
             <div className="flex-1">
               <h3 className="font-bold text-navy text-sm mb-1">
-                Install Classic Cleaning App
+                Install {business.name} App
               </h3>
               <p className="text-xs text-gray-500 mb-3">
                 Get quick access to booking, pricing, and instant quotes. Works offline!
