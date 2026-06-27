@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Building2, CheckCircle2 } from "lucide-react";
 
 const commercialServices = [
@@ -17,20 +16,20 @@ export default function Commercial() {
     <section className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
-          <div className="relative rounded-2xl overflow-hidden shadow-xl">
-            <Image
-              src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80"
-              alt="Professional office cleaning"
-              width={800}
-              height={450}
-              className="w-full h-[350px] lg:h-[450px] object-cover"
-              loading="lazy"
-            />
+          {/* CSS-only decorative panel — saves ~250KB vs Unsplash image */}
+          <div className="relative rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br from-navy via-navy-light to-teal/30 h-[350px] lg:h-[450px]">
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute top-1/4 left-1/3 w-40 h-40 bg-teal rounded-full blur-3xl" />
+              <div className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-blue rounded-full blur-2xl" />
+            </div>
             <div className="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent" />
             <div className="absolute bottom-5 left-5">
               <div className="glass rounded-lg px-4 py-2 text-white text-sm font-medium">
                 🏢 Serving 50+ businesses in Pune
               </div>
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Building2 className="w-24 h-24 text-white/10" />
             </div>
           </div>
 

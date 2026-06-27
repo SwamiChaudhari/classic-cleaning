@@ -1,62 +1,52 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface BeforeAfterPair {
   id: number;
   category: string;
-  beforeImage: string;
-  afterImage: string;
   title: string;
+  /** CSS gradient used instead of Unsplash images — saves ~1.5MB total */
+  beforeGradient: string;
+  afterGradient: string;
 }
 
 const beforeAfterData: BeforeAfterPair[] = [
   {
     id: 1,
     category: 'Kitchen',
-    beforeImage:
-      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80',
-    afterImage:
-      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80&sat=-100&hue=-50',
     title: 'Kitchen Deep Clean',
+    beforeGradient: 'from-amber-900/60 via-stone-700/40 to-amber-800/50',
+    afterGradient: 'from-teal-600/30 via-white/10 to-teal-400/20',
   },
   {
     id: 2,
     category: 'Bathroom',
-    beforeImage:
-      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80',
-    afterImage:
-      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80&sat=-100&hue=-50',
     title: 'Bathroom Restoration',
+    beforeGradient: 'from-stone-600/60 via-gray-500/40 to-stone-700/50',
+    afterGradient: 'from-cyan-500/20 via-white/10 to-blue-300/20',
   },
   {
     id: 3,
     category: 'Sofa',
-    beforeImage:
-      'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80',
-    afterImage:
-      'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80&sat=-100&hue=-50',
     title: 'Sofa Deep Cleaning',
+    beforeGradient: 'from-amber-800/60 via-orange-900/40 to-yellow-900/50',
+    afterGradient: 'from-blue-400/20 via-white/10 to-indigo-300/20',
   },
   {
     id: 4,
     category: 'Deep Cleaning',
-    beforeImage:
-      'https://images.unsplash.com/photo-1527515637462-cee1395c108c?w=800&q=80',
-    afterImage:
-      'https://images.unsplash.com/photo-1527515637462-cee1395c108c?w=800&q=80&sat=-100',
     title: 'Full Home Deep Clean',
+    beforeGradient: 'from-gray-700/60 via-stone-600/40 to-gray-800/50',
+    afterGradient: 'from-emerald-400/20 via-white/10 to-teal-300/20',
   },
   {
     id: 5,
     category: 'Office',
-    beforeImage:
-      'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
-    afterImage:
-      'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&sat=-100',
     title: 'Office Space Cleaning',
+    beforeGradient: 'from-slate-700/60 via-gray-600/40 to-slate-800/50',
+    afterGradient: 'from-blue-500/20 via-white/10 to-slate-300/20',
   },
 ];
 
@@ -196,9 +186,10 @@ export default function BeforeAfter() {
             </span>
           </div>
 
-          {/* Image Comparison Container */}
+          {/* Image Comparison Container — uses CSS variable for clip-path to avoid style recalc */}
           <div
-            className="relative w-full aspect-[16/9] md:aspect-[2/1] rounded-2xl overflow-hidden cursor-col-resize select-none shadow-xl border-2 border-white"
+            className="relative w-full aspect-[16/9] md:aspect-[2/1] rounded-2xl overflow-hidden cursor-col-resize select-none shadow-xl border-2 before-after-slider"
+            style={{ "--slider-pos": `${sliderPosition}%` } as React.CSSProperties}
             onMouseMove={handleMouseMove}
             onMouseUp={() => setIsDragging(false)}
             onMouseLeave={() => setIsDragging(false)}
@@ -206,35 +197,34 @@ export default function BeforeAfter() {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {/* After Image (full background) */}
-            <div className="absolute inset-0">
-              <img
-                src={currentItem.afterImage}
-                alt={`${currentItem.title} - After`}
-                className="w-full h-full object-cover"
-                draggable={false}
-              loading="lazy" />
+            {/* After Gradient (full background) — CSS-only, no image download */}
+            <div className={`absolute inset-0 bg-gradient-to-br ${currentItem.afterGradient}`}>
+              {/* Texture pattern for visual interest */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-1/3 left-1/4 w-32 h-32 bg-white rounded-full blur-2xl" />
+                <div className="absolute bottom-1/3 right-1/3 w-24 h-24 bg-white rounded-full blur-xl" />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-white/60 text-6xl font-bold">✨</div>
+              </div>
             </div>
 
-            {/* Before Image (clipped) */}
+            {/* Before Gradient (clipped) — uses CSS variable, no inline style recalc */}
             <div
-              className="absolute inset-0 overflow-hidden"
-              style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+              className="absolute inset-0 overflow-hidden before-after-clip"
             >
-              <img
-                src={currentItem.beforeImage}
-                alt={`${currentItem.title} - Before`}
-                className="w-full h-full object-cover"
-                draggable={false}
-              loading="lazy" />
+              <div className={`absolute inset-0 bg-gradient-to-br ${currentItem.beforeGradient}`}>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-white/40 text-6xl font-bold">🧹</div>
+                </div>
+              </div>
               {/* Grayscale overlay for "before" effect */}
               <div className="absolute inset-0 bg-gray-600/30 mix-blend-multiply" />
             </div>
 
-            {/* Slider Handle */}
+            {/* Slider Handle — positioned via CSS variable */}
             <div
-              className="absolute top-0 bottom-0 z-10 flex items-center"
-              style={{ left: `calc(${sliderPosition}% - 20px)` }}
+              className="absolute top-0 bottom-0 z-10 flex items-center before-after-handle"
             >
               <div
                 onMouseDown={() => setIsDragging(true)}
@@ -260,10 +250,9 @@ export default function BeforeAfter() {
               After
             </div>
 
-            {/* Slider line */}
+            {/* Slider line — positioned via CSS variable */}
             <div
-              className="absolute top-0 bottom-0 w-0.5 z-10 pointer-events-none"
-              style={{ left: `${sliderPosition}%`, backgroundColor: '#ffffff' }}
+              className="absolute top-0 bottom-0 w-0.5 z-10 pointer-events-none before-after-line"
             />
           </div>
 
@@ -326,14 +315,8 @@ export default function BeforeAfter() {
             </button>
           </div>
 
-          {/* Title Bar */}
-          <motion.div
-            className="mt-8 text-center"
-            key={currentItem.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
+          {/* Title Bar — plain div, no motion needed for simple text */}
+          <div className="mt-8 text-center">
             <h3
               className="text-xl md:text-2xl font-bold"
               style={{ color: '#0B1D3A' }}
@@ -343,7 +326,7 @@ export default function BeforeAfter() {
             <p className="text-sm mt-1" style={{ color: '#0B1D3A80' }}>
               Drag the slider or tap arrows to compare
             </p>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

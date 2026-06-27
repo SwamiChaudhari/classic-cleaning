@@ -10,7 +10,7 @@ export default function AnalyticsTracker(): null {
   const searchParams = useSearchParams();
   const triggeredDepths = useRef(new Set<number>());
   const docHeightRef = useRef(0);
-  const ticking = false;
+  const ticking = useRef(false); // Fixed: was const (never mutable), now useRef
 
   // Get current path including search params
   const getPath = () =>
@@ -22,12 +22,16 @@ export default function AnalyticsTracker(): null {
     if (h > 0) docHeightRef.current = h;
   };
 
-  // Debounced scroll handler using rAF for efficiency
+  // Throttled scroll handler using rAF — properly guarded now
   const handleScroll = () => {
-    if (ticking) return;
+    if (ticking.current) return;
+    ticking.current = true;
     requestAnimationFrame(() => {
       const docHeight = docHeightRef.current;
-      if (docHeight <= 0) return;
+      if (docHeight <= 0) {
+        ticking.current = false;
+        return;
+      }
       const scrollTop =
         window.scrollY || document.documentElement.scrollTop;
       const scrollPercent = Math.round((scrollTop / docHeight) * 100);
@@ -49,6 +53,7 @@ export default function AnalyticsTracker(): null {
           } catch {}
         }
       }
+      ticking.current = false;
     });
   };
 

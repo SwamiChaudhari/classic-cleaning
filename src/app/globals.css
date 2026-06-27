@@ -209,3 +209,47 @@ section {
 .img-zoom:hover {
   transform: scale(1.05);
 }
+
+/* ===== PERFORMANCE: CSS-only animations replacing Framer Motion infinite loops ===== */
+
+/* Slow bounce for floating badges (replaces motion.div animate y infinite) */
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Infinite scroll left for reviews carousel (replaces JS rAF loop) */
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-scroll-left {
+  animation: scroll-left 30s linear infinite;
+  will-change: transform;
+}
+.animate-scroll-left:hover {
+  animation-play-state: paused;
+}
+
+/* GPU-promote elements that animate */
+.animate-bounce-slow,
+.animate-scroll-left {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ===== Before/After slider — CSS variable-driven to avoid inline style recalc ===== */
+.before-after-clip {
+  clip-path: inset(0 calc(100 - var(--slider-pos, 50%)) 0 0);
+}
+.before-after-handle {
+  left: calc(var(--slider-pos, 50%) - 20px);
+}
+.before-after-line {
+  left: var(--slider-pos, 50%);
+  background-color: #ffffff;
+}

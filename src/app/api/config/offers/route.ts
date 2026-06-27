@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { withCache } from "@/lib/cache-response";
 import { readData, writeData } from "@/lib/data-store";
 import { offers as defaultOffers } from "@/config/offers";
 
 export async function GET() {
   const data = await readData("offers.json", defaultOffers);
-  return NextResponse.json(data);
+  return withCache(NextResponse.json(data), 300);
 }
 
 export async function POST(request: NextRequest) {

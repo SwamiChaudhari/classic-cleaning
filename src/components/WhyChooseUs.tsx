@@ -1,16 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  ShieldCheck,
-  Leaf,
-  Users,
-  Wrench,
-  IndianRupee,
-  Clock,
-  Zap,
-  Heart,
-} from "lucide-react";
+import { ShieldCheck, Leaf, Users, Wrench, IndianRupee, Clock, Zap, Heart } from "lucide-react";
 import Link from "next/link";
 import { business } from "@/config/business";
 
@@ -120,12 +110,13 @@ export default function WhyChooseUs() {
           </div>
 
           <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-xl">
-              <img
-                src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80"
-                alt="Professional cleaning team at work"
-                className="w-full h-[400px] lg:h-[500px] object-cover"
-              />
+            <div className="relative rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br from-navy via-navy-light to-teal/40 h-[400px] lg:h-[500px]">
+              {/* Decorative CSS-only background replacing Unsplash image — saves ~300KB */}
+              <div className="absolute inset-0 opacity-20">
+                <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-teal rounded-full blur-3xl" />
+                <div className="absolute bottom-1/3 right-1/4 w-36 h-36 bg-blue rounded-full blur-2xl" />
+                <div className="absolute top-1/2 left-1/2 w-28 h-28 bg-emerald rounded-full blur-2xl" />
+              </div>
               <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="glass-dark rounded-xl p-4">
@@ -152,19 +143,15 @@ export default function WhyChooseUs() {
                 </div>
               </div>
             </div>
-            {/* Floating badge */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="absolute -top-4 -right-4 bg-gradient-to-r from-orange to-gold text-white rounded-2xl px-4 py-3 shadow-lg"
-            >
+            {/* Floating badge — CSS-only animation, no JS cost */}
+            <div className="absolute -top-4 -right-4 bg-gradient-to-r from-orange to-gold text-white rounded-2xl px-4 py-3 shadow-lg animate-bounce-slow">
               <div className="text-center">
                 <div className="text-2xl font-extrabold">4.8★</div>
                 <div className="text-[10px] font-medium opacity-90">
                   151+ Reviews
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
 

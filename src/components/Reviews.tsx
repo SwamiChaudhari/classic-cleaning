@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { Star, Quote, MapPin, CheckCircle2 } from "lucide-react";
 import { reviews } from "@/config/reviews";
 import { business } from "@/config/business";
@@ -73,44 +72,7 @@ function ReviewCard({ review }: { review: (typeof reviews)[0] }) {
 }
 
 export default function Reviews() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [isPaused, setIsPaused] = useState(false);
-
-  // Auto-scroll carousel with infinite loop
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    let animationId: number;
-    let lastTime = 0;
-    const speed = 0.5; // pixels per frame
-
-    const scroll = (time: number) => {
-      if (!lastTime) lastTime = time;
-      const delta = time - lastTime;
-      lastTime = time;
-
-      if (!isPaused && container) {
-        container.scrollLeft += speed * (delta / 16);
-
-        // Infinite loop: when scrolled past half, reset to start
-        const maxScroll = container.scrollWidth / 2;
-        if (container.scrollLeft >= maxScroll) {
-          container.scrollLeft = 0;
-        }
-      }
-
-      animationId = requestAnimationFrame(scroll);
-    };
-
-    animationId = requestAnimationFrame(scroll);
-
-    return () => cancelAnimationFrame(animationId);
-  }, [isPaused]);
-
-  // Duplicate reviews for infinite scroll
-  const duplicatedReviews = [...reviews, ...reviews];
-
+  // Single render — CSS handles infinite scroll animation, no JS rAF loop
   return (
     <section className="py-16 lg:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -166,31 +128,21 @@ export default function Reviews() {
           </div>
         </div>
 
-        {/* Auto-scroll Carousel */}
-        <div
-          ref={scrollRef}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          className="flex gap-5 overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory pb-4"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {duplicatedReviews.map((review, index) => (
-            <div
-              key={`${review.id}-${index}`}
-              className="min-w-[300px] sm:min-w-[350px] lg:min-w-[380px] snap-start flex-shrink-0"
-            >
-              <ReviewCard review={review} />
-            </div>
-          ))}
-        </div>
-
-        {/* Tablet/Desktop Grid (visible above mobile carousel) */}
-        <div className="hidden lg:grid lg:grid-cols-3 gap-6 mt-10">
-          {reviews.slice(0, 6).map((review) => (
-            <div key={review.id}>
-              <ReviewCard review={review} />
-            </div>
-          ))}
+        {/* CSS-only infinite scroll carousel — no JS rAF loop, no duplicated DOM */}
+        <div className="overflow-hidden relative">
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
+          <div className="flex gap-5 animate-scroll-left">
+            {[...reviews, ...reviews].map((review, index) => (
+              <div
+                key={`${review.id}-${index}`}
+                className="min-w-[300px] sm:min-w-[350px] lg:min-w-[380px] flex-shrink-0"
+              >
+                <ReviewCard review={review} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

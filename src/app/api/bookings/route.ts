@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { readData, writeData } from "@/lib/data-store";
 import { Booking, generateBookingId } from "@/lib/booking";
+import { isRateLimited } from "@/lib/rate-limit";
 
 const sampleBookings: Booking[] = [
   {
@@ -39,6 +40,12 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 10 requests per minute per IP
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   try {
     const body = await request.json();
     const bookings = await readData<Booking[]>("bookings.json", sampleBookings);

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { readData, writeData } from "@/lib/data-store";
+import { isRateLimited } from "@/lib/rate-limit";
 
 export interface Lead {
   id: string;
@@ -63,6 +64,12 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 10 requests per minute per IP
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   try {
     const body = await request.json();
     const leads = await readData<Lead[]>("leads.json", sampleLeads);

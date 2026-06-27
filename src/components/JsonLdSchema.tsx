@@ -85,39 +85,23 @@ export default function JsonLdSchema() {
     reviewBody: review.text,
   }));
 
+  // Single merged schema — reduces DOM nodes from N+2 to 1
+  const mergedSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      schema,
+      breadcrumbSchema,
+      faqSchema,
+      ...serviceSchemas,
+      ...reviewSchemas,
+    ],
+  };
+
   return (
-    <>
-      <Script
-        id="local-business-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-      <Script
-        id="breadcrumb-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <Script
-        id="faq-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      {serviceSchemas.map((s, i) => (
-        <Script
-          key={`service-schema-${i}`}
-          id={`service-schema-${i}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(s) }}
-        />
-      ))}
-      {reviewSchemas.map((r, i) => (
-        <Script
-          key={`review-schema-${i}`}
-          id={`review-schema-${i}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(r) }}
-        />
-      ))}
-    </>
+    <Script
+      id="structured-data"
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(mergedSchema) }}
+    />
   );
 }

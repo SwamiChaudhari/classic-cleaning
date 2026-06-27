@@ -6,18 +6,19 @@ import AnalyticsTracker from "@/components/AnalyticsTracker";
 import JsonLdSchema from "@/components/JsonLdSchema";
 import SkipLink from "@/components/SkipLink";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import BottomActionBar from "@/components/BottomActionBar";
+import ClientGlobalComponents from "@/components/ClientGlobalComponents";
 import { business } from "@/config/business";
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+  weight: ["400", "600", "700"], // Reduced from all weights — saves ~60KB
 });
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "600", "700"], // Reduced from 5 weights — saves ~80KB
   display: "swap",
   variable: "--font-poppins",
 });
@@ -83,10 +84,10 @@ export default function RootLayout({
         <ErrorBoundary>
           <JsonLdSchema />
           {children}
-          <BottomActionBar />
           <Suspense fallback={null}>
             <AnalyticsTracker />
           </Suspense>
+          <ClientGlobalComponents />
         </ErrorBoundary>
       </body>
     </html>
